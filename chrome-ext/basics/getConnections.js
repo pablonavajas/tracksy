@@ -1,6 +1,6 @@
 console.log("getConnections.js is running");
 
-viewAllConnections(sendConnectionsToBackground);
+viewAllConnections(sendConnectionsDataToBackground);
 
 function viewAllConnections(callback) {
     /* Scrolls to bottom of the page until all connections become visible,
@@ -37,7 +37,7 @@ function getConnectionsOnPage(){
     return document.querySelectorAll('div.mn-connection-card__details a[data-control-name=\'connection_profile\']')
 }
 
-function sendConnectionsToBackground() {
+function sendConnectionsDataToBackground() {
     /* Formats the connection data and send to background
 
         Sends:  [ { link: "https://xxx", name: "xxx", occupation: "yyy" }, ... ]
@@ -63,8 +63,3 @@ function stripProfileInfo(profiles_list, profile) {
     };
     profiles_list.push(profile_json);
 }
-
-
-
-
-
