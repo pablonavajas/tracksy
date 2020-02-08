@@ -1,0 +1,31 @@
+{
+  "manifest_version": 2,
+  "name": "Personal Extension Test",
+  "version": "0.1",
+
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": ["content.js"]
+    },
+
+    {
+      "matches" : [
+        "https://www.linkedin.com/mynetwork/invite-connect/connections/"
+      ],
+      "js" : ["getConnections.js"]
+    }
+  ],
+
+  "background": {
+    "scripts": ["background.js"]
+  },
+
+  "browser_action": {
+    "default_icon": "tracksy.png"
+  }
+
+}
+
