@@ -1,10 +1,8 @@
-# How to run
-
 ## Create a new react app
 
-Run `npx create-react-app .` in the project folder
+Run `npx create-react-app .` in the project folder.
 
-## Used dependencies
+## Used dependencies in this project
 
 - materialize-css
 - react-materialize
@@ -21,29 +19,32 @@ Run `npx create-react-app .` in the project folder
 - [json-server](https://github.com/typicode/json-server) (development back-end / fake REST API)
 - concurrently (run back-end and front-end server at the same time)
 
-## Possible other dependencies
+## Other useful npm packages
 
 - nodemon (utility that will monitor for any changes in your source and automatically restart your server)
 - config (for global variables)
 - express-validator (validate any body data that is coming in)
 - mongoose (abstraction layer for adding data, deleting data, etc.)
 
-## Possible to use security dependencies
+## Other useful security-related npm packages
 
 - bcryptjs (will handle hashing of passwords)
 - jsonwebtoken (creates a jwt that is being sent back and forth and allows accessing protected routes on our server)
 
-## How to install dependencies
+## How to install dependencies / npm packages
 
-For any dependency: `npm i <name of dependency>`
-
-For development dependencies: `npm i -D <name of dependency>`
-
+For any dependency: `npm i <name of dependency>`\
+For development dependencies: `npm i -D <name of dependency>`\
 Add a `-g` flag if dependency should be installed globaly.
 
-## Files
+## Project Structure Description
 
-`db.json` - file that has the data stored using json-server
+`src` folder - contains all the react components that are needed for normal application functionality\
+`public` folder - contains all the public files (most important `index.html`)
+
+`db.json` - file that has the data stored using json-server\
+`package.json` - file that contains a list of all libraries/packages used,
+configured scripts that can be run from the command line and development dependencies
 
 ## Modifications in `package.json`
 
