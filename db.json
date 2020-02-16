@@ -1,0 +1,56 @@
+{
+  "startups": [
+    {
+      "id": 1,
+      "name": "Facebook",
+      "website": "facebook.com",
+      "ownership": "12",
+      "board": "Member",
+      "investment_1": "3000",
+      "investment_2": "450000",
+      "type_1": "X Series",
+      "type_2": "S Series",
+      "date_1": "2012-02-20",
+      "date_2": "2019-08-12"
+    },
+    {
+      "id": 2,
+      "name": "Reddit",
+      "website": "reddit.com",
+      "ownership": "50",
+      "board": "Observer",
+      "investment_1": "123",
+      "investment_2": "adf",
+      "type_1": "14",
+      "type_2": "ad",
+      "date_1": "1999-12-12",
+      "date_2": "2019-03-12"
+    },
+    {
+      "name": "Future Meat",
+      "website": "future-meat.com",
+      "ownership": "30",
+      "board": "Member",
+      "investment_1": "200000",
+      "investment_2": "300000",
+      "type_1": "X Series",
+      "type_2": "S Series",
+      "date_1": "2019-02-03",
+      "date_2": "2020-02-01",
+      "id": 3
+    },
+    {
+      "id": 4,
+      "name": "Google",
+      "website": "google.com",
+      "ownership": "23",
+      "board": "Observer",
+      "investment_1": "300000",
+      "investment_2": "1000000",
+      "type_1": "X series",
+      "type_2": "S Series",
+      "date_1": "2005-02-03",
+      "date_2": "2015-05-03"
+    }
+  ]
+}
