@@ -3,6 +3,8 @@ console.log("background.js running");
 chrome.browserAction.onClicked.addListener(buttonClicked);
 
 function buttonClicked(tab) {
+    /* Logs click of the extension logo
+        Note: Not used atm  */
     console.log("button clicked");
 }
 
