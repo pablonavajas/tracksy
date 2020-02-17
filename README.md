@@ -19,6 +19,8 @@ So, run from the commandline the following command to install all of those autom
 
 - [json-server](https://github.com/typicode/json-server) (development back-end / fake REST API)
 - concurrently (run back-end and front-end server at the same time)
+- nock (allows HTTP Server mocking for manipulating and asserting on HTTP responses and requests)
+- async-wait-until (ensures repeatable and deterministic behaviour when fetching data for tests)
 
 ## Testing dependencies
 
