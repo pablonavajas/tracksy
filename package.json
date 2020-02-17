@@ -22,14 +22,29 @@
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0"
   },
+  "jest": {
+    "verbose": true,
+    "collectCoverage": true,
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx}"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 80,
+        "functions": 80,
+        "lines": 80,
+        "statements": -10
+      }
+    }
+  },
   "scripts": {
     "start": "react-scripts start",
     "json-server": "json-server --watch db.json --port 5000",
     "dev": "concurrently \"npm start\" \"npm run json-server\"",
     "build": "react-scripts build",
-    "test": "jest",
+    "test": "jest --watchAll",
     "eject": "react-scripts eject",
-    "coverage": "react-scripts test --env=jsdom --watchAll=false --coverage"
+    "coverage": "jest --watchAll --coverage --colors"
   },
   "eslintConfig": {
     "extends": "react-app"
