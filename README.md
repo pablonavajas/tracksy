@@ -1,6 +1,7 @@
-## Create a new react app
+## Install All Dependencies for the app
 
-Run `npx create-react-app .` in the project folder.
+All the dependencies needed for this application are listed in the `package.json` file.
+So, run from the commandline the following command to install all of those automatically: `npm install`.
 
 ## Used dependencies in this project
 
@@ -19,6 +20,14 @@ Run `npx create-react-app .` in the project folder.
 - [json-server](https://github.com/typicode/json-server) (development back-end / fake REST API)
 - concurrently (run back-end and front-end server at the same time)
 
+## Testing dependencies
+
+- jest (test runner)
+- enzyme (test utility)
+- react-test-renderer
+- enzyme-adapter-react-16
+- `brew install watchman` (getting rid of the fsevents is not a function error)
+
 ## Other useful npm packages
 
 - nodemon (utility that will monitor for any changes in your source and automatically restart your server)
@@ -33,8 +42,9 @@ Run `npx create-react-app .` in the project folder.
 
 ## How to install dependencies / npm packages
 
-For any dependency: `npm i <name of dependency>`\
+For any dependency: `npm i --save <name of dependency>`\
 For development dependencies: `npm i -D <name of dependency>`\
+Flag `--save` stores writes the name of the package installed into `package.json`.
 Add a `-g` flag if dependency should be installed globaly.
 
 ## Project Structure Description
@@ -57,7 +67,31 @@ Add proxy:
 
 - `"proxy": "http://localhost:5000"`
 
+## Testing Strategy for Front-End React Components
+
+Test Runner (runs tests and provides validation library)
+
+- Jest is used as the test runner in this project
+
+Testing Utilities (mounting to a non-existing DOM and then traversing the components)
+
+- Enzyme will be used as the testing utility in this project
+
+Don't test:
+
+- libraries
+- complex connections
+
+Do test:
+
+- isolated units
+- conditional outputs
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+## Create a new react app in existing folder
+
+Run `npx create-react-app .` in the project folder.
 
 ## Available Scripts
 
