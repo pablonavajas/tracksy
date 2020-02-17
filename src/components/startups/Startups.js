@@ -6,7 +6,7 @@ import StartupItem from './StartupItem';
 import { getStartups } from '../../actions/startupsActions';
 import AddStartupBtn from './../layout/AddStartupBtn';
 
-const Startups = ({ startup: { startups, loading }, getStartups }) => {
+export const Startups = ({ startup: { startups, loading }, getStartups }) => {
   //everything inside useEffect hook, gets called at page start up if [] is empty
   useEffect(() => {
     getStartups();
@@ -17,12 +17,16 @@ const Startups = ({ startup: { startups, loading }, getStartups }) => {
     return <h4>Loading ...</h4>;
   }
 
-  return !loading && startups.length === 0 ? (
-    <div>
-      <h5 className="left">No logs to show...</h5>
-      <AddStartupBtn />
-    </div>
-  ) : (
+  if (!loading && startups.length === 0) {
+    return (
+      <div>
+        <h5 className="left">No logs to show...</h5>
+        <AddStartupBtn />
+      </div>
+    );
+  }
+
+  return (
     <div>
       <div className="row">
         <div className="col s12">
