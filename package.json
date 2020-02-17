@@ -8,7 +8,6 @@
     "@testing-library/user-event": "^7.2.1",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
-    "fsevents": "^2.1.2",
     "materialize-css": "^1.0.0",
     "moment": "^2.24.0",
     "react": "^16.12.0",
@@ -21,37 +20,16 @@
     "react-test-renderer": "^16.12.0",
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
-    "redux-thunk": "^2.3.0",
-    "yarn": "^1.22.0"
-  },
-  "jest": {
-    "collectCoverageFrom": [
-      "src/**/*.{js,jsx,ts,tsx}",
-      "!<rootDir>/node_modules/",
-      "!<rootDir>/path/to/dir/"
-    ],
-    "coverageThreshold": {
-      "global": {
-        "branches": 90,
-        "functions": 90,
-        "lines": 90,
-        "statements": 90
-      }
-    },
-    "coverageReporters": [
-      "text"
-    ],
-    "snapshotSerializers": [
-      "my-serializer-module"
-    ]
+    "redux-thunk": "^2.3.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "json-server": "json-server --watch db.json --port 5000",
     "dev": "concurrently \"npm start\" \"npm run json-server\"",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "test": "jest",
+    "eject": "react-scripts eject",
+    "coverage": "react-scripts test --env=jsdom --watchAll=false --coverage"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -69,6 +47,8 @@
     ]
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.8.4",
+    "babel-plugin-transform-export-extensions": "^6.22.0",
     "concurrently": "^5.1.0",
     "json-server": "^0.15.1"
   },
