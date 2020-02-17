@@ -26,7 +26,8 @@ So, run from the commandline the following command to install all of those autom
 - enzyme (test utility)
 - react-test-renderer
 - enzyme-adapter-react-16
-- `brew install watchman` (getting rid of the fsevents is not a function error)
+- `brew install watchman` (on mac getting rid of the fsevents is not a function error in testing)
+-
 
 ## Other useful npm packages
 
@@ -55,6 +56,8 @@ Add a `-g` flag if dependency should be installed globaly.
 `db.json` - file that has the data stored using json-server\
 `package.json` - file that contains a list of all libraries/packages used,
 configured scripts that can be run from the command line and development dependencies
+`jest.config.js` - file with configuration for jest test runner
+`babel.config.js` - configuration for Babel which transpiles ES6 to ES5
 
 ## Modifications in `package.json`
 
