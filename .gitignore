@@ -1,5 +1,7 @@
 node_modules/
 
+/coverage
+
 /client/build
 
 .DS_Store
