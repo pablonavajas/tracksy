@@ -1,6 +1,10 @@
-console.log("getConnections.js is running");
+console.log("connections.js is running");
 
-viewAllConnections(sendConnectionsDataToBackground);
+chrome.runtime.onMessage.addListener(connectionRetrieval);
+
+function connectionRetrieval(message, sender, sendResponse){
+    viewAllConnections(sendConnectionsDataToBackground);
+}
 
 function viewAllConnections(callback) {
     /* Scrolls to bottom of the page until all connections become visible,
@@ -80,3 +84,4 @@ function stripProfileInfo(profile, owner) {
         occupation: occupation
     }
 }
+
