@@ -1,6 +1,10 @@
 console.log("connections.js is running");
 
-chrome.runtime.onMessage.addListener(connectionRetrieval);
+if (typeof chrome !== "undefined") {
+    chrome.runtime.onMessage.addListener(connectionRetrieval);
+} else {
+    module.exports = stripProfileInfo;
+}
 
 function connectionRetrieval(message, sender, sendResponse){
     viewAllConnections(sendConnectionsDataToBackground);
