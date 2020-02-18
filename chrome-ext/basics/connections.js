@@ -36,13 +36,14 @@ function viewAllConnections(callback) {
 function sendConnectionsDataToBackground() {
     /* Formats the connection data and send to background
 
-        Sends:  [ { link: "https://xxx", name: "xxx", occupation: "yyy" }, ... ]
+        Sends:  [ { owner: "zzz", link: "https://xxx", name: "xxx", occupation: "yyy" }, ... ]
      */
-    let owner = getOwnerName();
-    let htmlConnections = getConnectionsOnPage();
+    const owner = getOwnerName();
+    const htmlConnections = getConnectionsOnPage();
     let profiles_list = [];
-    htmlConnections.forEach(function(profile) {
-            stripProfileInfo(profiles_list, profile, owner)
+    htmlConnections.forEach(function(profileHTML) {
+            const profile = stripProfileInfo(profileHTML, owner);
+            profiles_list.push(profile);
         }
     );
 
@@ -60,18 +61,22 @@ function getOwnerName(){
     return document.querySelector(".nav-item__profile-member-photo").alt;
 }
 
-function stripProfileInfo(profiles_list, profile, owner) {
-    /* Creates object for a profile from HTML, adds object to profile_list
+function stripProfileInfo(profile, owner) {
+    /* Creates object containing connection info from HTML and owner name
         Fields extracted: link, name, occupation
+        Object keys: owner, link, name, occupation
     */
-    let link = profile.href;
-    let name = profile.querySelector(".mn-connection-card__name").textContent.trim();
-    let occupation = profile.querySelector(".mn-connection-card__occupation").textContent.trim();
-    let profile_json = {
+    const link = profile.href;
+
+    const nameSelector = ".mn-connection-card__name";
+    const occupationSelector = ".mn-connection-card__occupation";
+    const name = profile.querySelector(nameSelector).textContent.trim();
+    const occupation = profile.querySelector(occupationSelector).textContent.trim();
+
+    return {
         owner: owner,
         link: link,
         name: name,
         occupation: occupation
-    };
-    profiles_list.push(profile_json);
+    }
 }
