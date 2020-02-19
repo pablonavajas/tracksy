@@ -3,9 +3,8 @@ console.log("background.js running");
 chrome.browserAction.onClicked.addListener(buttonClicked);
 
 function buttonClicked(tab) {
-    /* Logs click of the extension logo
-        Note: Not used atm  */
-    console.log("button clicked");
+    let msg = {text: "connections"};
+    chrome.tabs.sendMessage(tab.id, msg);
 }
 
 chrome.runtime.onMessage.addListener(
