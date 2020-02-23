@@ -3,7 +3,10 @@ console.log("connections.js is running");
 if (typeof chrome !== "undefined") {
     chrome.runtime.onMessage.addListener(connectionRetrieval);
 } else {
-    module.exports = stripProfileInfo;
+    const functions = {
+        stripProfileInfo : stripProfileInfo
+    };
+    module.exports = functions;
 }
 
 const selectors = {
@@ -89,6 +92,6 @@ function stripProfileInfo(profile, owner) {
         owner: owner,
         link: profile.href,
         name: profile.querySelector(selectors.connection.name).textContent.trim(),
-        occupation: profile.querySelector(selectors.connection.name).textContent.trim()
+        occupation: profile.querySelector(selectors.connection.occupation).textContent.trim()
     }
 }

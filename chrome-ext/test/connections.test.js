@@ -1,6 +1,7 @@
 test("Test Running", () => {});
 
-const stripProfileInfo = require("../basics/connections");
+const functions = require("../basics/connections");
+
 
 test("Creation of JSON object from HTML for single connection", () => {
     const fs = require('fs');
@@ -17,6 +18,7 @@ test("Creation of JSON object from HTML for single connection", () => {
         name: "Sebastian Isaacs",
         occupation: "Co-Founder, London Blockchain Labs"
     };
-    expect(stripProfileInfo(profileHTML, owner)).toEqual(profile);
+    expect(functions.stripProfileInfo(profileHTML, owner)).toEqual(profile);
 });
+
 
