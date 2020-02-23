@@ -2,7 +2,7 @@ test("Test Running", () => {});
 
 const stripProfileInfo = require("../basics/connections");
 
-test("Object creation from HTML describing a connection", () => {
+test("Creation of JSON object from HTML for single connection", () => {
     const fs = require('fs');
     const path = require('path');
     document.body.innerHTML = fs.readFileSync(

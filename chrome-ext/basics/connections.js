@@ -6,40 +6,51 @@ if (typeof chrome !== "undefined") {
     module.exports = stripProfileInfo;
 }
 
+const selectors = {
+    totalConnections : ".mn-connections__header",
+    allConnectionsInfo : 'div.mn-connection-card__details a[data-control-name=\'connection_profile\']',
+    connection : {
+        photo : ".nav-item__profile-member-photo",
+        name : ".mn-connection-card__name",
+        occupation : ".mn-connection-card__occupation"
+    }
+};
+
 function connectionRetrieval(message, sender, sendResponse){
-    viewAllConnections(sendConnectionsDataToBackground);
+    viewAllConnections(sendConnectionsDataToBackground, document.body.scrollHeight);
 }
 
-function viewAllConnections(callback) {
+function viewAllConnections(callback, pageHeight) {
     /* Scrolls to bottom of the page until all connections become visible,
         calls sendConnectionsToBackground once all connections become visible
+        Note: if page doesn't change callback will be called
 
-        TODO: are there cases when all connections cannot be visible?
         TODO: how long to wait for new connections to load?
         */
-
-    let totalConnections_txt =
-        document.querySelector(".mn-connections__header").textContent.trim();
-    let totalConnections = Number(totalConnections_txt.split(" ")[0]);
-
+    let totalConnections = totalConnectionsNumber();
     let visibleConnections = getConnectionsOnPage().length; // number of connections on page
-
-    if (visibleConnections === totalConnections) {
-        callback()
-    } else {
-        window.scrollTo(0, document.body.scrollHeight); // scroll to bottom of the page
-        setTimeout(function () {
+    if (visibleConnections !== totalConnections) {
+        window.scroll(0, document.body.scrollHeight); // scroll to bottom of the page
+        setTimeout(() => {
             window.scrollBy(0, -1000); // scroll a bit upwards, to make more connections load
-            visibleConnections = getConnectionsOnPage().length;
-            if (visibleConnections < totalConnections) {
-                viewAllConnections(callback)
-            } else {
+            let curPageHeight = document.body.scrollHeight;
+            if (pageHeight === curPageHeight) { // if page doesn't change do callback
                 callback()
+            }
+            else {
+                viewAllConnections(callback, curPageHeight);
             }
         }, 1000)
     }
+    else {
+        callback();
+    }
 }
 
+function totalConnectionsNumber() {
+    let totalNumber_txt = document.querySelector(selectors.totalConnections).textContent.trim();
+    return Number(totalNumber_txt.split(" ")[0]);
+}
 
 function sendConnectionsDataToBackground() {
     /* Formats the connection data and send to background
@@ -60,13 +71,12 @@ function sendConnectionsDataToBackground() {
 
 function getConnectionsOnPage(){
     /* Gets data for all visible connections on the page */
-
-    return document.querySelectorAll('div.mn-connection-card__details a[data-control-name=\'connection_profile\']')
+    return document.querySelectorAll(selectors.allConnectionsInfo);
 }
 
 function getOwnerName(){
     /* Returns name of the user/owner from page */
-    return document.querySelector(".nav-item__profile-member-photo").alt;
+    return document.querySelector(selectors.connection.photo).alt;
 }
 
 function stripProfileInfo(profile, owner) {
@@ -74,18 +84,11 @@ function stripProfileInfo(profile, owner) {
         Fields extracted: link, name, occupation
         Object keys: owner, link, name, occupation
     */
-    const link = profile.href;
-
-    const nameSelector = ".mn-connection-card__name";
-    const occupationSelector = ".mn-connection-card__occupation";
-    const name = profile.querySelector(nameSelector).textContent.trim();
-    const occupation = profile.querySelector(occupationSelector).textContent.trim();
 
     return {
         owner: owner,
-        link: link,
-        name: name,
-        occupation: occupation
+        link: profile.href,
+        name: profile.querySelector(selectors.connection.name).textContent.trim(),
+        occupation: profile.querySelector(selectors.connection.name).textContent.trim()
     }
 }
-
