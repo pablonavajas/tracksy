@@ -4,7 +4,11 @@ if (typeof chrome !== "undefined") {
     chrome.runtime.onMessage.addListener(connectionRetrieval);
 } else {
     const functions = {
-        stripProfileInfo : stripProfileInfo
+        totalConnectionsNumber : totalConnectionsNumber,
+        getConnectionsOnPage : getConnectionsOnPage,
+        getOwnerName : getOwnerName,
+        stripProfileInfo : stripProfileInfo,
+        createListOfJSONConnections : createListOfJSONConnections
     };
     module.exports = functions;
 }
@@ -20,46 +24,40 @@ const selectors = {
 };
 
 function connectionRetrieval(message, sender, sendResponse){
-    viewAllConnections(sendConnectionsDataToBackground, document.body.scrollHeight);
+    scrollToVeryBottom(sendConnectionsDataToBackground, document.body.scrollHeight);
 }
 
-function viewAllConnections(callback, pageHeight) {
-    /* Scrolls to bottom of the page until all connections become visible,
-        calls sendConnectionsToBackground once all connections become visible
+function scrollToVeryBottom(callback, pageHeight) {
+    /* Scrolls to bottom of the page with 1 sec wait, until scroll does not change the page
         Note: if page doesn't change callback will be called
 
-        TODO: how long to wait for new connections to load?
+        TODO: how long to wait for page to load?
         */
-    let totalConnections = totalConnectionsNumber();
-    let visibleConnections = getConnectionsOnPage().length; // number of connections on page
-    if (visibleConnections !== totalConnections) {
-        window.scroll(0, document.body.scrollHeight); // scroll to bottom of the page
-        setTimeout(() => {
-            window.scrollBy(0, -1000); // scroll a bit upwards, to make more connections load
-            let curPageHeight = document.body.scrollHeight;
-            if (pageHeight === curPageHeight) { // if page doesn't change do callback
-                callback()
-            }
-            else {
-                viewAllConnections(callback, curPageHeight);
-            }
-        }, 1000)
-    }
-    else {
-        callback();
-    }
+    window.scroll(0, document.body.scrollHeight);
+    setTimeout( () => {
+        window.scrollBy(0, -1000);
+        let curHeight = document.body.scrollHeight;
+        (curHeight === pageHeight) ?  callback() : scrollToVeryBottom(callback, curHeight);
+    }, 1000);
 }
 
 function totalConnectionsNumber() {
+    /* Number of total connections as displayed at the top of the page */
     let totalNumber_txt = document.querySelector(selectors.totalConnections).textContent.trim();
     return Number(totalNumber_txt.split(" ")[0]);
 }
 
 function sendConnectionsDataToBackground() {
-    /* Formats the connection data and send to background
+    let profiles_list = createListOfJSONConnections();
 
-        Sends:  [ { owner: "zzz", link: "https://xxx", name: "xxx", occupation: "yyy" }, ... ]
-     */
+    chrome.runtime.sendMessage(profiles_list);
+}
+
+function createListOfJSONConnections() {
+    /* Formats the connection data into list of JSON objects
+
+    [ { owner: "zzz", link: "https://xxx", name: "xxx", occupation: "yyy" }, ... ]
+    */
     const owner = getOwnerName();
     const htmlConnections = getConnectionsOnPage();
     let profiles_list = [];
@@ -69,7 +67,7 @@ function sendConnectionsDataToBackground() {
         }
     );
 
-    chrome.runtime.sendMessage(profiles_list);
+    return profiles_list;
 }
 
 function getConnectionsOnPage(){
