@@ -14,16 +14,25 @@ import Home from "./home/Home";
 // import Login from "./components/auth/Login";
 
 import Startups from "./startups/Startups";
-// import EditStartupModal from './components/startups/EditStartupModal';
-// import AddStartupModal from './components/startups/AddStartupModal';
+import EditStartupModal from "./startups/EditStartupModal";
+import AddStartupModal from "./startups/AddStartupModal";
+
+import M from "materialize-css";
 
 class App extends Component {
+  componentDidMount() {
+    M.AutoInit();
+  }
   render() {
     return (
       <Provider store={store}>
         <Fragment>
           <Navbar />
-          <Startups />
+          <div className="container">
+            <AddStartupModal />
+            <EditStartupModal />
+            <Startups />
+          </div>
           <Footer />
         </Fragment>
       </Provider>

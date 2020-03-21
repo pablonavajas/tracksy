@@ -9,9 +9,13 @@ class Startup(models.Model):
     currency = models.CharField(max_length=10, blank=True, null=True)
     ownership = models.IntegerField(blank=True, null=True)
     board = models.CharField(max_length=30, blank=True, null=True)
-    first_investment = models.IntegerField(blank=True, null=True)
-    second_investment = models.IntegerField(blank=True, null=True)
+
+    # First Round of Investment, it's type and date closed
+    investment_1 = models.IntegerField(blank=True, null=True)
     type_1 = models.CharField(max_length=30, blank=True, null=True)
-    type_2 = models.CharField(max_length=30, blank=True, null=True)
     date_closed_1 = models.DateTimeField(auto_now_add=True)
+
+    # First Round of Investment, it's type and date closed
+    investment_2 = models.IntegerField(blank=True, null=True)
+    type_2 = models.CharField(max_length=30, blank=True, null=True)
     date_closed_2 = models.DateTimeField(auto_now_add=True)

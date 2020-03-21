@@ -1,66 +1,51 @@
-import React, { useState } from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import { addStartup } from '../../actions/startupsActions';
+import React, { useState } from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { addStartup } from "../../actions/startupsActions";
 
-import M from 'materialize-css/dist/js/materialize.min.js';
+// import M from 'materialize-css/dist/js/materialize.min.js';
 
 const AddStartupModal = ({ addStartup }) => {
-  const [name, setName] = useState('');
-  const [website, setWebsite] = useState('');
-  const [ownership, setOwnership] = useState('');
-  const [board, setBoard] = useState('');
-  const [investment_1, setInvestment_1] = useState('');
-  const [type_1, setType_1] = useState('');
-  const [date_1, setDate_1] = useState('');
-  const [investment_2, setInvestment_2] = useState('');
-  const [type_2, setType_2] = useState('');
-  const [date_2, setDate_2] = useState('');
+  const [name, setName] = useState("");
+  const [website, setWebsite] = useState("");
+  const [ownership, setOwnership] = useState("");
+  const [board, setBoard] = useState("");
+  const [investment_1, setInvestment_1] = useState("");
+  const [type_1, setType_1] = useState("");
+  const [date_closed_1, setDate_1] = useState("");
+  const [investment_2, setInvestment_2] = useState("");
+  const [type_2, setType_2] = useState("");
+  const [date_closed_2, setDate_2] = useState("");
 
   const onSubmit = () => {
-    if (
-      name === '' ||
-      website === '' ||
-      ownership === '' ||
-      board === '' ||
-      investment_1 === '' ||
-      type_1 === '' ||
-      date_1 === '' ||
-      investment_2 === '' ||
-      type_2 === '' ||
-      date_2 === ''
-    ) {
-      M.toast({
-        html: 'Please enter NA in the fields that are not applicable'
-      });
-    } else {
-      const newStartup = {
-        name,
-        website,
-        ownership,
-        board,
-        investment_1,
-        investment_2,
-        type_1,
-        type_2,
-        date_1,
-        date_2
-      };
+    const newStartup = {
+      name,
+      website,
+      ownership,
+      board,
+      investment_1,
+      investment_2,
+      type_1,
+      type_2,
+      date_closed_1,
+      date_closed_2
+    };
+    console.log(date_closed_1);
 
-      addStartup(newStartup);
+    addStartup(newStartup);
 
-      // Clear fields
-      setName('');
-      setWebsite('');
-      setOwnership('');
-      setBoard('');
-      setInvestment_1('');
-      setDate_1('');
-      setType_1('');
-      setInvestment_2('');
-      setDate_2('');
-      setType_2('');
-    }
+    // Clear fields
+    setName("");
+    setWebsite("");
+    setOwnership("");
+    setBoard("");
+    setInvestment_1("");
+    setDate_1("");
+    setType_1("");
+    setInvestment_2("");
+    setDate_2("");
+    setType_2("");
+
     //console.log('Submit button Clicked');
   };
 
@@ -72,7 +57,6 @@ const AddStartupModal = ({ addStartup }) => {
         <div className="row">
           <div className="input-field">
             <input
-              id="name"
               type="text"
               name="name"
               value={name}
@@ -86,7 +70,6 @@ const AddStartupModal = ({ addStartup }) => {
         <div className="row">
           <div className="input-field">
             <input
-              id="website"
               type="text"
               name="name"
               value={website}
@@ -100,7 +83,6 @@ const AddStartupModal = ({ addStartup }) => {
         <div className="row">
           <div className="input-field">
             <input
-              id="ownership"
               name="ownership"
               type="text"
               value={ownership}
@@ -114,7 +96,6 @@ const AddStartupModal = ({ addStartup }) => {
         <div className="row">
           <div className="input-field">
             <input
-              id="investment_1"
               name="investment_1"
               type="text"
               value={investment_1}
@@ -127,7 +108,6 @@ const AddStartupModal = ({ addStartup }) => {
         <div className="row">
           <div className="input-field">
             <input
-              id="type_1"
               name="type_1"
               type="text"
               value={type_1}
@@ -140,9 +120,8 @@ const AddStartupModal = ({ addStartup }) => {
         <div className="row">
           <div className="input-field">
             <input
-              id="date_1"
               name="date_1"
-              value={date_1}
+              value={date_closed_1}
               type="date"
               onChange={e => setDate_1(e.target.value)}
             />
@@ -154,7 +133,6 @@ const AddStartupModal = ({ addStartup }) => {
         <div className="row">
           <div className="input-field">
             <input
-              id="investment_2"
               name="investment_2"
               type="text"
               value={investment_2}
@@ -168,7 +146,6 @@ const AddStartupModal = ({ addStartup }) => {
         <div className="row">
           <div className="input-field">
             <input
-              id="type_2"
               name="type_2"
               type="text"
               value={type_2}
@@ -182,9 +159,8 @@ const AddStartupModal = ({ addStartup }) => {
         <div className="row">
           <div className="input-field">
             <input
-              id="date_2"
               name="date_2"
-              value={date_2}
+              value={date_closed_2}
               type="date"
               onChange={e => setDate_2(e.target.value)}
             />
@@ -195,7 +171,6 @@ const AddStartupModal = ({ addStartup }) => {
       <div className="row">
         <div className="input-field col s12">
           <select
-            id="board"
             name="board"
             value={board}
             className="browser-default"
@@ -214,7 +189,7 @@ const AddStartupModal = ({ addStartup }) => {
         <a
           href="#!"
           onClick={onSubmit}
-          className="modal-close waves-effect blue waves-light btn"
+          className="modal-close waves-effect blue waves-light btn-flat"
         >
           Submit
         </a>
@@ -224,8 +199,8 @@ const AddStartupModal = ({ addStartup }) => {
 };
 
 const modalStyle = {
-  width: '60%',
-  height: '75%'
+  width: "60%",
+  height: "75%"
 };
 
 AddStartupModal.propTypes = {
