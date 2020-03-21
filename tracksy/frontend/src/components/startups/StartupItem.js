@@ -1,9 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { deleteStartup, setCurrent } from '../../actions/startupsActions';
+import React from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { deleteStartup, setCurrent } from "../../actions/startupsActions";
 
-import M from 'materialize-css/dist/js/materialize.min.js';
+import M from "materialize-css/dist/js/materialize.min.js";
 
 const StartupItem = ({ startup, setCurrent, deleteStartup }) => {
   // const onDelete = () => {
@@ -14,9 +14,9 @@ const StartupItem = ({ startup, setCurrent, deleteStartup }) => {
   return (
     <tr>
       <th className="center">
-        <a href={'https://' + startup.website}>
+        <a href={"https://" + startup.website}>
           <img
-            src={'http://logo.clearbit.com/' + startup.website}
+            src={"http://logo.clearbit.com/" + startup.website}
             alt=""
             width="100"
             height="100"
@@ -28,10 +28,10 @@ const StartupItem = ({ startup, setCurrent, deleteStartup }) => {
       <td className="center">{startup.board}</td>
       <td>{startup.investment_1}</td>
       <td className="center">{startup.type_1}</td>
-      <td>{startup.date_1}</td>
+      <td>{startup.date_closed_1}</td>
       <td className="center">{startup.investment_2}</td>
       <td className="center">{startup.type_2}</td>
-      <td>{startup.date_2}</td>
+      <td>{startup.date_closed_2}</td>
       <td>
         <a
           href="#edit-startup-modal"

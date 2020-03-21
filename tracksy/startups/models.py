@@ -10,12 +10,14 @@ class Startup(models.Model):
     ownership = models.IntegerField(blank=True, null=True)
     board = models.CharField(max_length=30, blank=True, null=True)
 
-    # First Round of Investment, it's type and date closed
-    investment_1 = models.IntegerField(blank=True, null=True)
-    type_1 = models.CharField(max_length=30, blank=True, null=True)
-    date_closed_1 = models.DateTimeField(auto_now_add=True)
+    # Investment amounts in round 1 and 2
+    investment_1 = models.IntegerField(blank=True, default=0)
+    investment_2 = models.IntegerField(blank=True, default=0)
 
-    # First Round of Investment, it's type and date closed
-    investment_2 = models.IntegerField(blank=True, null=True)
+    # Type of investment in round 1 and 2
+    type_1 = models.CharField(max_length=30, blank=True, null=True)
     type_2 = models.CharField(max_length=30, blank=True, null=True)
-    date_closed_2 = models.DateTimeField(auto_now_add=True)
+
+    # Date investments in round 1 and 2 were closed
+    date_closed_1 = models.DateField(blank=True)
+    date_closed_2 = models.DateField(blank=True)

@@ -44,6 +44,7 @@ export const addStartup = startup => async dispatch => {
       payload: res.data
     });
   } catch (err) {
+    console.log(err.response.data);
     dispatch({
       type: STARTUPS_ERROR,
       payload: err.response.statusText

@@ -5,8 +5,6 @@ import { updateStartup } from "../../actions/startupsActions";
 //import moment from "moment/src/moment";
 var moment = require("moment");
 
-import M from "materialize-css/dist/js/materialize.min.js";
-
 const EditStartupModal = ({ current, updateStartup }) => {
   const [name, setName] = useState("");
   const [website, setWebsite] = useState("");
@@ -31,13 +29,12 @@ const EditStartupModal = ({ current, updateStartup }) => {
       setInvestment_2(current.investment_2);
       setDate_2(current.date_closed_2);
       setType_2(current.type_2);
+      console.log(date_closed_2);
     }
-    console.log(moment(date_closed_2.value).format("YYYY-MM-DD"));
-    //dependency of useEffect is current
   }, [current]);
 
   const onSubmit = () => {
-    console.log(date_closed_2);
+    //console.log(moment(date_closed_2.value).format("YYYY-MM-DD"));
     const updStartup = {
       id: current.id,
       name,
@@ -53,7 +50,6 @@ const EditStartupModal = ({ current, updateStartup }) => {
     };
 
     updateStartup(updStartup);
-    M.toast({ html: `Startup updated` });
 
     // Clear fields
     setName("");
@@ -179,7 +175,7 @@ const EditStartupModal = ({ current, updateStartup }) => {
           <div className="input-field">
             <input
               name="date_2"
-              value={date_closed_2 ? date_closed_2 : ""}
+              value={date_closed_2}
               type="date"
               onChange={e => setDate_2(e.target.value)}
             />
