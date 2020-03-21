@@ -2,11 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="bootstrap.min.css"/>
+    <link rel="stylesheet" href="popup.css"/>
     <title>LinkedIn Connections Retrieval</title>
 </head>
 <body>
 
-<button>Open LinkedIn</button>
+<div class="container">
+    <button type="button" id="btnToLinkedIn" class="btn btn-outline-primary text-nowrap">
+        To LinkedIn </button>
+
+    <button type="button" id="btnConnections" class="btn btn-outline-primary text-nowrap" hidden>
+        Retrieve Connections </button>
+</div>
 
 <script src="popup_controller.js"></script>
 

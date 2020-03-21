@@ -24,6 +24,10 @@ const selectors = {
     }
 };
 
+// function connectionsPresent(){
+//     document.querySelector(selectors.totalConnections) !== "undefined"
+// }
+
 function connectionRetrieval(message, sender, sendResponse){
     console.log("received message");
     scrollToVeryBottom(sendConnectionsDataToBackground);
