@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { updateStartup } from "../../actions/startupsActions";
 //import moment from "moment/src/moment";
-var moment = require("moment");
+//var moment = require("moment");
 
 const EditStartupModal = ({ current, updateStartup }) => {
   const [name, setName] = useState("");
@@ -29,12 +29,10 @@ const EditStartupModal = ({ current, updateStartup }) => {
       setInvestment_2(current.investment_2);
       setDate_2(current.date_closed_2);
       setType_2(current.type_2);
-      console.log(date_closed_2);
     }
   }, [current]);
 
   const onSubmit = () => {
-    //console.log(moment(date_closed_2.value).format("YYYY-MM-DD"));
     const updStartup = {
       id: current.id,
       name,

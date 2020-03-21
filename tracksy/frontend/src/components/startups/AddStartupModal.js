@@ -30,7 +30,7 @@ const AddStartupModal = ({ addStartup }) => {
       date_closed_1,
       date_closed_2
     };
-    console.log(date_closed_1);
+    //console.log(date_closed_1);
 
     addStartup(newStartup);
 
