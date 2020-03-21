@@ -4,6 +4,7 @@ if (typeof chrome !== "undefined") {
     chrome.runtime.onMessage.addListener(connectionRetrieval);
 } else {
     const functions = {
+        scrollToVeryBottom : scrollToVeryBottom,
         totalConnectionsNumber : totalConnectionsNumber,
         getConnectionsOnPage : getConnectionsOnPage,
         getOwnerName : getOwnerName,
@@ -24,20 +25,21 @@ const selectors = {
 };
 
 function connectionRetrieval(message, sender, sendResponse){
-    scrollToVeryBottom(sendConnectionsDataToBackground, document.body.scrollHeight);
+    console.log("received message");
+    scrollToVeryBottom(sendConnectionsDataToBackground);
 }
 
-function scrollToVeryBottom(callback, pageHeight) {
+function scrollToVeryBottom(callback, scrollTo = document.body.scrollHeight) {
     /* Scrolls to bottom of the page with 1 sec wait, until scroll does not change the page
         Note: if page doesn't change callback will be called
 
         TODO: how long to wait for page to load?
         */
-    window.scroll(0, document.body.scrollHeight);
+    window.scroll(0, scrollTo);
     setTimeout( () => {
         window.scrollBy(0, -1000);
         let curHeight = document.body.scrollHeight;
-        (curHeight === pageHeight) ?  callback() : scrollToVeryBottom(callback, curHeight);
+        (curHeight === scrollTo) ?  callback() : scrollToVeryBottom(callback, curHeight);
     }, 1000);
 }
 

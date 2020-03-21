@@ -40,6 +40,16 @@ test("List of JSON connections created", () => {
     expect(functions.createListOfJSONConnections().length).toBe(65);
 });
 
+test("Callback in scroll after 1 scroll attempt when no scrolling possible", done => {
+    global.scroll = jest.fn();
+    global.scrollBy = jest.fn();
+    functions.scrollToVeryBottom(() => {
+        expect(global.scroll).toBeCalled();
+        expect(global.scrollBy).toBeCalled();
+        done();
+    });
+});
+
 
 // test("Creation of JSON object from HTML for single connection", () => {
 //     const fs = require('fs');
