@@ -8,6 +8,7 @@ import {
   SET_CURRENT,
   CLEAR_CURRENT
 } from './types';
+import axios from 'axios';
 
 //returns an async fucntion which fetches dispatches at the same time
 
@@ -16,12 +17,11 @@ export const getStartups = () => async dispatch => {
   try {
     setLoading();
 
-    const res = await fetch('/startups');
-    const data = await res.json();
+    const res = await axios.get('/startups');
 
     dispatch({
       type: GET_STARTUPS,
-      payload: data
+      payload: res.data
     });
   } catch (err) {
     dispatch({
@@ -33,19 +33,15 @@ export const getStartups = () => async dispatch => {
 
 //Add New Startup
 export const addStartup = startup => async dispatch => {
+  const config = { headers: { 'Content-Type': 'application/json' } };
+
   try {
     setLoading();
-
-    const res = await fetch('/startups', {
-      method: 'POST',
-      body: JSON.stringify(startup),
-      headers: { 'Content-Type': 'application/json' }
-    });
-    const data = await res.json();
+    const res = await axios.post('/startups', startup, config);
 
     dispatch({
       type: ADD_STARTUP,
-      payload: data
+      payload: res.data
     });
   } catch (err) {
     dispatch({
@@ -60,17 +56,16 @@ export const updateStartup = startup => async dispatch => {
   try {
     setLoading();
 
-    const res = await fetch(`/startups/${startup.id}`, {
-      method: 'PUT',
-      body: JSON.stringify(startup),
-      headers: { 'Content-Type': 'application/json' }
-    });
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
 
-    const data = await res.json();
-    console.log(data);
+    const res = await axios.put(`/startups/${startup.id}`, startup, config);
     dispatch({
       type: UPDATE_STARTUP,
-      payload: data
+      payload: res.data
     });
   } catch (err) {
     dispatch({
@@ -85,9 +80,7 @@ export const deleteStartup = id => async dispatch => {
   try {
     setLoading();
 
-    await fetch(`/startups/${id}`, {
-      method: 'DELETE'
-    });
+    await axios.delete(`/startups/${id}`);
 
     dispatch({
       type: DELETE_STARTUP,

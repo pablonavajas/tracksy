@@ -5,11 +5,11 @@ import { deleteStartup, setCurrent } from '../../actions/startupsActions';
 
 import M from 'materialize-css/dist/js/materialize.min.js';
 
-const startupItem = ({ startup, setCurrent, deleteStartup }) => {
-  const onDelete = () => {
-    deleteStartup(startup.id);
-    M.toast({ html: 'Startup Deleted' });
-  };
+const StartupItem = ({ startup, setCurrent, deleteStartup }) => {
+  // const onDelete = () => {
+  //   deleteStartup(startup.id);
+  //   M.toast({ html: 'Startup Deleted' });
+  // };
 
   return (
     <tr>
@@ -41,8 +41,12 @@ const startupItem = ({ startup, setCurrent, deleteStartup }) => {
           <i className="material-icons grey-text">edit</i>
         </a>
       </td>
-      <td width="50">
-        <a href="#!" onClick={onDelete} className="secondary-content">
+      <td>
+        <a
+          href="#!"
+          onClick={() => deleteStartup(startup.id)}
+          className="secondary-content"
+        >
           <i className="material-icons grey-text">delete</i>
         </a>
       </td>
@@ -50,10 +54,10 @@ const startupItem = ({ startup, setCurrent, deleteStartup }) => {
   );
 };
 
-startupItem.propTypes = {
+StartupItem.propTypes = {
   startup: PropTypes.object.isRequired,
   deleteStartup: PropTypes.func.isRequired,
   setCurrent: PropTypes.func.isRequired
 };
 
-export default connect(null, { setCurrent, deleteStartup })(startupItem);
+export default connect(null, { setCurrent, deleteStartup })(StartupItem);
