@@ -15,6 +15,8 @@ import { Provider as AlertProvider } from "react-alert";
 import AlertTemplate from "react-alert-template-basic";
 import store from "../store";
 
+import { loadUser } from "../actions/authActions";
+
 //import "./App.css";
 // import store from './store';
 import Home from "./home/Home";
@@ -26,6 +28,7 @@ import AddStartupModal from "./startups/AddStartupModal";
 import Alerts from "./layout/Alerts";
 import Login from "./accounts/Login";
 import Register from "./accounts/Register";
+import PrivateRoute from "./common/PrivateRoute";
 
 import M from "materialize-css";
 
@@ -37,6 +40,8 @@ const alertOptions = {
 
 class App extends Component {
   componentDidMount() {
+    console.log("componentDidMount");
+    store.dispatch(loadUser());
     M.AutoInit();
   }
   render() {
@@ -51,7 +56,7 @@ class App extends Component {
                 <AddStartupModal />
                 <EditStartupModal />
                 <Switch>
-                  <Route exact path="/" component={Startups} />
+                  <PrivateRoute exact path="/" component={Startups} />
                   <Route exact path="/register" component={Register} />
                   <Route exact path="/login" component={Login} />
                 </Switch>
