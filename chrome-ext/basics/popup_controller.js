@@ -4,6 +4,11 @@ const linkedIn_url = "https://www.linkedin.com/mynetwork/invite-connect/connecti
 
 const btnGoToLinkedIn = document.body.querySelector("#btnToLinkedIn");
 const btnGetConnections = document.body.querySelector("#btnConnections");
+const btnSuccess = document.body.querySelector("#success");
+function progressBarHidden(bool){
+    document.body.querySelector(".progress").hidden = bool
+}
+const progressBar = document.body.querySelector(".progress-bar"); // use this
 
 setButtonBasedOnTab();
 
@@ -26,13 +31,18 @@ function setButtons(curTab) {
         if (message.linkedInLoaded !== undefined) {
             btnGetConnections.disabled = false
         }
+        if (message.progress !== undefined) {
+            progressBar.style.width = message.progress;
+        }
+        if (message.connectionsSent !== undefined) {
+            setButtonsConnectionsRetrieved();
+        }
     });
 
     console.log("button set up for: " + curTab.url);
     if (curTab.url === linkedIn_url) {
         btnGoToLinkedIn.hidden = true;
         btnGetConnections.hidden = false;
-        btnGetConnections.disabled = true;
 
         // Lets the content script know that popup has been activated
         console.log("send message that popup has been activated");
@@ -43,8 +53,17 @@ function setButtons(curTab) {
     }
 }
 
+function setButtonsConnectionsRetrieved() {
+    btnGetConnections.hidden = true;
+    btnGoToLinkedIn.hidden = true;
+    progressBarHidden(true);
+    btnSuccess.hidden = false;
+}
+
 function buttonActionGetConnections(curTab) {
     console.log("calling content script to retrieve connections");
+    btnGetConnections.disabled = true;
+    progressBarHidden(false);
     chrome.tabs.sendMessage(curTab.id, {getConnections: true});
 }
 

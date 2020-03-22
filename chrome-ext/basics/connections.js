@@ -28,11 +28,13 @@ function pageSetup() {
     });
 
     window.addEventListener("load", (event) => {
+        console.log("page loaded");
         chrome.runtime.sendMessage({linkedInLoaded: true});
 
         chrome.runtime.onMessage.addListener((message, sender) => {
             if (message.getConnections !== undefined){
-                scrollToVeryBottom(sendConnectionsDataToBackground);
+                // scrollToVeryBottom(sendConnectionsDataToBackground);
+                scrollToVeryBottom();
             }
         })
         // TODO: add variable monitoring whether retrieval is on
@@ -49,19 +51,31 @@ const selectors = {
     }
 };
 
-function scrollToVeryBottom(callback, scrollTo = document.body.scrollHeight) {
-    /* Scrolls to bottom of the page with 1 sec wait, until scroll does not change the page
-        Note: if page doesn't change callback will be called
 
-        TODO: how long to wait for page to load?
+function scrollToVeryBottom() {
+    /* Scrolls to bottom of the page to reveal more connections.
+        Recursive until scrolling does not result in change of page height
         */
-    window.scroll(0, scrollTo);
-    setTimeout( () => {
-        window.scrollBy(0, -1000);
-        let curHeight = document.body.scrollHeight;
-        (curHeight === scrollTo) ?  callback() : scrollToVeryBottom(callback, curHeight);
-    }, 1000);
+    let progress = ((getConnectionsOnPage().length + 1) / totalConnectionsNumber()) * 100;
+    let strProgress = progress.toString() + "%";
+    chrome.runtime.sendMessage({progress : strProgress}); // sends progress update
+
+    if (progress === 100) {
+        sendConnectionsDataToBackground();
+    } else {
+        let scrollTo = document.body.scrollHeight;
+        window.scroll(0, scrollTo);
+        setTimeout(() => {
+            window.scroll(0, 0);
+
+            // Wait for page to lazy load
+            setTimeout(() => {
+                scrollToVeryBottom();
+            }, 1000);
+        }, 100);
+    }
 }
+
 
 function totalConnectionsNumber() {
     /* Number of total connections as displayed at the top of the page */
@@ -71,8 +85,7 @@ function totalConnectionsNumber() {
 
 function sendConnectionsDataToBackground() {
     let profiles_list = createListOfJSONConnections();
-
-    chrome.runtime.sendMessage(profiles_list);
+    chrome.runtime.sendMessage({profiles: profiles_list});
 }
 
 function createListOfJSONConnections() {

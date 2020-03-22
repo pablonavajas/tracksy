@@ -1,11 +1,13 @@
 console.log("background.js running");
 
 chrome.runtime.onMessage.addListener(
-    function(request, sender) {
+    function(message, sender) {
         // TODO: check where the message is coming from (e.g. sender.tab.url)
-        console.log("profiles received");
-        console.log(request);
-        sendpost(request)
+        if (message.profiles !== undefined){
+            console.log("profiles received");
+            console.log(message);
+            sendpost(message);
+        }
     }
 );
 
@@ -18,6 +20,8 @@ function sendpost(data) {
         },
         body: JSON.stringify(data)
     };
+
+    chrome.runtime.sendMessage({connectionsSent: true});
 
     fetch('https://track-shsfw.run-us-west2.goorm.io/postThis', options);
 }
