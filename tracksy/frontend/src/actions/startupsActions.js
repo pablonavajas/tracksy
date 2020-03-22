@@ -11,7 +11,7 @@ import {
   CREATE_MESSAGE
 } from "./types";
 import axios from "axios";
-import { createMessage } from "./messageActions";
+import { createMessage, returnErrors } from "./messageActions";
 
 //returns an async fucntion which fetches dispatches at the same time
 
@@ -26,10 +26,7 @@ export const getStartups = () => async dispatch => {
       payload: res.data
     });
   } catch (err) {
-    dispatch({
-      type: GET_ERRORS,
-      payload: err.response.data
-    });
+    dispatch(returnErrors(err.response.data, err.response.status));
   }
 };
 
@@ -48,15 +45,7 @@ export const addStartup = startup => async dispatch => {
       payload: res.data
     });
   } catch (err) {
-    console.log(err.response.data);
-    const errors = {
-      msg: err.response.data,
-      status: err.response.status
-    };
-    dispatch({
-      type: GET_ERRORS,
-      payload: errors
-    });
+    dispatch(returnErrors(err.response.data, err.response.status));
   }
 };
 
@@ -85,10 +74,7 @@ export const updateStartup = startup => async dispatch => {
       payload: res.data
     });
   } catch (err) {
-    dispatch({
-      type: GET_ERRORS,
-      payload: err.response.data
-    });
+    dispatch(returnErrors(err.response.data, err.response.status));
   }
 };
 
@@ -105,10 +91,7 @@ export const deleteStartup = id => async dispatch => {
       payload: id
     });
   } catch (err) {
-    dispatch({
-      type: GET_ERRORS,
-      payload: err.response.data
-    });
+    dispatch(returnErrors(err.response.data, err.response.status));
   }
 };
 
