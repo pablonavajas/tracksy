@@ -2,15 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { deleteStartup, setCurrent } from "../../actions/startupsActions";
-
-import M from "materialize-css/dist/js/materialize.min.js";
+import CurrencyFormat from "react-currency-format";
+var moment = require("moment");
 
 const StartupItem = ({ startup, setCurrent, deleteStartup }) => {
-  // const onDelete = () => {
-  //   deleteStartup(startup.id);
-  //   M.toast({ html: 'Startup Deleted' });
-  // };
-
   return (
     <tr>
       <th className="center">
@@ -24,14 +19,30 @@ const StartupItem = ({ startup, setCurrent, deleteStartup }) => {
         </a>
         <div>{startup.name}</div>
       </th>
-      <td className="center">{startup.ownership}</td>
+      <td className="center">
+        <div>{startup.ownership}</div>
+      </td>
       <td className="center">{startup.board}</td>
-      <td>{startup.investment_1}</td>
+      <td>
+        <CurrencyFormat
+          value={startup.investment_1}
+          displayType={"text"}
+          thousandSeparator={true}
+          prefix={startup.currency}
+        />
+      </td>
       <td className="center">{startup.type_1}</td>
-      <td>{startup.date_closed_1}</td>
-      <td className="center">{startup.investment_2}</td>
+      <td>{moment(startup.date_closed_1).format("DD/MM/YYYY")}</td>
+      <td className="center">
+        <CurrencyFormat
+          value={startup.investment_2}
+          displayType={"text"}
+          thousandSeparator={true}
+          prefix={startup.currency}
+        />
+      </td>
       <td className="center">{startup.type_2}</td>
-      <td>{startup.date_closed_2}</td>
+      <td>{moment(startup.date_closed_2).format("DD/MM/YYYY")}</td>
       <td>
         <a
           href="#edit-startup-modal"

@@ -4,11 +4,13 @@ import PropTypes from "prop-types";
 import { updateStartup } from "../../actions/startupsActions";
 //import moment from "moment/src/moment";
 //var moment = require("moment");
+import CurrencyFormat from "react-currency-format";
 
 const EditStartupModal = ({ current, updateStartup }) => {
   const [name, setName] = useState("");
   const [website, setWebsite] = useState("");
   const [ownership, setOwnership] = useState("");
+  const [currency, setCurrency] = useState("");
   const [board, setBoard] = useState("");
   const [investment_1, setInvestment_1] = useState("");
   const [type_1, setType_1] = useState("");
@@ -22,6 +24,7 @@ const EditStartupModal = ({ current, updateStartup }) => {
       setName(current.name);
       setWebsite(current.website);
       setOwnership(current.ownership);
+      setCurrency(current.currency);
       setBoard(current.board);
       setInvestment_1(current.investment_1);
       setDate_1(current.date_closed_1);
@@ -38,6 +41,7 @@ const EditStartupModal = ({ current, updateStartup }) => {
       name,
       website,
       ownership,
+      currency,
       board,
       investment_1,
       investment_2,
@@ -53,6 +57,7 @@ const EditStartupModal = ({ current, updateStartup }) => {
     setName("");
     setWebsite("");
     setOwnership("");
+    setCurrency("");
     setBoard("");
     setInvestment_1("");
     setDate_1("");
@@ -105,14 +110,36 @@ const EditStartupModal = ({ current, updateStartup }) => {
           </div>
         </div>
 
+        <div className="input-field col s12">
+          <select
+            name="currency"
+            value={currency}
+            className="browser-default"
+            onChange={e => setCurrency(e.target.value)}
+          >
+            <option value="" disabled>
+              Select Currency
+            </option>
+            <option value="£">£</option>
+            <option value="$">$</option>
+            <option value="€">€</option>
+          </select>
+        </div>
+
         {/** Investment 1 */}
         <div className="row">
           <div className="input-field">
-            <input
-              name="investment_1"
-              type="text"
+            <CurrencyFormat
               value={investment_1 ? investment_1 : ""}
-              onChange={e => setInvestment_1(e.target.value)}
+              thousandSeparator={true}
+              prefix={currency}
+              allowNegative={false}
+              onValueChange={values => {
+                const { formattedValue, value } = values;
+                // formattedValue = $2,223
+                // value ie, 2223
+                setInvestment_1(value);
+              }}
             />
             <span className="helper-text">Investment 1</span>
           </div>
@@ -145,11 +172,17 @@ const EditStartupModal = ({ current, updateStartup }) => {
         {/** Investment 2 */}
         <div className="row">
           <div className="input-field">
-            <input
-              name="investment_2"
-              type="text"
+            <CurrencyFormat
               value={investment_2 ? investment_2 : ""}
-              onChange={e => setInvestment_2(e.target.value)}
+              thousandSeparator={true}
+              prefix={currency}
+              allowNegative={false}
+              onValueChange={values => {
+                const { formattedValue, value } = values;
+                // formattedValue = $2,223
+                // value ie, 2223
+                setInvestment_1(value);
+              }}
             />
             <span className="helper-text">Investment 2</span>
           </div>
