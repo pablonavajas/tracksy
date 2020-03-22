@@ -1,4 +1,5 @@
 import {
+  GET_ERRORS,
   GET_STARTUPS,
   UPDATE_STARTUP,
   SET_LOADING,
@@ -6,9 +7,11 @@ import {
   ADD_STARTUP,
   DELETE_STARTUP,
   SET_CURRENT,
-  CLEAR_CURRENT
+  CLEAR_CURRENT,
+  CREATE_MESSAGE
 } from "./types";
 import axios from "axios";
+import { createMessage } from "./messageActions";
 
 //returns an async fucntion which fetches dispatches at the same time
 
@@ -18,15 +21,14 @@ export const getStartups = () => async dispatch => {
     setLoading();
 
     const res = await axios.get("/api/startups");
-
     dispatch({
       type: GET_STARTUPS,
       payload: res.data
     });
   } catch (err) {
     dispatch({
-      type: STARTUPS_ERROR,
-      payload: err.response.statusText
+      type: GET_ERRORS,
+      payload: err.response.data
     });
   }
 };
@@ -39,15 +41,21 @@ export const addStartup = startup => async dispatch => {
     setLoading();
     const res = await axios.post("/api/startups/", startup, config);
 
+    dispatch(createMessage({ startupAdded: "Startup has been added" }));
+
     dispatch({
       type: ADD_STARTUP,
       payload: res.data
     });
   } catch (err) {
-    //console.log(err.response.data);
+    console.log(err.response.data);
+    const errors = {
+      msg: err.response.data,
+      status: err.response.status
+    };
     dispatch({
-      type: STARTUPS_ERROR,
-      payload: err.response.statusText
+      type: GET_ERRORS,
+      payload: errors
     });
   }
 };
@@ -68,14 +76,18 @@ export const updateStartup = startup => async dispatch => {
       startup,
       config
     );
+
+    dispatch(
+      createMessage({ startupUpdated: "Startup information has been updated" })
+    );
     dispatch({
       type: UPDATE_STARTUP,
       payload: res.data
     });
   } catch (err) {
     dispatch({
-      type: STARTUPS_ERROR,
-      payload: err.response.statusText
+      type: GET_ERRORS,
+      payload: err.response.data
     });
   }
 };
@@ -87,14 +99,15 @@ export const deleteStartup = id => async dispatch => {
 
     await axios.delete(`/api/startups/${id}/`);
 
+    dispatch(createMessage({ startupDeleted: "Startup has been deleted" }));
     dispatch({
       type: DELETE_STARTUP,
       payload: id
     });
   } catch (err) {
     dispatch({
-      type: STARTUPS_ERROR,
-      payload: err.response.statusText
+      type: GET_ERRORS,
+      payload: err.response.data
     });
   }
 };

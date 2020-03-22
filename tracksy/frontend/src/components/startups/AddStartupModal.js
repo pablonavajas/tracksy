@@ -98,6 +98,7 @@ const AddStartupModal = ({ addStartup }) => {
             <input
               name="investment_1"
               type="text"
+              required
               value={investment_1}
               onChange={e => setInvestment_1(e.target.value)}
             />
@@ -135,6 +136,7 @@ const AddStartupModal = ({ addStartup }) => {
             <input
               name="investment_2"
               type="text"
+              required
               value={investment_2}
               onChange={e => setInvestment_2(e.target.value)}
             />
