@@ -1,5 +1,9 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { register } from "../../actions/authActions";
+import { createMessage } from "../../actions/messageActions";
 
 export class Register extends Component {
   state = {
@@ -9,13 +13,31 @@ export class Register extends Component {
     password2: ""
   };
 
+  static propTypes = {
+    register: PropTypes.func.isRequired,
+    isAuthenticated: PropTypes.bool
+  };
+
   onSubmit = e => {
     e.preventDefault();
-    console.log("submit");
+    const { username, email, password, password2 } = this.state;
+    if (password != password2) {
+      this.props.createMessage({ passwordsNotMatch: "Password do not match" });
+    } else {
+      const newUser = {
+        username,
+        email,
+        password
+      };
+      this.props.register(newUser);
+    }
   };
   onChange = e => this.setState({ [e.target.name]: e.target.value });
 
   render() {
+    if (this.props.isAuthenticated) {
+      return <Redirect to="/" />;
+    }
     const { username, email, password, password2 } = this.state;
     return (
       <div>
@@ -25,7 +47,7 @@ export class Register extends Component {
               <div className="col s12 m8 offset-m2 l6 offset-l3">
                 <div className="card-panel login blue white-text center">
                   <h2>Register</h2>
-                  <form>
+                  <form onSubmit={this.onSubmit}>
                     <div className="input-field">
                       <i className="material-icons prefix">account_box</i>
                       <input
@@ -73,11 +95,14 @@ export class Register extends Component {
                       <label className="white-text">Password</label>
                     </div>
 
-                    <a className="btn  #546e7a blue-grey darken-1 waves-effect waves-light">
-                      Login
-                    </a>
+                    <button
+                      type="submit"
+                      className="btn  #546e7a blue-grey darken-1 waves-effect waves-light"
+                    >
+                      Register
+                    </button>
                     <p>
-                      Don't have an account?{" "}
+                      Already have an account?{" "}
                       <Link to="/login" style={{ color: "#FFF" }}>
                         Login
                       </Link>
@@ -93,4 +118,8 @@ export class Register extends Component {
   }
 }
 
-export default Register;
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(mapStateToProps, { register, createMessage })(Register);

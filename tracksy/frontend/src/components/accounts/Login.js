@@ -1,5 +1,8 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { login } from "../../actions/authActions";
 
 export class Login extends Component {
   state = {
@@ -7,14 +10,23 @@ export class Login extends Component {
     password: ""
   };
 
+  static propTypes = {
+    login: PropTypes.func.isRequired,
+    isAuthenticated: PropTypes.bool
+  };
+
   onSubmit = e => {
+    console.log("onsubmit clicked");
     e.preventDefault();
-    console.log("submit");
+    this.props.login(this.state.username, this.state.password);
   };
 
   onChange = e => this.setState({ [e.target.name]: e.target.value });
 
   render() {
+    if (this.props.isAuthenticated) {
+      return <Redirect to="/" />;
+    }
     const { username, password } = this.state;
     return (
       <div>
@@ -24,7 +36,7 @@ export class Login extends Component {
               <div className="col s12 m8 offset-m2 l6 offset-l3">
                 <div className="card-panel login blue white-text center">
                   <h2>Tracksy Login</h2>
-                  <form>
+                  <form onSubmit={this.onSubmit}>
                     <div className="input-field">
                       <i className="material-icons prefix">account_box</i>
                       <input
@@ -49,9 +61,13 @@ export class Login extends Component {
                       <label className="white-text">Password</label>
                     </div>
 
-                    <a className="btn  #546e7a blue-grey darken-1 waves-effect waves-light">
+                    <button
+                      className="btn #546e7a blue-grey darken-1 waves-effect waves-light"
+                      type="submit"
+                      name="action"
+                    >
                       Login
-                    </a>
+                    </button>
                     <p>
                       Don't have an account?{" "}
                       <Link to="/register" style={{ color: "#FFF" }}>
@@ -69,4 +85,8 @@ export class Login extends Component {
   }
 }
 
-export default Login;
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(mapStateToProps, { login })(Login);

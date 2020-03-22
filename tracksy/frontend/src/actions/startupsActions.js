@@ -12,15 +12,16 @@ import {
 } from "./types";
 import axios from "axios";
 import { createMessage, returnErrors } from "./messageActions";
+import { tokenConfig } from "./authActions";
 
 //returns an async fucntion which fetches dispatches at the same time
 
 //Getting All Startups
-export const getStartups = () => async dispatch => {
+export const getStartups = () => async (dispatch, getState) => {
   try {
     setLoading();
 
-    const res = await axios.get("/api/startups");
+    const res = await axios.get("/api/startups", tokenConfig(getState));
     dispatch({
       type: GET_STARTUPS,
       payload: res.data
@@ -31,12 +32,16 @@ export const getStartups = () => async dispatch => {
 };
 
 //Add New Startup
-export const addStartup = startup => async dispatch => {
-  const config = { headers: { "Content-Type": "application/json" } };
+export const addStartup = startup => async (dispatch, getState) => {
+  //const config = { headers: { "Content-Type": "application/json" } };
 
   try {
     setLoading();
-    const res = await axios.post("/api/startups/", startup, config);
+    const res = await axios.post(
+      "/api/startups/",
+      startup,
+      tokenConfig(getState)
+    );
 
     dispatch(createMessage({ startupAdded: "Startup has been added" }));
 
@@ -50,7 +55,7 @@ export const addStartup = startup => async dispatch => {
 };
 
 //Update Startup
-export const updateStartup = startup => async dispatch => {
+export const updateStartup = startup => async (dispatch, getState) => {
   try {
     setLoading();
 
@@ -63,7 +68,7 @@ export const updateStartup = startup => async dispatch => {
     const res = await axios.put(
       `/api/startups/${startup.id}/`,
       startup,
-      config
+      tokenConfig(getState)
     );
 
     dispatch(
@@ -79,11 +84,11 @@ export const updateStartup = startup => async dispatch => {
 };
 
 //Delete Startup
-export const deleteStartup = id => async dispatch => {
+export const deleteStartup = id => async (dispatch, getState) => {
   try {
     setLoading();
 
-    await axios.delete(`/api/startups/${id}/`);
+    await axios.delete(`/api/startups/${id}/`, tokenConfig(getState));
 
     dispatch(createMessage({ startupDeleted: "Startup has been deleted" }));
     dispatch({

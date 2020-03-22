@@ -17,7 +17,7 @@ import store from "../store";
 
 import { loadUser } from "../actions/authActions";
 
-//import "./App.css";
+import "./App.css";
 // import store from './store';
 import Home from "./home/Home";
 // import Login from "./components/auth/Login";
@@ -40,29 +40,31 @@ const alertOptions = {
 
 class App extends Component {
   componentDidMount() {
-    console.log("componentDidMount");
     store.dispatch(loadUser());
     M.AutoInit();
   }
+
   render() {
     return (
       <Provider store={store}>
         <AlertProvider template={AlertTemplate} {...alertOptions}>
           <Router>
-            <Fragment>
-              <Navbar />
-              <Alerts />
-              <div className="container">
-                <AddStartupModal />
-                <EditStartupModal />
-                <Switch>
-                  <PrivateRoute exact path="/" component={Startups} />
-                  <Route exact path="/register" component={Register} />
-                  <Route exact path="/login" component={Login} />
-                </Switch>
-              </div>
+            <div className="page-flexbox-wrapper">
+              <main>
+                <Navbar />
+                <Alerts />
+                <div className="container">
+                  <AddStartupModal />
+                  <EditStartupModal />
+                  <Switch>
+                    <PrivateRoute exact path="/" component={Startups} />
+                    <Route exact path="/register" component={Register} />
+                    <Route exact path="/login" component={Login} />
+                  </Switch>
+                </div>
+              </main>
               <Footer />
-            </Fragment>
+            </div>
           </Router>
         </AlertProvider>
       </Provider>

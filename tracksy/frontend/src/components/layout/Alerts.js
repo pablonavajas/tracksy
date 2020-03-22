@@ -28,6 +28,12 @@ export class Alerts extends Component {
         alert.error(`Date Closed 2: ${error.msg.date_closed_2.join()}`);
       } else {
       }
+
+      if (error.msg.non_field_errors) {
+        alert.error(error.msg.non_field_errors.join());
+      } else if (error.msg.username) {
+        alert.error(error.msg.username.join());
+      }
     }
 
     if (message !== prevProps.message) {
@@ -39,6 +45,9 @@ export class Alerts extends Component {
       }
       if (message.startupUpdated) {
         alert.success(message.startupUpdated);
+      }
+      if (message.passwordsNotMatch) {
+        alert.error(message.passwordsNotMatch);
       }
     }
   }
