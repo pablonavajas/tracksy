@@ -19,9 +19,24 @@ function setButtons(curTab) {
     btnGetConnections.addEventListener("click",
         () => buttonActionGetConnections(curTab), {once: true});
 
+    chrome.runtime.onMessage.addListener((message, sender) => {
+        if (message.btnConnectionsTurnOn !== undefined) {
+            btnGetConnections.disabled = !message.btnConnectionsTurnOn;
+        }
+        if (message.linkedInLoaded !== undefined) {
+            btnGetConnections.disabled = false
+        }
+    });
+
+    console.log("button set up for: " + curTab.url);
     if (curTab.url === linkedIn_url) {
-        btnGetConnections.hidden = false;
         btnGoToLinkedIn.hidden = true;
+        btnGetConnections.hidden = false;
+        btnGetConnections.disabled = true;
+
+        // Lets the content script know that popup has been activated
+        console.log("send message that popup has been activated");
+        chrome.tabs.sendMessage(curTab.id, {popupActivated: true});
     } else {
         btnGetConnections.hidden = true;
         btnGoToLinkedIn.hidden = false;
@@ -30,8 +45,7 @@ function setButtons(curTab) {
 
 function buttonActionGetConnections(curTab) {
     console.log("calling content script to retrieve connections");
-    chrome.tabs.sendMessage(curTab.id, {text: "getConnections"});
-    setButtonBasedOnTab();
+    chrome.tabs.sendMessage(curTab.id, {getConnections: true});
 }
 
 function buttonActionGoToLinkedIn(curTab) {

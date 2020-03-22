@@ -1,8 +1,12 @@
 console.log("connections.js is running");
 
 if (typeof chrome !== "undefined") {
-    chrome.runtime.onMessage.addListener(connectionRetrieval);
+    pageSetup();
 } else {
+    testSetup();
+}
+
+function testSetup() {
     const functions = {
         scrollToVeryBottom : scrollToVeryBottom,
         totalConnectionsNumber : totalConnectionsNumber,
@@ -14,6 +18,27 @@ if (typeof chrome !== "undefined") {
     module.exports = functions;
 }
 
+function pageSetup() {
+    chrome.runtime.onMessage.addListener((message, sender) => {
+        if (message.popupActivated !== undefined){
+            let pageLoaded = document.readyState === "complete";
+            console.log("sending info about page load status: " + pageLoaded);
+            chrome.runtime.sendMessage({btnConnectionsTurnOn : pageLoaded})
+        }
+    });
+
+    window.addEventListener("load", (event) => {
+        chrome.runtime.sendMessage({linkedInLoaded: true});
+
+        chrome.runtime.onMessage.addListener((message, sender) => {
+            if (message.getConnections !== undefined){
+                scrollToVeryBottom(sendConnectionsDataToBackground);
+            }
+        })
+        // TODO: add variable monitoring whether retrieval is on
+    });
+}
+
 const selectors = {
     totalConnections : ".mn-connections__header",
     allConnectionsInfo : 'div.mn-connection-card__details a[data-control-name=\'connection_profile\']',
@@ -23,15 +48,6 @@ const selectors = {
         occupation : ".mn-connection-card__occupation"
     }
 };
-
-// function connectionsPresent(){
-//     document.querySelector(selectors.totalConnections) !== "undefined"
-// }
-
-function connectionRetrieval(message, sender, sendResponse){
-    console.log("received message");
-    scrollToVeryBottom(sendConnectionsDataToBackground);
-}
 
 function scrollToVeryBottom(callback, scrollTo = document.body.scrollHeight) {
     /* Scrolls to bottom of the page with 1 sec wait, until scroll does not change the page
