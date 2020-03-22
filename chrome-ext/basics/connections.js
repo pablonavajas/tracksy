@@ -1,51 +1,98 @@
 console.log("connections.js is running");
 
 if (typeof chrome !== "undefined") {
-    chrome.runtime.onMessage.addListener(connectionRetrieval);
+    pageSetup();
 } else {
-    module.exports = stripProfileInfo;
+    testSetup();
 }
 
-function connectionRetrieval(message, sender, sendResponse){
-    viewAllConnections(sendConnectionsDataToBackground);
+function testSetup() {
+    const functions = {
+        scrollToVeryBottom : scrollToVeryBottom,
+        totalConnectionsNumber : totalConnectionsNumber,
+        getConnectionsOnPage : getConnectionsOnPage,
+        getOwnerName : getOwnerName,
+        stripProfileInfo : stripProfileInfo,
+        createListOfJSONConnections : createListOfJSONConnections
+    };
+    module.exports = functions;
 }
 
-function viewAllConnections(callback) {
-    /* Scrolls to bottom of the page until all connections become visible,
-        calls sendConnectionsToBackground once all connections become visible
+function pageSetup() {
+    chrome.runtime.onMessage.addListener((message, sender) => {
+        if (message.popupActivated !== undefined){
+            let pageLoaded = document.readyState === "complete";
+            console.log("sending info about page load status: " + pageLoaded);
+            chrome.runtime.sendMessage({btnConnectionsTurnOn : pageLoaded})
+        }
+    });
 
-        TODO: are there cases when all connections cannot be visible?
-        TODO: how long to wait for new connections to load?
-        */
+    window.addEventListener("load", (event) => {
+        console.log("page loaded");
+        chrome.runtime.sendMessage({linkedInLoaded: true});
 
-    let totalConnections_txt =
-        document.querySelector(".mn-connections__header").textContent.trim();
-    let totalConnections = Number(totalConnections_txt.split(" ")[0]);
-
-    let visibleConnections = getConnectionsOnPage().length; // number of connections on page
-
-    if (visibleConnections === totalConnections) {
-        callback()
-    } else {
-        window.scrollTo(0, document.body.scrollHeight); // scroll to bottom of the page
-        setTimeout(function () {
-            window.scrollBy(0, -1000); // scroll a bit upwards, to make more connections load
-            visibleConnections = getConnectionsOnPage().length;
-            if (visibleConnections < totalConnections) {
-                viewAllConnections(callback)
-            } else {
-                callback()
+        chrome.runtime.onMessage.addListener((message, sender) => {
+            if (message.getConnections !== undefined){
+                // scrollToVeryBottom(sendConnectionsDataToBackground);
+                scrollToVeryBottom();
             }
-        }, 1000)
+        })
+        // TODO: add variable monitoring whether retrieval is on
+    });
+}
+
+const selectors = {
+    totalConnections : ".mn-connections__header",
+    allConnectionsInfo : 'div.mn-connection-card__details a[data-control-name=\'connection_profile\']',
+    connection : {
+        photo : ".nav-item__profile-member-photo",
+        name : ".mn-connection-card__name",
+        occupation : ".mn-connection-card__occupation"
+    }
+};
+
+
+function scrollToVeryBottom() {
+    /* Scrolls to bottom of the page to reveal more connections.
+        Recursive until scrolling does not result in change of page height
+        */
+    let progress = ((getConnectionsOnPage().length + 1) / totalConnectionsNumber()) * 100;
+    let strProgress = progress.toString() + "%";
+    chrome.runtime.sendMessage({progress : strProgress}); // sends progress update
+
+    if (progress === 100) {
+        sendConnectionsDataToBackground();
+    } else {
+        let scrollTo = document.body.scrollHeight;
+        window.scroll(0, scrollTo);
+        setTimeout(() => {
+            window.scroll(0, 0);
+
+            // Wait for page to lazy load
+            setTimeout(() => {
+                scrollToVeryBottom();
+            }, 1000);
+        }, 100);
     }
 }
 
 
-function sendConnectionsDataToBackground() {
-    /* Formats the connection data and send to background
+function totalConnectionsNumber() {
+    /* Number of total connections as displayed at the top of the page */
+    let totalNumber_txt = document.querySelector(selectors.totalConnections).textContent.trim();
+    return Number(totalNumber_txt.split(" ")[0]);
+}
 
-        Sends:  [ { owner: "zzz", link: "https://xxx", name: "xxx", occupation: "yyy" }, ... ]
-     */
+function sendConnectionsDataToBackground() {
+    let profiles_list = createListOfJSONConnections();
+    chrome.runtime.sendMessage({profiles: profiles_list});
+}
+
+function createListOfJSONConnections() {
+    /* Formats the connection data into list of JSON objects
+
+    [ { owner: "zzz", link: "https://xxx", name: "xxx", occupation: "yyy" }, ... ]
+    */
     const owner = getOwnerName();
     const htmlConnections = getConnectionsOnPage();
     let profiles_list = [];
@@ -55,18 +102,17 @@ function sendConnectionsDataToBackground() {
         }
     );
 
-    chrome.runtime.sendMessage(profiles_list);
+    return profiles_list;
 }
 
 function getConnectionsOnPage(){
     /* Gets data for all visible connections on the page */
-
-    return document.querySelectorAll('div.mn-connection-card__details a[data-control-name=\'connection_profile\']')
+    return document.querySelectorAll(selectors.allConnectionsInfo);
 }
 
 function getOwnerName(){
     /* Returns name of the user/owner from page */
-    return document.querySelector(".nav-item__profile-member-photo").alt;
+    return document.querySelector(selectors.connection.photo).alt;
 }
 
 function stripProfileInfo(profile, owner) {
@@ -74,18 +120,11 @@ function stripProfileInfo(profile, owner) {
         Fields extracted: link, name, occupation
         Object keys: owner, link, name, occupation
     */
-    const link = profile.href;
-
-    const nameSelector = ".mn-connection-card__name";
-    const occupationSelector = ".mn-connection-card__occupation";
-    const name = profile.querySelector(nameSelector).textContent.trim();
-    const occupation = profile.querySelector(occupationSelector).textContent.trim();
 
     return {
         owner: owner,
-        link: link,
-        name: name,
-        occupation: occupation
+        link: profile.href,
+        name: profile.querySelector(selectors.connection.name).textContent.trim(),
+        occupation: profile.querySelector(selectors.connection.occupation).textContent.trim()
     }
 }
-

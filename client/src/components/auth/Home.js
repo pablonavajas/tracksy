@@ -7,7 +7,7 @@ const Home = props => {
       fullscreen={false}
       options={{
         duration: 500,
-        height: 550,
+        height: 700,
         indicators: true,
         interval: 6000
       }}
@@ -21,9 +21,9 @@ const Home = props => {
         }
       >
         <Caption placement="center">
-          <h3>This is our big Tagline!</h3>
+          <h3>The right place</h3>
           <h5 className="light grey-text text-lighten-3">
-            Here's our small slogan.
+            To manage relationships with your portfolio companies.
           </h5>
         </Caption>
       </Slide>

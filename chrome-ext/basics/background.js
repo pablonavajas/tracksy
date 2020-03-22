@@ -1,25 +1,18 @@
 console.log("background.js running");
 
-chrome.browserAction.onClicked.addListener(buttonClicked);
-
-function buttonClicked(tab) {
-    let msg = {text: "connections"};
-    chrome.tabs.sendMessage(tab.id, msg);
-}
-
 chrome.runtime.onMessage.addListener(
-    function(request, sender) {
-        if (sender.tab.url === "https://www.linkedin.com/mynetwork/invite-connect/connections/" ) {
-            console.log("Sending data!");
-            console.log(request);
-            sendpost(request)
-        } else {
-            console.log("Messege from unexpected tab: " + sender.tab.url)
+    function(message, sender) {
+        // TODO: check where the message is coming from (e.g. sender.tab.url)
+        if (message.profiles !== undefined){
+            console.log("profiles received");
+            console.log(message);
+            sendpost(message);
         }
     }
 );
 
 function sendpost(data) {
+    console.log("Sending data!");
     let options = {
         method: 'POST',
         headers: {
@@ -28,6 +21,7 @@ function sendpost(data) {
         body: JSON.stringify(data)
     };
 
+    chrome.runtime.sendMessage({connectionsSent: true});
+
     fetch('https://track-shsfw.run-us-west2.goorm.io/postThis', options);
 }
-

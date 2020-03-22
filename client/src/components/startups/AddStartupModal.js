@@ -61,7 +61,7 @@ const AddStartupModal = ({ addStartup }) => {
       setDate_2('');
       setType_2('');
     }
-    console.log('Submit button Clicked');
+    //console.log('Submit button Clicked');
   };
 
   return (
@@ -72,6 +72,7 @@ const AddStartupModal = ({ addStartup }) => {
         <div className="row">
           <div className="input-field">
             <input
+              id="name"
               type="text"
               name="name"
               value={name}
@@ -85,6 +86,7 @@ const AddStartupModal = ({ addStartup }) => {
         <div className="row">
           <div className="input-field">
             <input
+              id="website"
               type="text"
               name="name"
               value={website}
@@ -98,6 +100,7 @@ const AddStartupModal = ({ addStartup }) => {
         <div className="row">
           <div className="input-field">
             <input
+              id="ownership"
               name="ownership"
               type="text"
               value={ownership}
@@ -111,6 +114,7 @@ const AddStartupModal = ({ addStartup }) => {
         <div className="row">
           <div className="input-field">
             <input
+              id="investment_1"
               name="investment_1"
               type="text"
               value={investment_1}
@@ -123,6 +127,7 @@ const AddStartupModal = ({ addStartup }) => {
         <div className="row">
           <div className="input-field">
             <input
+              id="type_1"
               name="type_1"
               type="text"
               value={type_1}
@@ -135,6 +140,7 @@ const AddStartupModal = ({ addStartup }) => {
         <div className="row">
           <div className="input-field">
             <input
+              id="date_1"
               name="date_1"
               value={date_1}
               type="date"
@@ -148,6 +154,7 @@ const AddStartupModal = ({ addStartup }) => {
         <div className="row">
           <div className="input-field">
             <input
+              id="investment_2"
               name="investment_2"
               type="text"
               value={investment_2}
@@ -161,6 +168,7 @@ const AddStartupModal = ({ addStartup }) => {
         <div className="row">
           <div className="input-field">
             <input
+              id="type_2"
               name="type_2"
               type="text"
               value={type_2}
@@ -174,6 +182,7 @@ const AddStartupModal = ({ addStartup }) => {
         <div className="row">
           <div className="input-field">
             <input
+              id="date_2"
               name="date_2"
               value={date_2}
               type="date"
@@ -186,6 +195,7 @@ const AddStartupModal = ({ addStartup }) => {
       <div className="row">
         <div className="input-field col s12">
           <select
+            id="board"
             name="board"
             value={board}
             className="browser-default"

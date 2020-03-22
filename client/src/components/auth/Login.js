@@ -1,11 +1,11 @@
 import React from 'react';
 
 const Login = props => {
-  const onSubmit = e => {};
-  const onChange = e => {};
+  // const onSubmit = e => {};
+  // const onChange = e => {};
 
-  const email = '';
-  const password = '';
+  // const email = '';
+  // const password = '';
 
   return (
     <div>
@@ -15,15 +15,10 @@ const Login = props => {
             <div className="col s12 m8 offset-m2 l6 offset-l3">
               <div className="card-panel login blue white-text center">
                 <h2>Tracksy Login</h2>
-                <form action="index.html" onSubmit={onSubmit}>
+                <form action="index.html">
                   <div className="input-field">
                     <i className="material-icons prefix">email</i>
-                    <input
-                      type="email"
-                      id="email"
-                      onChange={onChange}
-                      required
-                    />
+                    <input type="email" id="email" required />
                     <label className="white-text">Email</label>
                   </div>
                   <div className="input-field">
@@ -31,7 +26,6 @@ const Login = props => {
                     <input
                       type="password"
                       id="password"
-                      onChange={onChange}
                       required
                       minLength="6"
                     />
