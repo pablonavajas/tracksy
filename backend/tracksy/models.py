@@ -40,16 +40,15 @@ class Requests(models.Model):
 class Startups(models.Model):
     startup_id = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=10)
-    logo_url = models.CharField(max_length=100, blank=True, null=True)
-    currency = models.CharField(max_length=10, blank=True, null=True)
+    website = models.CharField(max_length=100, blank=True, null=True)
     ownership = models.IntegerField(blank=True, null=True)
     board = models.CharField(max_length=30, blank=True, null=True)
-    first_investment = models.IntegerField(blank=True, null=True)
-    second_investment = models.IntegerField(blank=True, null=True)
+    investment_1 = models.IntegerField(blank=True, null=True)
+    investment_2 = models.IntegerField(blank=True, null=True)
     type_1 = models.CharField(max_length=30, blank=True, null=True)
     type_2 = models.CharField(max_length=30, blank=True, null=True)
-    date_closed_1 = models.DateTimeField()
-    date_closed_2 = models.DateTimeField()
+    date_1 = models.DateTimeField()
+    date_2 = models.DateTimeField()
 
     class Meta:
         managed = False
