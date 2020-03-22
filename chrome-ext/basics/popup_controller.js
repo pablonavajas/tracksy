@@ -25,11 +25,8 @@ function setButtons(curTab) {
         () => buttonActionGetConnections(curTab), {once: true});
 
     chrome.runtime.onMessage.addListener((message, sender) => {
-        if (message.btnConnectionsTurnOn !== undefined) {
-            btnGetConnections.disabled = !message.btnConnectionsTurnOn;
-        }
         if (message.linkedInLoaded !== undefined) {
-            btnGetConnections.disabled = false
+            btnDisable(btnGetConnections, !message.linkedInLoaded);
         }
         if (message.progress !== undefined) {
             progressBar.style.width = message.progress;
@@ -43,14 +40,17 @@ function setButtons(curTab) {
     if (curTab.url === linkedIn_url) {
         btnGoToLinkedIn.hidden = true;
         btnGetConnections.hidden = false;
-
-        // Lets the content script know that popup has been activated
-        console.log("send message that popup has been activated");
-        chrome.tabs.sendMessage(curTab.id, {popupActivated: true});
+        btnDisable(btnGetConnections, true);
+        chrome.tabs.sendMessage(curTab.id, {popupActivated: true})
     } else {
         btnGetConnections.hidden = true;
         btnGoToLinkedIn.hidden = false;
     }
+}
+
+function btnDisable(btn, bool) {
+    btn.disabled = bool;
+    btn.style.cursor = bool ? "default" : "";
 }
 
 function setButtonsConnectionsRetrieved() {
@@ -62,7 +62,7 @@ function setButtonsConnectionsRetrieved() {
 
 function buttonActionGetConnections(curTab) {
     console.log("calling content script to retrieve connections");
-    btnGetConnections.disabled = true;
+    btnDisable(btnGetConnections, true);
     progressBarHidden(false);
     chrome.tabs.sendMessage(curTab.id, {getConnections: true});
 }

@@ -21,9 +21,8 @@ function testSetup() {
 function pageSetup() {
     chrome.runtime.onMessage.addListener((message, sender) => {
         if (message.popupActivated !== undefined){
-            let pageLoaded = document.readyState === "complete";
-            console.log("sending info about page load status: " + pageLoaded);
-            chrome.runtime.sendMessage({btnConnectionsTurnOn : pageLoaded})
+            let fullyLoaded = document.readyState === "complete";
+            chrome.runtime.sendMessage({linkedInLoaded: fullyLoaded});
         }
     });
 
