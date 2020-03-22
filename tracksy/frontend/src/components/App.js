@@ -1,6 +1,11 @@
 import React, { Component, Fragment } from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import {
+  HashRouter as Router,
+  Route,
+  Switch,
+  Redirect
+} from "react-router-dom";
 
 import Navbar from "./layout/Navbar";
 import Footer from "./layout/Footer";
@@ -19,6 +24,8 @@ import Startups from "./startups/Startups";
 import EditStartupModal from "./startups/EditStartupModal";
 import AddStartupModal from "./startups/AddStartupModal";
 import Alerts from "./layout/Alerts";
+import Login from "./accounts/Login";
+import Register from "./accounts/Register";
 
 import M from "materialize-css";
 
@@ -36,16 +43,22 @@ class App extends Component {
     return (
       <Provider store={store}>
         <AlertProvider template={AlertTemplate} {...alertOptions}>
-          <Fragment>
-            <Navbar />
-            <Alerts />
-            <div className="container">
-              <AddStartupModal />
-              <EditStartupModal />
-              <Startups />
-            </div>
-            <Footer />
-          </Fragment>
+          <Router>
+            <Fragment>
+              <Navbar />
+              <Alerts />
+              <div className="container">
+                <AddStartupModal />
+                <EditStartupModal />
+                <Switch>
+                  <Route exact path="/" component={Startups} />
+                  <Route exact path="/register" component={Register} />
+                  <Route exact path="/login" component={Login} />
+                </Switch>
+              </div>
+              <Footer />
+            </Fragment>
+          </Router>
         </AlertProvider>
       </Provider>
     );

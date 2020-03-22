@@ -12,19 +12,14 @@ const Navbar = ({ title, icon }) => {
           </i>
           {title}
         </a>
-        {/* 
         <ul id="nav-mobile" className="right hide-on-med-and-down">
           <li className="right">
             <Link to="/login">Login</Link>
           </li>
           <li className="right">
-            <Link to="/">Home</Link>
-          </li>
-          <li className="right">
-            <Link to="/startups">Overview</Link>
+            <Link to="/register">Register</Link>
           </li>
         </ul>
-        */}
       </div>
     </nav>
   );
