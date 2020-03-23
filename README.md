@@ -11,7 +11,8 @@ This application is developed for relationship management of Venture Capital (VC
 `pipenv install pylint-django` - this is optional, but it enables static checking of django code without actiually running it (useful for some editors like VSCode)
 
 **Change to the trakcsy directory `(cd tracksy)` and run:**\
-`python manage.py makemigrations leads` - creates db migrations \
+`python manage.py makemigrations startups` - creates db migrations \
+`python manage.py makemigrations accounts` - creates db migrations \
 `python manage.py migrate` - puts the table and columns into database:
 
 **Change back to the root directory `(cd ..)` and run :**\
