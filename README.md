@@ -4,29 +4,29 @@ This application is developed for relationship management of Venture Capital (VC
 
 ## Running the project locally
 
-In the root directory run the following:\
+**In the root directory run the following:**\
 `pip3 install pipenv` - installs pipenv for creation of virtual environments \
 `pipenv shell` - creates a virtual environment and creates a Pipfile \
 `pipenv install django djangorestframework django-rest-knox` - installs django dependencies (django-rest-knox for token authentication) \
 `pipenv install pylint-django` - this is optional, but it enables static checking of django code without actiually running it (useful for some editors like VSCode)
 
-Change to the trakcsy directory `(cd tracksy)` and run the following:\
+**Change to the trakcsy directory `(cd tracksy)` and run the following:**\
 `python manage.py makemigrations leads` - creates db migrations \
 `python manage.py migrate` - puts the table and columns into database:
 
-Change back to the root directory `(cd ..)` and run the following:\
+**Change back to the root directory `(cd ..)` and run the following:**\
 `npm install` - installs all the frontend/react dependencies\
 `npm run dev` - compiles the fron-end code into a single javascript file
 
-Finally to run the project change to the tracksy project directory `(cd tracksy)` and run:
+**Finally to run the project change to the tracksy project directory `(cd tracksy)` and run:**
 `python manage.py runserver` - server should now be running on a localhost (if this link is copied to the browser, this will make the whole application accessible)\
 
 ## Root File Structure
 
 The old file structure contains a backend and client/frontend folders as well as chrome-ext folder, however once react and django are integrated the front-end application runs within the backend/django directory, therefore there is a new file structure.
 
-The new file structure of the root directory is explained below.
-`chrome-ext` - chrome extension which allows extracting personal connections from a given LinkedIn account
+**The new file structure of the root directory is explained below.**\
+`chrome-ext` - chrome extension which allows extracting personal connections from a given LinkedIn account\
 `tracksy` - django project folder\
 [`.babelrc`](https://babeljs.io/) - contains configuration for JavaScript transcompiler that is mainly used to convert ECMAScript 2015+ code into a backwards compatible version of JavaScript that can be run by older JavaScript engines \
 [`webpack.config.js`](https://webpack.js.org/) - contains configuration for webpack module bundler which bundles JavaScript modules with dependencies and generates static assets representing those modules\
