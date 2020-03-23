@@ -10,15 +10,15 @@ This application is developed for relationship management of Venture Capital (VC
 `pipenv install django djangorestframework django-rest-knox` - installs django dependencies (django-rest-knox for token authentication) \
 `pipenv install pylint-django` - this is optional, but it enables static checking of django code without actiually running it (useful for some editors like VSCode)
 
-**Change to the trakcsy directory `(cd tracksy)` and run the following:**\
+**Change to the trakcsy directory `(cd tracksy)` and run:**\
 `python manage.py makemigrations leads` - creates db migrations \
 `python manage.py migrate` - puts the table and columns into database:
 
-**Change back to the root directory `(cd ..)` and run the following:**\
+**Change back to the root directory `(cd ..)` and run :**\
 `npm install` - installs all the frontend/react dependencies\
 `npm run dev` - compiles the fron-end code into a single javascript file
 
-**Finally to run the project change to the tracksy project directory `(cd tracksy)` and run:**
+**Finally to run the project change to the tracksy project directory `(cd tracksy)` and run:**\
 `python manage.py runserver` - server should now be running on a localhost (if this link is copied to the browser, this will make the whole application accessible)\
 
 ## Root File Structure
@@ -40,14 +40,13 @@ The old file structure contains a backend and client/frontend folders as well as
 `frontend` - frontend app folder (used for ReactJS development) \
 `startups` - backend startups folder (used for startups models setup and manageing HTTP requests)\
 `tracksy` - main application folder (which combines all the applications into one project)\
-`db.sqlite3` - local sqlite database (default with django) / to be changed to an AWS ran database
+`db.sqlite3` - local sqlite database (default with django) / to be changed to an AWS ran database\
 `manage.py` - python file that allows to run administrative tasks
-
-When making changes in ReactJS, the the whole application has to be rebuilt,
-otherwise the `main.js` will not change, and therefore changes will not be applied to the version running on a given host. `--watch` in `package.json` allows for `npm run dev` to run, everytime a change in files has occured, therefore recompiling the application and showing it in the browser straight away (with no manual re-run of the command).
 
 ## Front-end development instructions
 
+When making changes in ReactJS, the the whole application has to be rebuilt,
+otherwise the `main.js` will not change, and therefore changes will not be applied to the version running on a given host. `--watch` in `package.json` allows for `npm run dev` to run, everytime a change in files has occured, therefore recompiling the application and showing it in the browser straight away (with no manual re-run of the command).
 Run `python manage.py runserver` from the tracksy directory, and simultaneously in another terminal run `npm run dev` in the root directory, which allows for continuous development, without having to restart the server or manually recompile/rebundle the code.
 
 ## Miscellaneous
