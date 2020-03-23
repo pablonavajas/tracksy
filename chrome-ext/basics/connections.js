@@ -18,26 +18,15 @@ function testSetup() {
     module.exports = functions;
 }
 
+
 function pageSetup() {
+    chrome.runtime.sendMessage({status: status});
+
     chrome.runtime.onMessage.addListener((message, sender) => {
-        if (message.popupActivated !== undefined){
-            let fullyLoaded = document.readyState === "complete";
-            chrome.runtime.sendMessage({linkedInLoaded: fullyLoaded});
+        if (message.getConnections !== undefined){
+            scrollToVeryBottom(status);
         }
-    });
-
-    window.addEventListener("load", (event) => {
-        console.log("page loaded");
-        chrome.runtime.sendMessage({linkedInLoaded: true});
-
-        chrome.runtime.onMessage.addListener((message, sender) => {
-            if (message.getConnections !== undefined){
-                // scrollToVeryBottom(sendConnectionsDataToBackground);
-                scrollToVeryBottom();
-            }
-        })
-        // TODO: add variable monitoring whether retrieval is on
-    });
+    })
 }
 
 const selectors = {
@@ -51,7 +40,7 @@ const selectors = {
 };
 
 
-function scrollToVeryBottom() {
+function scrollToVeryBottom(status) {
     /* Scrolls to bottom of the page to reveal more connections.
         Recursive until scrolling does not result in change of page height
         */
@@ -69,7 +58,7 @@ function scrollToVeryBottom() {
 
             // Wait for page to lazy load
             setTimeout(() => {
-                scrollToVeryBottom();
+                scrollToVeryBottom(status);
             }, 1000);
         }, 100);
     }

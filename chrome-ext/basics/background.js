@@ -1,15 +1,36 @@
 console.log("background.js running");
 
-chrome.runtime.onMessage.addListener(
-    function(message, sender) {
+// const linkedIn_url = "https://www.linkedin.com/mynetwork/invite-connect/connections/";
+
+let status = {
+    success : false,
+    inProgress : false,
+    progress : "0%"
+};
+
+chrome.runtime.onMessage.addListener((message, sender) => {
         // TODO: check where the message is coming from (e.g. sender.tab.url)
-        if (message.profiles !== undefined){
-            console.log("profiles received");
+        if (message.profiles !== undefined) {
             console.log(message);
+            status.success = true;
+            // Let the popup know
             sendpost(message);
+        } else if (message.getConnections !== undefined) {
+            status.inProgress = true;
+            getConnections();
+        } else if (message.progress !== undefined) {
+            status.progress = message.progress;
         }
+        chrome.runtime.sendMessage({status: status});
     }
 );
+
+function getConnections() {
+    let params = {active: true, currentWindow: true};
+    chrome.tabs.query(params, tabs => {
+        chrome.tabs.sendMessage(tabs[0].id, {getConnections: true});
+    });
+}
 
 function sendpost(data) {
     console.log("Sending data!");
