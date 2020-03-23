@@ -1,5 +1,8 @@
 node_modules/
 
+# vscode setting files
+.vscode/
+
 /client/coverage
 
 /client/build
