@@ -47,6 +47,7 @@ The old file structure contains a backend and client/frontend folders as well as
 
 When making changes in ReactJS, the the whole application has to be rebuilt,
 otherwise the `main.js` will not change, and therefore changes will not be applied to the version running on a given host. `--watch` in `package.json` allows for `npm run dev` to run, everytime a change in files has occured, therefore recompiling the application and showing it in the browser straight away (with no manual re-run of the command).
+
 Run `python manage.py runserver` from the tracksy directory, and simultaneously in another terminal run `npm run dev` in the root directory, which allows for continuous development, without having to restart the server or manually recompile/rebundle the code.
 
 ## Miscellaneous
