@@ -8,7 +8,7 @@ if (typeof chrome !== "undefined") {
 
 function testSetup() {
     const functions = {
-        scrollToVeryBottom : scrollToVeryBottom,
+        revealAllConnections : revealAllConnections,
         totalConnectionsNumber : totalConnectionsNumber,
         getConnectionsOnPage : getConnectionsOnPage,
         getOwnerName : getOwnerName,
@@ -20,11 +20,9 @@ function testSetup() {
 
 
 function pageSetup() {
-    chrome.runtime.sendMessage({status: status});
-
     chrome.runtime.onMessage.addListener((message, sender) => {
         if (message.getConnections !== undefined){
-            scrollToVeryBottom(status);
+            revealAllConnections(sendConnectionsDataToBackground);
         }
     })
 }
@@ -40,28 +38,28 @@ const selectors = {
 };
 
 
-function scrollToVeryBottom(status) {
+function revealAllConnections(callback) {
     /* Scrolls to bottom of the page to reveal more connections.
         Recursive until scrolling does not result in change of page height
         */
-    let progress = ((getConnectionsOnPage().length + 1) / totalConnectionsNumber()) * 100;
+    let visibleConnections = getConnectionsOnPage().length;
+    let totalConnections = totalConnectionsNumber();
+    let progress = 100 * visibleConnections/totalConnections;
     let strProgress = progress.toString() + "%";
     chrome.runtime.sendMessage({progress : strProgress}); // sends progress update
 
-    if (progress === 100) {
-        sendConnectionsDataToBackground();
-    } else {
-        let scrollTo = document.body.scrollHeight;
-        window.scroll(0, scrollTo);
-        setTimeout(() => {
-            window.scroll(0, 0);
+    let scrollTo = document.body.scrollHeight;
+    window.scroll(0, scrollTo);
+    setTimeout(() => {
+        window.scroll(0, 0);
 
-            // Wait for page to lazy load
-            setTimeout(() => {
-                scrollToVeryBottom(status);
-            }, 1000);
-        }, 100);
-    }
+        // Wait for page to lazy load
+        setTimeout(() => {
+            let difference = Math.abs((visibleConnections - totalConnections));
+            (scrollTo === document.body.scrollHeight && difference < 2) ?
+                callback() : revealAllConnections(callback)
+        }, 1000);
+    }, 100);
 }
 
 
