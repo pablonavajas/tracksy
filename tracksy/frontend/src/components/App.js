@@ -22,6 +22,7 @@ import "./App.css";
 import Home from "./home/Home";
 // import Login from "./components/auth/Login";
 
+import StartupOverview from "./startups/StartupOverview";
 import Startups from "./startups/Startups";
 import EditStartupModal from "./startups/EditStartupModal";
 import AddStartupModal from "./startups/AddStartupModal";
@@ -60,7 +61,9 @@ class App extends Component {
                     <PrivateRoute exact path="/" component={Startups} />
                     <Route exact path="/register" component={Register} />
                     <Route exact path="/login" component={Login} />
+                    <PrivateRoute exact path='/startup-overview' component={StartupOverview} />
                   </Switch>
+                  {/* <Route exact path="/startupoverview" component={StartupOverview} /> */}
                 </div>
               </main>
               <Footer />

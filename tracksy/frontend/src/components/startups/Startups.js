@@ -46,6 +46,7 @@ export const Startups = ({ startup: { startups, loading }, getStartups }) => {
                     <td className="center">Type</td>
                     <td className="center">Closed</td>
                     <th></th>
+                    <th></th>
                   </tr>
                 </thead>
                 <tbody>

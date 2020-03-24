@@ -44,6 +44,15 @@ const StartupItem = ({ startup, setCurrent, deleteStartup }) => {
       <td className="center">{startup.type_2}</td>
       <td>{moment(startup.date_closed_2).format("DD/MM/YYYY")}</td>
       <td>
+      <a
+          href="#startup-overview"
+          onClick={() => setCurrent(startup)}
+          className="secondary-content modal-trigger"
+        >
+          <i className="material-icons grey-text">dehaze</i>
+          </a>
+      </td>
+      <td>
         <a
           href="#edit-startup-modal"
           onClick={() => setCurrent(startup)}

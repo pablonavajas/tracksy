@@ -22,8 +22,8 @@ export default (state = initialState, action) => {
       return {
         ...state,
         startups: action.payload,
-        loading: false
-      };
+        loading: false 
+      }
     case ADD_STARTUP:
       return {
         ...state,

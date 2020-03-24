@@ -22,6 +22,10 @@ class Startup(models.Model):
     # Date investments in round 1 and 2 were closed
     date_closed_1 = models.DateField(blank=True)
     date_closed_2 = models.DateField(blank=True)
-
+    
     owner = models.ForeignKey(
         User, related_name="startups", on_delete=models.CASCADE, null=True)
+    
+    #Overview Stats
+    # runway = models.IntegerField(blank=True, default=0)
+    # monthly_burn = models.IntegerField(blank=True, default=0)
