@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+# from django.contrib.postgres.fields import ArrayField
 
 # Create your models here.
 
@@ -26,6 +27,10 @@ class Startup(models.Model):
     owner = models.ForeignKey(
         User, related_name="startups", on_delete=models.CASCADE, null=True)
     
-    #Overview Stats
-    # runway = models.IntegerField(blank=True, default=0)
-    # monthly_burn = models.IntegerField(blank=True, default=0)
+    # Overview Stats
+    cash_balance = models.IntegerField(blank=True, default=0)
+    monthly_burn = models.IntegerField(blank=True, default=0)
+
+    #KPIs
+    # kpi_string = ArrayField(models.CharField(max_length=10, blank=True, null=True),size=500)
+    # kpi_value = ArrayField(ArrayField(models.IntegerField(blank=True, default=0)), size = 500)
