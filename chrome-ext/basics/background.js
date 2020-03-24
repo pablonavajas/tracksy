@@ -18,7 +18,7 @@ chrome.runtime.onMessage.addListener((message, sender) => {
             chrome.runtime.sendMessage({status: status});
         } else if (message.getConnections !== undefined) {
             status.inProgress = true;
-            getConnections();
+            getConnections(message.getConnections.tabId);
             chrome.runtime.sendMessage({status: status});
         } else if (message.progress !== undefined) {
             status.progress = message.progress;
@@ -34,11 +34,8 @@ chrome.runtime.onMessage.addListener((message, sender) => {
     }
 );
 
-function getConnections() {
-    let params = {active: true, currentWindow: true};
-    chrome.tabs.query(params, tabs => {
-        chrome.tabs.sendMessage(tabs[0].id, {getConnections: true});
-    });
+function getConnections(tabId) {
+    chrome.tabs.sendMessage(tabId, {getConnections: true});
 }
 
 function sendpost(data) {

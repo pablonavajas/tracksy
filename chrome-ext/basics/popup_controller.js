@@ -24,7 +24,7 @@ class Btns {
         this.updateTab(tab);
 
         btnGetConnections.addEventListener("click",
-            () => chrome.runtime.sendMessage({getConnections: true}));
+            () => chrome.runtime.sendMessage({getConnections: {tabId: this.tab.id}}));
 
         btnReset.addEventListener("click",
             () => this.reset());
