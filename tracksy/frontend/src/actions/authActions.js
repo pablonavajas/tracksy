@@ -36,7 +36,6 @@ export const loadUser = () => (dispatch, getState) => {
 
 // LOGIN USER
 export const login = (username, password) => dispatch => {
-  console.log("login function called");
   // Headers
   const config = {
     headers: {

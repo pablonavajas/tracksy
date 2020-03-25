@@ -84,7 +84,7 @@ const EditStartupModal = ({ current, updateStartup }) => {
               value={name}
               onChange={e => setName(e.target.value)}
             />
-            <label className="active" for="name">
+            <label className="active" htmlFor="name">
               Startup Name
             </label>
           </div>
@@ -101,7 +101,7 @@ const EditStartupModal = ({ current, updateStartup }) => {
               value={website}
               onChange={e => setWebsite(e.target.value)}
             />
-            <label className="active" for="website">
+            <label className="active" htmlFor="website">
               Website
             </label>
           </div>
@@ -118,7 +118,7 @@ const EditStartupModal = ({ current, updateStartup }) => {
               value={ownership ? ownership : ""}
               onChange={e => setOwnership(e.target.value)}
             />
-            <label className="active" for="ownership">
+            <label className="active" htmlFor="ownership">
               Ownership (%)
             </label>
           </div>
@@ -134,7 +134,7 @@ const EditStartupModal = ({ current, updateStartup }) => {
               className="browser-default"
               onChange={e => setCurrency(e.target.value)}
             >
-              <option value="" disabled selected>
+              <option value="" disabled>
                 Choose your option
               </option>
               <option value="£">£</option>
@@ -162,7 +162,7 @@ const EditStartupModal = ({ current, updateStartup }) => {
                 setInvestment_1(value);
               }}
             />
-            <label for=" investment_1" className="active">
+            <label htmlFor=" investment_1" className="active">
               Investment 1
             </label>
           </div>
@@ -178,7 +178,7 @@ const EditStartupModal = ({ current, updateStartup }) => {
               value={type_1 ? type_1 : ""}
               onChange={e => setType_1(e.target.value)}
             />
-            <label for="type_1" className="active">
+            <label htmlFor="type_1" className="active">
               Type of investment 1
             </label>
           </div>
@@ -193,7 +193,7 @@ const EditStartupModal = ({ current, updateStartup }) => {
               type="date"
               onChange={e => setDate_1(e.target.value)}
             />
-            <label for="date_1" className="active">
+            <label htmlFor="date_1" className="active">
               Close Date
             </label>
           </div>
@@ -216,7 +216,7 @@ const EditStartupModal = ({ current, updateStartup }) => {
                 setInvestment_1(value);
               }}
             />
-            <label for="investment_2" className="active">
+            <label htmlFor="investment_2" className="active">
               Investment 2
             </label>
           </div>
@@ -233,7 +233,7 @@ const EditStartupModal = ({ current, updateStartup }) => {
               value={type_2 ? type_2 : ""}
               onChange={e => setType_2(e.target.value)}
             />
-            <label for="type_2" className="active">
+            <label htmlFor="type_2" className="active">
               Type of investment 2
             </label>
           </div>
@@ -249,7 +249,7 @@ const EditStartupModal = ({ current, updateStartup }) => {
               type="date"
               onChange={e => setDate_2(e.target.value)}
             />
-            <label for="date_2" className="active">
+            <label htmlFor="date_2" className="active">
               Close Date
             </label>
           </div>
@@ -264,7 +264,7 @@ const EditStartupModal = ({ current, updateStartup }) => {
               className="browser-default"
               onChange={e => setBoard(e.target.value)}
             >
-              <option value=" " selected disabled>
+              <option value=" " disabled>
                 Choose your option
               </option>
               <option value="Member">Member</option>
