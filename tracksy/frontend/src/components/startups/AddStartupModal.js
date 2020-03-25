@@ -61,12 +61,13 @@ const AddStartupModal = ({ addStartup }) => {
         <div className="row">
           <div className="input-field">
             <input
+              id="name"
               type="text"
               name="name"
               value={name}
               onChange={e => setName(e.target.value)}
             />
-            <label>Startup Name</label>
+            <label for="name">Startup Name</label>
           </div>
         </div>
 
@@ -74,12 +75,13 @@ const AddStartupModal = ({ addStartup }) => {
         <div className="row">
           <div className="input-field">
             <input
+              id="website"
               type="text"
-              name="name"
+              name="website"
               value={website}
               onChange={e => setWebsite(e.target.value)}
             />
-            <label>Website</label>
+            <label for="website">Website</label>
           </div>
         </div>
 
@@ -87,12 +89,13 @@ const AddStartupModal = ({ addStartup }) => {
         <div className="row">
           <div className="input-field">
             <input
+              id="ownership"
               name="ownership"
               type="text"
               value={ownership}
               onChange={e => setOwnership(e.target.value)}
             />
-            <label>Ownership (%)</label>
+            <label for="ownership">Ownership (%)</label>
           </div>
         </div>
 
@@ -116,6 +119,7 @@ const AddStartupModal = ({ addStartup }) => {
         <div className="row">
           <div className="input-field">
             <CurrencyFormat
+              id="investment_1"
               value={investment_1}
               thousandSeparator={true}
               prefix={currency}
@@ -127,31 +131,33 @@ const AddStartupModal = ({ addStartup }) => {
                 setInvestment_1(value);
               }}
             />
-            <label>Investment 1</label>
+            <label for="investment_1">Investment 1</label>
           </div>
         </div>
         {/** Type of Investment 1 */}
         <div className="row">
           <div className="input-field">
             <input
+              id="type_1"
               name="type_1"
               type="text"
               value={type_1}
               onChange={e => setType_1(e.target.value)}
             />
-            <label>Type of Investment 1</label>
+            <label for="type_1">Type of Investment 1</label>
           </div>
         </div>
         {/** Closing Date Investment 1 */}
         <div className="row">
           <div className="input-field">
             <input
+              id="date_1"
               name="date_1"
               value={date_closed_1}
               type="date"
               onChange={e => setDate_1(e.target.value)}
             />
-            <label>Close Date</label>
+            <label for="date_1">Close Date</label>
           </div>
         </div>
 
@@ -159,6 +165,7 @@ const AddStartupModal = ({ addStartup }) => {
         <div className="row">
           <div className="input-field">
             <CurrencyFormat
+              id="investment_2"
               value={investment_2}
               thousandSeparator={true}
               prefix={currency}
@@ -170,7 +177,7 @@ const AddStartupModal = ({ addStartup }) => {
                 setInvestment_2(value);
               }}
             />
-            <label>Investment 2</label>
+            <label for="investment_2">Investment 2</label>
           </div>
         </div>
 
@@ -178,12 +185,13 @@ const AddStartupModal = ({ addStartup }) => {
         <div className="row">
           <div className="input-field">
             <input
+              id="type_2"
               name="type_2"
               type="text"
               value={type_2}
               onChange={e => setType_2(e.target.value)}
             />
-            <label>Type of Investment 2</label>
+            <label for="type_2">Type of Investment 2</label>
           </div>
         </div>
 
@@ -191,12 +199,13 @@ const AddStartupModal = ({ addStartup }) => {
         <div className="row">
           <div className="input-field">
             <input
+              id="date_2"
               name="date_2"
               value={date_closed_2}
               type="date"
               onChange={e => setDate_2(e.target.value)}
             />
-            <label>Close</label>
+            <label for="date_2">Close</label>
           </div>
         </div>
       </div>
