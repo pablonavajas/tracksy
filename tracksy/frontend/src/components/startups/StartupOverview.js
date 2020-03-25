@@ -44,8 +44,6 @@ const StartupOverview = ({ current, updateStartup }) => {
     return result
   }
 
-
-
   return (
   // Section: Stats
   <section className="section section-stats center">

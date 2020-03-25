@@ -31,6 +31,6 @@ class Startup(models.Model):
     cash_balance = models.IntegerField(blank=True, default=0)
     monthly_burn = models.IntegerField(blank=True, default=0)
 
-    #KPIs
-    # kpi_string = ArrayField(models.CharField(max_length=10, blank=True, null=True),size=500)
-    # kpi_value = ArrayField(ArrayField(models.IntegerField(blank=True, default=0)), size = 500)
+    # KPIs
+    # kpi_string = ArrayField(models.CharField(max_length=10, blank=True, null=True), default=list)
+    # kpi_value = ArrayField(ArrayField(models.IntegerField(blank=True), default=list)
