@@ -16,7 +16,6 @@ export class Login extends Component {
   };
 
   onSubmit = e => {
-    console.log("onsubmit clicked");
     e.preventDefault();
     this.props.login(this.state.username, this.state.password);
   };
@@ -47,7 +46,7 @@ export class Login extends Component {
                         onChange={this.onChange}
                         required
                       />
-                      <label for="username" className="white-text">
+                      <label htmlFor="username" className="white-text">
                         Username
                       </label>
                     </div>
@@ -62,7 +61,7 @@ export class Login extends Component {
                         required
                         minLength="6"
                       />
-                      <label for="password" className="white-text">
+                      <label htmlFor="password" className="white-text">
                         Password
                       </label>
                     </div>
