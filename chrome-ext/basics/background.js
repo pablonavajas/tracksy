@@ -15,21 +15,27 @@ chrome.runtime.onMessage.addListener((message, sender) => {
             status.success = true;
             // Let the popup know
             sendpost(message);
+            chrome.runtime.sendMessage({status: status});
         } else if (message.getConnections !== undefined) {
             status.inProgress = true;
-            getConnections();
+            getConnections(message.getConnections.tabId);
+            chrome.runtime.sendMessage({status: status});
         } else if (message.progress !== undefined) {
             status.progress = message.progress;
+            chrome.runtime.sendMessage({status: status});
+        } else if (message.popupActivated !== undefined){
+            chrome.runtime.sendMessage({status: status});
+        } else if (message.reset !== undefined) {
+            status.success = false;
+            status.inProgress = false;
+            status.progress = "0%";
+            chrome.runtime.sendMessage({status: status});
         }
-        chrome.runtime.sendMessage({status: status});
     }
 );
 
-function getConnections() {
-    let params = {active: true, currentWindow: true};
-    chrome.tabs.query(params, tabs => {
-        chrome.tabs.sendMessage(tabs[0].id, {getConnections: true});
-    });
+function getConnections(tabId) {
+    chrome.tabs.sendMessage(tabId, {getConnections: true});
 }
 
 function sendpost(data) {

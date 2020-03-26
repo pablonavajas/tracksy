@@ -7,71 +7,92 @@ function progressBarHidden(bool){
     document.body.querySelector(".progress").hidden = bool
 }
 const progressBar = document.body.querySelector(".progress-bar"); // style.width to adjust
+const btnReset = document.body.querySelector("#reset");
 
-let success = false;
-let inProgress = false;
-let progress = "0%";
-let curTab = undefined;
 
-let params = {active: true, currentWindow: true};
-chrome.tabs.query(params, tabs => runPrimarySetUp(tabs[0]));
+class Btns {
+    constructor(tab) {
+        this.init(tab);
+        chrome.runtime.sendMessage({popupActivated: true});
+    }
 
-function runPrimarySetUp(tab) {
-    curTab = tab;
-    chrome.tabs.onUpdated.addListener((tabID, change, tab) => {
-        if (tabID === curTab.id) {
-            curTab = tab;
-            runSetUp()
+    init(tab) {
+        this.success = false;
+        this.inProgress = false;
+        this.progress = "0%";
+
+        this.updateTab(tab);
+
+        btnGetConnections.addEventListener("click",
+            () => chrome.runtime.sendMessage({getConnections: {tabId: this.tab.id}}));
+
+        btnReset.addEventListener("click",
+            () => this.reset());
+    }
+
+    updateTab(tab){
+        this.tab = tab;
+        this.onLinkedIn = (this.tab.url === linkedIn_url);
+        this.loading = (this.tab.status === "loading");
+
+        btnGoToLinkedIn.addEventListener("click",
+            () => chrome.tabs.update(this.tab.id, {url: linkedIn_url}),
+            {once: true});
+
+
+        chrome.tabs.onUpdated.addListener((tabID, change, tab) => {
+            if (this.tab.id === tabID) {
+                this.updateTab(tab);
+                this.update();
+            }
+        });
+    }
+
+    reset() {
+        this.init(this.tab);
+        chrome.runtime.sendMessage({reset: true});
+    }
+
+    update() {
+        console.log(btns);
+        btnSuccess.hidden = !this.success;
+        btnReset.hidden = !this.success;
+        if (this.success){
+            btnGoToLinkedIn.hidden = true;
+            btnGetConnections.hidden = true;
+            progressBarHidden(true);
+        } else {
+            btnGetConnections.hidden = !this.onLinkedIn;
+            this.btnDisable(btnGetConnections, this.loading);
+            btnGoToLinkedIn.hidden = this.onLinkedIn;
+            progressBarHidden(!this.inProgress);
+            progressBar.style.width = this.progress;
         }
-    });
+    }
+
+    btnDisable(btn, bool) {
+        btn.disabled = bool;
+        btn.style.cursor = bool ? "default" : "";
+    }
+}
+
+
+function setUp(curTab) {
+    btns = new Btns(curTab);
 
     chrome.runtime.onMessage.addListener((message, sender) => {
         if (message.status !== undefined) {
             console.log("message from background");
             console.log(message);
-            success = message.status.success;
-            inProgress = message.status.inProgress;
-            progress = message.status.progress;
-            runSetUp();
+            btns.success = message.status.success;
+            btns.inProgress = message.status.inProgress;
+            btns.progress = message.status.progress;
+            btns.update();
         }
     });
-
-    chrome.runtime.sendMessage({popupActivated: true});
 }
 
-function runSetUp() {
-    console.log("in setup, url: " + curTab.url);
-    if (success) {
-        displaySuccess();
-    } else {
-        btnGetConnections.addEventListener("click",
-            () => chrome.runtime.sendMessage({getConnections: true}));
-        btnGoToLinkedIn.addEventListener("click",
-            () => buttonActionGoToLinkedIn(curTab), {once: true});
 
-        let onLinkedIn = (curTab.url === linkedIn_url);
-        btnGetConnections.hidden = !onLinkedIn;
-        btnDisable(btnGetConnections, curTab.status === "loading");
-        btnGoToLinkedIn.hidden = onLinkedIn;
-        progressBarHidden(!inProgress);
-        progressBar.style.width = progress;
-    }
-}
-
-function buttonActionGoToLinkedIn(curTab) {
-    console.log("Updating current tab to display LinkedIn (in buttonActionGoToLinkedIn)");
-    chrome.tabs.update(curTab.id, {url: linkedIn_url});
-}
-
-function displaySuccess() {
-    btnGetConnections.hidden = true;
-    btnGoToLinkedIn.hidden = true;
-    progressBarHidden(true);
-    btnSuccess.hidden = false;
-}
-
-function btnDisable(btn, bool) {
-    btn.disabled = bool;
-    btn.style.cursor = bool ? "default" : "";
-}
-
+let btns = undefined;
+let params = {active: true, currentWindow: true};
+chrome.tabs.query(params, tabs => setUp(tabs[0]));
