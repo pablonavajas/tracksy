@@ -14,24 +14,20 @@ import {
 } from "./types";
 
 // CHECK TOKEN AND LOAD USER
-export const loadUser = () => (dispatch, getState) => {
-  // User Loading
-  dispatch({ type: USER_LOADING });
+export const loadUser = () => async (dispatch, getState) => {
+  try {
+    // User Loading
+    dispatch({ type: USER_LOADING });
 
-  axios
-    .get("/api/auth/user", tokenConfig(getState))
-    .then(res => {
-      dispatch({
-        type: USER_LOADED,
-        payload: res.data
-      });
-    })
-    .catch(err => {
-      dispatch(returnErrors(err.response.data, err.response.status));
-      dispatch({
-        type: AUTH_ERROR
-      });
+    const res = await axios.get("/api/auth/user", tokenConfig(getState));
+
+    dispatch({ type: USER_LOADED, payload: res.data });
+  } catch (err) {
+    dispatch(returnErrors(err.response.data, err.response.status));
+    dispatch({
+      type: AUTH_ERROR
     });
+  }
 };
 
 // LOGIN USER
