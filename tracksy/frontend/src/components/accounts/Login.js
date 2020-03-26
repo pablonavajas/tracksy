@@ -16,7 +16,6 @@ export class Login extends Component {
   };
 
   onSubmit = e => {
-    console.log("onsubmit clicked");
     e.preventDefault();
     this.props.login(this.state.username, this.state.password);
   };
@@ -40,17 +39,21 @@ export class Login extends Component {
                     <div className="input-field">
                       <i className="material-icons prefix">account_box</i>
                       <input
+                        id="username"
                         type="text"
                         name="username"
                         value={username}
                         onChange={this.onChange}
                         required
                       />
-                      <label className="white-text">Username</label>
+                      <label htmlFor="username" className="white-text">
+                        Username
+                      </label>
                     </div>
                     <div className="input-field">
                       <i className="material-icons prefix">lock</i>
                       <input
+                        id="password"
                         type="password"
                         name="password"
                         value={password}
@@ -58,7 +61,9 @@ export class Login extends Component {
                         required
                         minLength="6"
                       />
-                      <label className="white-text">Password</label>
+                      <label htmlFor="password" className="white-text">
+                        Password
+                      </label>
                     </div>
 
                     <button

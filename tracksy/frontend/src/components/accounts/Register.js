@@ -51,28 +51,35 @@ export class Register extends Component {
                     <div className="input-field">
                       <i className="material-icons prefix">account_box</i>
                       <input
+                        id="username"
                         type="text"
                         name="username"
                         value={username}
                         onChange={this.onChange}
                         required
                       />
-                      <label className="white-text">Username</label>
+                      <label for="username" className="white-text">
+                        Username
+                      </label>
                     </div>
                     <div className="input-field">
                       <i className="material-icons prefix">email</i>
                       <input
+                        id="email"
                         type="email"
                         name="email"
                         value={email}
                         onChange={this.onChange}
                         required
                       />
-                      <label className="white-text">Email Address</label>
+                      <label for="email" className="white-text">
+                        Email Address
+                      </label>
                     </div>
                     <div className="input-field">
                       <i className="material-icons prefix">lock</i>
                       <input
+                        id="password"
                         type="password"
                         name="password"
                         value={password}
@@ -80,11 +87,14 @@ export class Register extends Component {
                         required
                         minLength="6"
                       />
-                      <label className="white-text">Password</label>
+                      <label for="password" className="white-text">
+                        Password
+                      </label>
                     </div>
                     <div className="input-field">
                       <i className="material-icons prefix">lock</i>
                       <input
+                        id="password2"
                         type="password"
                         name="password2"
                         value={password2}
@@ -92,7 +102,9 @@ export class Register extends Component {
                         required
                         minLength="6"
                       />
-                      <label className="white-text">Password</label>
+                      <label for="password2" className="white-text">
+                        Password
+                      </label>
                     </div>
 
                     <button
