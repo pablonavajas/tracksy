@@ -14,7 +14,11 @@ export const Startups = ({ startup: { startups, loading }, getStartups }) => {
   }, []);
 
   if (loading || startups === null) {
-    return <h4>Loading ...</h4>;
+    return (
+      <div class="progress">
+        <div class="indeterminate"></div>
+      </div>
+    );
   }
 
   if (!loading && startups.length === 0) {
