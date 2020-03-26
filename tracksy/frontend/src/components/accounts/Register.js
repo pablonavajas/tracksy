@@ -95,7 +95,7 @@ export class Register extends Component {
                         onChange={this.onChange}
                         required
                       />
-                      <label for="username" className="white-text">
+                      <label htmlFor="username" className="white-text">
                         Username
                       </label>
                     </div>
@@ -109,7 +109,7 @@ export class Register extends Component {
                         onChange={this.onChange}
                         required
                       />
-                      <label for="email" className="white-text">
+                      <label htmlFor="email" className="white-text">
                         Email Address
                       </label>
                     </div>
@@ -124,7 +124,7 @@ export class Register extends Component {
                         required
                         minLength="6"
                       />
-                      <label for="password" className="white-text">
+                      <label htmlFor="password" className="white-text">
                         Password
                       </label>
                     </div>
@@ -139,7 +139,7 @@ export class Register extends Component {
                         required
                         minLength="6"
                       />
-                      <label for="password2" className="white-text">
+                      <label htmlFor="password2" className="white-text">
                         Password
                       </label>
                     </div>
