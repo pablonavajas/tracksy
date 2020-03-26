@@ -23,6 +23,9 @@ import Home from "./home/Home";
 // import Login from "./components/auth/Login";
 
 import StartupOverview from "./startups/StartupOverview";
+import BusinessDevelopment from "./startups/BusinessDevelopment";
+import Fundraising from "./startups/Fundraising";
+import Hiring from "./startups/Hiring";
 import Startups from "./startups/Startups";
 import EditStartupModal from "./startups/EditStartupModal";
 import AddStartupModal from "./startups/AddStartupModal";
@@ -62,8 +65,10 @@ class App extends Component {
                     <Route exact path="/register" component={Register} />
                     <Route exact path="/login" component={Login} />
                     <PrivateRoute exact path='/startup-overview' component={StartupOverview} />
+                    <PrivateRoute exact path='/business-development' component={BusinessDevelopment} />
+                    <PrivateRoute exact path='/hiring' component={Hiring} />
+                    <PrivateRoute exact path='/fundraising' component={Fundraising} />
                   </Switch>
-                  {/* <Route exact path="/startupoverview" component={StartupOverview} /> */}
                 </div>
               </main>
               <Footer />
