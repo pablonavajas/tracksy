@@ -1,5 +1,5 @@
-import reducer from '../src/reducers/startupsReducer';
-import * as types from '../src/actions/types';
+import reducer from "../tracksy/frontend/src/reducers/startupsReducer";
+import * as types from "../tracksy/frontend/src/actions/types";
 
 const initialState = {
   startups: [],
@@ -9,8 +9,8 @@ const initialState = {
 };
 
 const two_startups = [
-  { id: 0, name: 'Company1' },
-  { id: 1, name: 'Company2' }
+  { id: 0, name: "Company1" },
+  { id: 1, name: "Company2" }
 ];
 
 const stateWithTwoElements = {
@@ -18,8 +18,8 @@ const stateWithTwoElements = {
   startups: two_startups
 };
 
-describe('Startup reducer', () => {
-  it('should return the initial state', () => {
+describe("Startup reducer", () => {
+  it("should return the initial state", () => {
     expect(reducer(undefined, {})).toEqual({
       startups: null,
       current: null,
@@ -28,12 +28,12 @@ describe('Startup reducer', () => {
     });
   });
 
-  it('should handle ADD_STARTUP', () => {
+  it("should handle ADD_STARTUP", () => {
     const red = reducer(stateWithTwoElements, {
       type: types.ADD_STARTUP,
       payload: {
         id: 2,
-        name: 'Company3'
+        name: "Company3"
       }
     });
     expect(red).toEqual({
@@ -42,13 +42,13 @@ describe('Startup reducer', () => {
         ...stateWithTwoElements.startups,
         {
           id: 2,
-          name: 'Company3'
+          name: "Company3"
         }
       ]
     });
   });
 
-  it('should handle GET_STARTUPS', () => {
+  it("should handle GET_STARTUPS", () => {
     const red = reducer(initialState, {
       type: types.GET_STARTUPS,
       payload: two_startups
@@ -57,12 +57,12 @@ describe('Startup reducer', () => {
     expect(red).toEqual(stateWithTwoElements);
   });
 
-  it('should handle UPDATE_STARTUPS', () => {
+  it("should handle UPDATE_STARTUPS", () => {
     const red = reducer(stateWithTwoElements, {
       type: types.UPDATE_STARTUP,
       payload: {
         id: 0,
-        name: 'UpdatedCompany1'
+        name: "UpdatedCompany1"
       }
     });
 
@@ -71,17 +71,17 @@ describe('Startup reducer', () => {
       startups: [
         {
           id: 0,
-          name: 'UpdatedCompany1'
+          name: "UpdatedCompany1"
         },
         {
           id: 1,
-          name: 'Company2'
+          name: "Company2"
         }
       ]
     });
   });
 
-  it('should handle DELETE_STARTUP', () => {
+  it("should handle DELETE_STARTUP", () => {
     const red = reducer(stateWithTwoElements, {
       type: types.DELETE_STARTUP,
       payload: 0
@@ -89,33 +89,33 @@ describe('Startup reducer', () => {
 
     expect(red).toEqual({
       ...stateWithTwoElements,
-      startups: [{ id: 1, name: 'Company2' }]
+      startups: [{ id: 1, name: "Company2" }]
     });
   });
 
-  it('should handle SET_CURRENT', () => {
+  it("should handle SET_CURRENT", () => {
     const red = reducer(stateWithTwoElements, {
       type: types.SET_CURRENT,
       payload: {
         id: 0,
-        name: 'Company1'
+        name: "Company1"
       }
     });
 
     expect(red).toEqual({
       ...stateWithTwoElements,
-      current: { id: 0, name: 'Company1' }
+      current: { id: 0, name: "Company1" }
     });
   });
 
-  it('should handle CLEAR_CURRENT', () => {
+  it("should handle CLEAR_CURRENT", () => {
     const red = reducer(
-      { ...stateWithTwoElements, current: { id: 0, name: 'Company1' } },
+      { ...stateWithTwoElements, current: { id: 0, name: "Company1" } },
       {
         type: types.CLEAR_CURRENT,
         payload: {
           id: 0,
-          name: 'Company1'
+          name: "Company1"
         }
       }
     );
@@ -123,7 +123,7 @@ describe('Startup reducer', () => {
     expect(red).toEqual(stateWithTwoElements);
   });
 
-  it('should handle SET_LOADING', () => {
+  it("should handle SET_LOADING", () => {
     const red = reducer(stateWithTwoElements, {
       type: types.SET_LOADING
     });
@@ -134,15 +134,15 @@ describe('Startup reducer', () => {
     });
   });
 
-  it('should handle STARTUPS_ERROR', () => {
+  it("should handle STARTUPS_ERROR", () => {
     const red = reducer(stateWithTwoElements, {
       type: types.STARTUPS_ERROR,
-      payload: 'some error'
+      payload: "some error"
     });
 
     expect(red).toEqual({
       ...stateWithTwoElements,
-      error: 'some error'
+      error: "some error"
     });
   });
 });
