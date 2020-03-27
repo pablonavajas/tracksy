@@ -47,7 +47,10 @@ const StartupOverview = ({ current, updateStartup }) => {
         label: 'Monthly Revenue',
         data: [cash_balance, 
               monthly_burn
-            ]
+            ],
+        backgroundColor: [
+          'rgba(66, 148, 136, 0.6)',
+        ]
       }
     ],
   };
@@ -61,7 +64,7 @@ const StartupOverview = ({ current, updateStartup }) => {
   // Section: Stats
   <section className="section section-stats center">
       <nav>
-    <div className="nav-wrapper blue-grey lighten-3">
+    <div className="nav-wrapper teal ligthen-2">
       <ul id="nav-mobile" className="left hide-on-med-and-down">
         <li className="active"><a href="#startup-overview">Overview</a></li>
         <li><a href="#hiring">Hiring</a></li>
@@ -103,7 +106,20 @@ const StartupOverview = ({ current, updateStartup }) => {
       <Line
       data={chartData}
       height={100}
-      options={{}}
+      options={{
+        title: {
+        display: true,
+        text:'Monthly Revenues',
+        fontSize: 25
+      },
+      legend: {
+        display: true,
+        position: 'right',
+        labels: {
+          fontColor:'#000'
+        }
+      }
+    }}
       />
       </div>
     </div>
