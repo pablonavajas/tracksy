@@ -3,7 +3,7 @@ import { Slide } from "react-materialize";
 import Adapter from "enzyme-adapter-react-16";
 import { configure, shallow } from "enzyme";
 
-import Login from "../tracksy/frontend/src/components/auth/Login";
+import Login from "../tracksy/frontend/src/components/accounts/Login";
 configure({ adapter: new Adapter() });
 
 describe("<Login/> compnent", () => {

@@ -35,28 +35,30 @@ describe("onChange for ", () => {
   it("name should store it in its input field", () => {
     //console.log(wrapper.find('#name').debug());
     wrapper
-      .find("#name")
+      .find("#name_add")
       .simulate("change", { target: { value: "test name" } });
-    expect(wrapper.find("#name").prop("value")).toEqual("test name");
+    expect(wrapper.find("#name_add").prop("value")).toEqual("test name");
   });
 
   it("website should store it in its input field", () => {
     wrapper
-      .find("#website")
+      .find("#website_add")
       .simulate("change", { target: { value: "test website" } });
-    expect(wrapper.find("#website").prop("value")).toEqual("test website");
+    expect(wrapper.find("#website_add").prop("value")).toEqual("test website");
   });
 
   it("ownership should store it in its input field", () => {
     wrapper
-      .find("#ownership")
+      .find("#ownership_add")
       .simulate("change", { target: { value: "test ownership" } });
-    expect(wrapper.find("#ownership").prop("value")).toEqual("test ownership");
+    expect(wrapper.find("#ownership_add").prop("value")).toEqual(
+      "test ownership"
+    );
   });
 
   it("investment_1 should store it in its input field", () => {
     wrapper
-      .find("#investment_1")
+      .find("#investment_1_add")
       .simulate("change", { target: { value: "test investment_1" } });
     expect(wrapper.find("#investment_1").prop("value")).toEqual(
       "test investment_1"
@@ -65,46 +67,46 @@ describe("onChange for ", () => {
 
   it("investment_2 should store it in its input field", () => {
     wrapper
-      .find("#investment_2")
+      .find("#investment_2_add")
       .simulate("change", { target: { value: "test investment_2" } });
-    expect(wrapper.find("#investment_2").prop("value")).toEqual(
+    expect(wrapper.find("#investment_2_add").prop("value")).toEqual(
       "test investment_2"
     );
   });
 
   it("type_1 should store it in its input field", () => {
     wrapper
-      .find("#type_1")
+      .find("#type_1_add")
       .simulate("change", { target: { value: "test type_1" } });
-    expect(wrapper.find("#type_1").prop("value")).toEqual("test type_1");
+    expect(wrapper.find("#type_1_add").prop("value")).toEqual("test type_1");
   });
 
   it("type_2 should store it in its input field", () => {
     wrapper
-      .find("#type_2")
+      .find("#type_2_add")
       .simulate("change", { target: { value: "test type_2" } });
-    expect(wrapper.find("#type_2").prop("value")).toEqual("test type_2");
+    expect(wrapper.find("#type_2_add").prop("value")).toEqual("test type_2");
   });
 
   it("date_1 should store it in its input field", () => {
     wrapper
-      .find("#date_1")
+      .find("#date_1_add")
       .simulate("change", { target: { value: "test date_1" } });
-    expect(wrapper.find("#date_1").prop("value")).toEqual("test date_1");
+    expect(wrapper.find("#date_1_add").prop("value")).toEqual("test date_1");
   });
 
   it("date_2 should store it in its input field", () => {
     wrapper
-      .find("#date_2")
+      .find("#date_2_add")
       .simulate("change", { target: { value: "test date_2" } });
-    expect(wrapper.find("#date_2").prop("value")).toEqual("test date_2");
+    expect(wrapper.find("#date_2_add").prop("value")).toEqual("test date_2");
   });
 
   it("board should store it in its input field", () => {
     wrapper
-      .find("#board")
+      .find("#board_add")
       .simulate("change", { target: { value: "test board" } });
-    expect(wrapper.find("#board").prop("value")).toEqual("test board");
+    expect(wrapper.find("#board_add").prop("value")).toEqual("test board");
   });
 });
 
