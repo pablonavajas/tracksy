@@ -5,6 +5,7 @@ import { updateStartup } from "../../actions/startupsActions";
 //import moment from "moment/src/moment";
 //var moment = require("moment");
 import CurrencyFormat from "react-currency-format";
+import { Line } from 'react-chartjs-2';
 
 const StartupOverview = ({ current, updateStartup }) => {
   const [name, setName] = useState("");
@@ -39,6 +40,18 @@ const StartupOverview = ({ current, updateStartup }) => {
     }
   }, [current]);
 
+  const chartData = {
+    labels: [name],
+    datasets: [
+      {
+        label: 'Monthly Revenue',
+        data: [cash_balance, 
+              monthly_burn
+            ]
+      }
+    ],
+  };
+
   const runway = (cash_balance, monthly_burn) => {
     const result = cash_balance / monthly_burn;
     return result
@@ -48,7 +61,7 @@ const StartupOverview = ({ current, updateStartup }) => {
   // Section: Stats
   <section className="section section-stats center">
       <nav>
-    <div className="nav-wrapper blue-grey lighten-1">
+    <div className="nav-wrapper blue-grey lighten-3">
       <ul id="nav-mobile" className="left hide-on-med-and-down">
         <li className="active"><a href="#startup-overview">Overview</a></li>
         <li><a href="#hiring">Hiring</a></li>
@@ -83,13 +96,26 @@ const StartupOverview = ({ current, updateStartup }) => {
       </div>
     </div>
   </div>
-      
-      <div className="row">
+
+  <div className="col s12 m6 l4">
+    <div className="chart">
+      <div className="card-content">
+      <Line
+      data={chartData}
+      height={100}
+      options={{}}
+      />
+      </div>
+    </div>
+  </div>
+    
+
+      {/* <div className="row">
         <div className="col s12 m6 l8">
            <div className="card-panel">
-              {/* <div id="chartContainer" style="height: 300px; width: 100%;"></div> */}
+            <canvas id="myChart" width="400" height="100"></canvas>
           </div>
-        </div>
+        </div> */}
 
       <div className="col s12 m6 l4">
           <div className="card">
@@ -123,8 +149,7 @@ const StartupOverview = ({ current, updateStartup }) => {
             </div>
           </div>
         </div>
-      </div>
-      </section>
+        </section>
   );
 };
 

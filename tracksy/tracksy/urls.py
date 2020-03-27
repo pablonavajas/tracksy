@@ -15,10 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from startups.views import StartupChartView
 
 urlpatterns = [
     path('', include("frontend.urls")),
     path('', include("startups.urls")),
-    path('', include("accounts.urls"))
+    path('', include("accounts.urls")),
+    path('home/', StartupChartView.as_view(), name = 'home')
 
 ]
