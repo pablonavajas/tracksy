@@ -21,7 +21,13 @@ export const getStartups = () => async (dispatch, getState) => {
   try {
     setLoading();
 
-    const res = await axios.get("/api/startups", tokenConfig(getState));
+    // const res = await axios.get("/api/startups", tokenConfig(getState));
+    const res = await axios.get(
+      "https://57265e7d-5fd2-4d07-b74e-2873784851aa.mock.pstmn.io",
+      tokenConfig(getState)
+    );
+
+    console.log(res);
     dispatch({
       type: GET_STARTUPS,
       payload: res.data

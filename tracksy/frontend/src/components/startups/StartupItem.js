@@ -23,26 +23,41 @@ const StartupItem = ({ startup, setCurrent, deleteStartup }) => {
         <div>{startup.ownership}</div>
       </td>
       <td className="center">{startup.board}</td>
-      <td>
-        <CurrencyFormat
-          value={startup.investment_1}
-          displayType={"text"}
-          thousandSeparator={true}
-          prefix={startup.currency}
-        />
-      </td>
-      <td className="center">{startup.type_1}</td>
-      <td>{moment(startup.date_closed_1).format("DD/MM/YYYY")}</td>
+
       <td className="center">
-        <CurrencyFormat
-          value={startup.investment_2}
-          displayType={"text"}
-          thousandSeparator={true}
-          prefix={startup.currency}
-        />
+        {startup.investment.map((investment, i) => (
+          <div className="center" key={investment.id}>
+            <div className="chip center">
+              <p>
+                {i + 1}
+                {". "}
+                <CurrencyFormat
+                  value={investment.value}
+                  displayType={"text"}
+                  thousandSeparator={true}
+                  prefix={investment.currency}
+                />
+              </p>
+            </div>
+          </div>
+        ))}
       </td>
-      <td className="center">{startup.type_2}</td>
-      <td>{moment(startup.date_closed_2).format("DD/MM/YYYY")}</td>
+      <td className="center">
+        {startup.investment.map(investment => (
+          <div className="center" key={investment.id}>
+            <div className="chip center">{investment.type}</div>
+          </div>
+        ))}
+      </td>
+      <td>
+        {startup.investment.map(investment => (
+          <div className="center" key={investment.id}>
+            <div className="chip center">
+              {moment(investment.date_closed).format("DD/MM/YYYY")}
+            </div>
+          </div>
+        ))}
+      </td>
       <td>
         <a
           href="#edit-startup-modal"

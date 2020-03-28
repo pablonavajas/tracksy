@@ -43,10 +43,7 @@ export const Startups = ({ startup: { startups, loading }, getStartups }) => {
                     <th>Logo</th>
                     <th>Ownership (%)</th>
                     <th>Board</th>
-                    <th className="center">Investment 1</th>
-                    <td className="center">Type</td>
-                    <td className="center">Closed</td>
-                    <th className="center">Investment 2</th>
+                    <th className="center">Investment</th>
                     <td className="center">Type</td>
                     <td className="center">Closed</td>
                     <th></th>
