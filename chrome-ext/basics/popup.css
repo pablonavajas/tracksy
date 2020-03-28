@@ -1,9 +1,10 @@
-body {
-    margin: 10px;
-    text-align: center;
+@import "bootstrap.min.css";
+
+h2 {
+  text-decoration: underline;
+  text-decoration-color: #007bff;
 }
 
-.container {
-    text-align: center;
+:disabled{
+  cursor: default; 
 }
-

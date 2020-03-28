@@ -3,14 +3,17 @@ const linkedIn_url = "https://www.linkedin.com/mynetwork/invite-connect/connecti
 const btnGoToLinkedIn = document.body.querySelector("#btnToLinkedIn");
 const btnGetConnections = document.body.querySelector("#btnConnections");
 const btnSuccess = document.body.querySelector("#success");
-function progressBarHidden(bool){
-    document.body.querySelector(".progress").hidden = bool
-}
-const progressBar = document.body.querySelector(".progress-bar"); // style.width to adjust
 const btnReset = document.body.querySelector("#reset");
 
 
 class Btns {
+    progressBar(toDisplay, progress) {
+        document.body.querySelector("#progress").hidden = !toDisplay
+        if (progress !== undefined) {
+            document.body.querySelector(".progress-bar").style.width = progress
+        }
+    }
+    
     constructor(tab) {
         this.init(tab);
         chrome.runtime.sendMessage({popupActivated: true});
@@ -54,25 +57,17 @@ class Btns {
     }
 
     update() {
-        console.log(btns);
-        btnSuccess.hidden = !this.success;
-        btnReset.hidden = !this.success;
+        btnReset.hidden = false;
         if (this.success){
             btnGoToLinkedIn.hidden = true;
             btnGetConnections.hidden = true;
-            progressBarHidden(true);
+            this.progressBar(false)
         } else {
             btnGetConnections.hidden = !this.onLinkedIn;
-            this.btnDisable(btnGetConnections, this.loading);
+            btnGetConnections.disabled = this.loading;
             btnGoToLinkedIn.hidden = this.onLinkedIn;
-            progressBarHidden(!this.inProgress);
-            progressBar.style.width = this.progress;
+            this.progressBar(this.inProgress, this.progress)
         }
-    }
-
-    btnDisable(btn, bool) {
-        btn.disabled = bool;
-        btn.style.cursor = bool ? "default" : "";
     }
 }
 
@@ -83,7 +78,6 @@ function setUp(curTab) {
     chrome.runtime.onMessage.addListener((message, sender) => {
         if (message.status !== undefined) {
             console.log("message from background");
-            console.log(message);
             btns.success = message.status.success;
             btns.inProgress = message.status.inProgress;
             btns.progress = message.status.progress;

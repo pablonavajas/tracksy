@@ -43,10 +43,12 @@ test("List of JSON connections created", () => {
 test("Callback in scroll after 1 scroll attempt when no scrolling possible", done => {
     global.scroll = jest.fn();
     global.scrollBy = jest.fn();
-    functions.scrollToVeryBottom(() => {
+    functions.revealAllConnections(() => {
         expect(global.scroll).toBeCalled();
-        expect(global.scrollBy).toBeCalled();
+        expect(global.scroll).toBeCalled();
         done();
+    }, (visibleN, totalN) => {
+        expect(visibleN).toBe(65); expect(totalN).toBe(65)
     });
 });
 

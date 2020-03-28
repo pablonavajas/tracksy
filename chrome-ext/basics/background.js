@@ -4,8 +4,10 @@ console.log("background.js running");
 
 let status = {
     success : false,
+    tabId : undefined,
     inProgress : false,
-    progress : "0%"
+    progress : "0%",
+    email : undefined
 };
 
 chrome.runtime.onMessage.addListener((message, sender) => {
@@ -18,7 +20,8 @@ chrome.runtime.onMessage.addListener((message, sender) => {
             chrome.runtime.sendMessage({status: status});
         } else if (message.getConnections !== undefined) {
             status.inProgress = true;
-            getConnections(message.getConnections.tabId);
+            status.tabId = message.getConnections.tabId;
+            chrome.tabs.sendMessage(status.tabId, {getConnections: true});
             chrome.runtime.sendMessage({status: status});
         } else if (message.progress !== undefined) {
             status.progress = message.progress;
@@ -29,6 +32,8 @@ chrome.runtime.onMessage.addListener((message, sender) => {
             status.success = false;
             status.inProgress = false;
             status.progress = "0%";
+            chrome.tabs.sendMessage(status.tabId, {getConnections: true});
+            status.tabId = undefined;
             chrome.runtime.sendMessage({status: status});
         }
     }
@@ -50,5 +55,5 @@ function sendpost(data) {
 
     chrome.runtime.sendMessage({connectionsSent: true});
 
-    fetch('https://track-shsfw.run-us-west2.goorm.io/postThis', options);
+    fetch('https://track-shsfw.run-us-west2.goorm.io/postThis/', options);
 }

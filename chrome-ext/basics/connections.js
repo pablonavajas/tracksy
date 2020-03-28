@@ -18,11 +18,30 @@ function testSetup() {
     module.exports = functions;
 }
 
+let status = {
+    reset: false
+}
 
 function pageSetup() {
     chrome.runtime.onMessage.addListener((message, sender) => {
         if (message.getConnections !== undefined){
-            revealAllConnections(sendConnectionsDataToBackground);
+            status.reset = false;
+
+            function sendConnectionsToBackground() {
+                let profiles_list = createListOfJSONConnections();
+                chrome.runtime.sendMessage({profiles: profiles_list});
+            }
+
+            function sendProgress(visibleN, totalN) {
+                let progress = (100 * visibleN / totalN).toString() + "%";
+                chrome.runtime.sendMessage({progress: progress});
+            }
+            
+            revealAllConnections(sendConnectionsToBackground, sendProgress);
+        }
+        
+        if (message.reset !== undefined) {
+            status.reset = true;
         }
     })
 }
@@ -38,15 +57,16 @@ const selectors = {
 };
 
 
-function revealAllConnections(callback) {
+function revealAllConnections(callback, progressUpdate) {
     /* Scrolls to bottom of the page to reveal more connections.
         Recursive until scrolling does not result in change of page height
         */
+    if (status.reset) {
+        return;
+    }
     let visibleConnections = getConnectionsOnPage().length;
     let totalConnections = totalConnectionsNumber();
-    let progress = 100 * visibleConnections/totalConnections;
-    let strProgress = progress.toString() + "%";
-    chrome.runtime.sendMessage({progress : strProgress}); // sends progress update
+    progressUpdate(visibleConnections, totalConnections);
 
     let scrollTo = document.body.scrollHeight;
     window.scroll(0, scrollTo);
@@ -57,9 +77,9 @@ function revealAllConnections(callback) {
         setTimeout(() => {
             let difference = Math.abs((visibleConnections - totalConnections));
             (scrollTo === document.body.scrollHeight && difference < 2) ?
-                callback() : revealAllConnections(callback)
-        }, 1000);
-    }, 100);
+                callback() : revealAllConnections(callback, progressUpdate)
+        }, Math.random()*3000+1500);
+    }, Math.random()*1000+100);
 }
 
 
@@ -69,10 +89,6 @@ function totalConnectionsNumber() {
     return Number(totalNumber_txt.split(" ")[0]);
 }
 
-function sendConnectionsDataToBackground() {
-    let profiles_list = createListOfJSONConnections();
-    chrome.runtime.sendMessage({profiles: profiles_list});
-}
 
 function createListOfJSONConnections() {
     /* Formats the connection data into list of JSON objects
