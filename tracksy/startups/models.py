@@ -5,9 +5,9 @@ from django.contrib.auth.models import User
 
 
 class Startup(models.Model):
-    owner = models.ForeignKey(
+    vcAuthId = models.ForeignKey(
         User, related_name="portfolio", on_delete=models.CASCADE, null=True)
-    ownerStartup = models.ForeignKey(
+    startupAuthId = models.ForeignKey(
         User, related_name="startup", on_delete=models.CASCADE, blank=True, null=True)
     startupEmail = models.EmailField()
     name = models.CharField(max_length=20, unique=True)

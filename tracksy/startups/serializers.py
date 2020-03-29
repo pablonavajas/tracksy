@@ -47,7 +47,7 @@ class StartupSerializer(serializers.ModelSerializer):
             email,
             password)
 
-        validated_data['ownerStartup'] = user
+        validated_data['startupAuthId'] = user
 
         Startup.objects.create(**validated_data)
 

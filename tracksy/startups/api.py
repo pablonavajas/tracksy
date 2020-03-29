@@ -31,33 +31,7 @@ class StartupViewSet(viewsets.ModelViewSet):
         return self.request.user.portfolio.all()
 
     def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
-
-
-# class IsStartUpViewSet(generics.RetrieveAPIView):
-#     permission_classes = [
-#         permissions.IsAuthenticated
-#     ]
-
-#     serializer_class = StartupSerializer
-
-#     def get_object(self):
-#         isStartup = False
-#         if (self.request.user.startup.all()):
-#             isStartup = True
-#         response = Response({"isStartup": isStartup})
-#         return response
-
-
-# class UserAPI(generics.RetrieveAPIView):
-#     permission_classes = [
-#         permissions.IsAuthenticated,
-#     ]
-
-#     serializer_class = UserSerializer
-
-#     def get_object(self):
-#         return self.request.user
+        serializer.save(vcAuthId=self.request.user)
 
 
 class InvestmentViewSet(viewsets.ModelViewSet):
