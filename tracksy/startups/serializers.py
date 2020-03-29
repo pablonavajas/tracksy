@@ -1,5 +1,13 @@
+"""
+    Note:
+        Adding the same startup for two (or more) different VC
+        funds is not a feature built here (to be resolved later)
+"""
+
 from rest_framework import serializers
 from .models import *
+from accounts.serializers import RegisterSerializer
+from django.contrib.auth.models import User
 
 
 class InvestmentSerializer(serializers.ModelSerializer):
@@ -29,23 +37,18 @@ class StartupSerializer(serializers.ModelSerializer):
         fields = '__all__'  # (name, website, etc.)
 
     def create(self, validated_data):
-        kpi_names_data = None
-        investments_data = None
+        email = validated_data.get('startupEmail')
+        username = email[:email.find("@")]
+        password = User.objects.make_random_password()
+        print(password)
 
-        if 'kpinames' in validated_data:
-            kpi_names_data = validated_data.pop('kpinames')
+        user = User.objects.create_user(
+            username,
+            email,
+            password)
 
-        if 'investments' in validated_data:
-            investments_data = validated_data.pop('investments')
+        validated_data['ownerStartup'] = user
 
-        startup = Startup.objects.create(**validated_data)
+        Startup.objects.create(**validated_data)
 
-        if kpi_names_data is not None:
-            for kpi in kpi_names_data:
-                KpiName.objects.create(startupId=startup, **kpi)
-
-        if investments_data is not None:
-            for investment in investments_data:
-                Investment.objects.create(startupId=startup, **investment)
-
-        return startup
+        return validated_data

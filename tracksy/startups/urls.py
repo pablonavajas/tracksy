@@ -1,5 +1,5 @@
 from rest_framework import routers
-from .api import StartupViewSet, InvestmentViewSet
+from .api import *
 
 
 router = routers.DefaultRouter()
