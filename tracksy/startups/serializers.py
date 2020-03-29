@@ -22,6 +22,33 @@ class KpiNameSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class KpiSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Kpi
+        fields = '__all__'
+
+
+class FinancialSerializer(serializers.ModelSerializer):
+    kpis = KpiSerializer(many=True, required=False)
+
+    class Meta:
+        model = Financial
+        fields = '__all__'
+
+    def create(self, validated_data):
+        kpisData = None
+        if 'kpis' in validated_data:
+            kpisData = validated_data.pop('kpis')
+
+        financials = Financial.objects.create(**validated_data)
+
+        if kpisData is not None:
+            for kpiData in kpisData:
+                Kpi.objects.create(financialId=financials, **kpiData)
+
+        return financials
+
+
 class StartupSerializer(serializers.ModelSerializer):
     """ For Adding a Startup (KPI and Investments can be nested in)
 
@@ -31,6 +58,7 @@ class StartupSerializer(serializers.ModelSerializer):
     """
     kpinames = KpiNameSerializer(many=True, required=False)
     investments = InvestmentSerializer(many=True, required=False)
+    financials = FinancialSerializer(many=True, required=False)
 
     class Meta:
         model = Startup

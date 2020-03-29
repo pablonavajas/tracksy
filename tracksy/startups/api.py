@@ -1,9 +1,13 @@
-""" Managment of requests
+""" 
+    Managment of requests
     Note:
-        PUT not available, use POST instead to edit
+        Startup API to be used to post information first level info (with no nestings)
+        Other APIs (e.g. Investment, Finanical, KPI) to be used to post info for other nested level info
+        PUT not currently available 
     
     TODO:
-        Limit GET for invesments
+        Limit GET for all APIs except the Startup API
+        Limit posting additional information to Startups that belong to user
 """
 
 from startups.models import Startup
@@ -43,10 +47,29 @@ class InvestmentViewSet(viewsets.ModelViewSet):
     queryset = Investment.objects.all()
 
 
-class KpiViewSet(viewsets.ModelViewSet):
+class KpiNameViewSet(viewsets.ModelViewSet):
     permission_classes = [
         permissions.IsAuthenticated
     ]
 
     serializer_class = KpiNameSerializer
     queryset = KpiName.objects.all()
+
+
+class KpiViewSet(viewsets.ModelViewSet):
+    permission_classes = [
+        permissions.IsAuthenticated
+    ]
+
+    serializer_class = KpiSerializer
+    queryset = Kpi.objects.all()
+
+
+class FinancialViewSet(viewsets.ModelViewSet):
+    perform_create = [permissions.IsAuthenticated]
+
+    serializer_class = FinancialSerializer
+    queryset = Financial.objects.all()
+
+    def perform_create(self, serializer):
+        serializer.save()
