@@ -1,0 +1,86 @@
+// User Object
+{
+  "username": "username",
+  "email": "email1",
+  "password": "xxx",
+  "is_staff": true   // True if VC fund user
+}
+
+// Startup Object
+{
+  "id": 1,
+  "vcAuthId": "userObject",
+  "startupAuthId": "userObject",
+  "startupEmail": "email",
+  "website": "amazingStartup2366.com", // Provided on Creation
+	"name": "amazingStartup2366", // Provided on Creation
+  "kpi_names": ["CAC", "LVC", "OTHER_METRIC"], // Provided on Creation
+  "investments": [ "InvestmentObject"], // Provided on Creation
+  "jobs" : ["jobObject"], // Not Present on creation
+  "jobLinks" : ["jobLinkObject"], // Not Present on creation
+  "financials": [ "financialObject"] // Not Present on creation 
+}
+
+// Access
+{
+  "userObject": "user",
+  "startupObject": "startup"
+}
+
+
+// Investment
+{
+  "startupId": "id", // foreign key
+  "date": "2020-01-01",
+  "currency": "£",
+  "amount": 10000
+}
+
+// Financial
+{
+  "startupObject": "startup", // foreign key
+  "startData": "2020-01-01",
+  "currency": "$",
+  "revenue" : 100000,
+  "cash_balance" : 1000,
+  "monthly_burn" : 10,
+  // Confirm more
+  "kpis" : [
+    "kpiObject"
+  ]
+}
+
+
+// Kpi
+{
+  "financialId": "financial", // foreign key
+  "name": "CAC",
+  "value": 10
+}
+
+// Connection
+{
+  "userObject": "user",
+  "name": "name1",
+  "url": "https://linkedIn/name",
+  "description": "Some Job"
+}
+
+// Job (All fields can be blank)
+{
+  "startupObject": "startup",
+  "title": "title",
+  "salary": 1000,
+  "description": "description",  // allow for big chunk of text
+  "extra_info": "some more text"  // here as well
+}
+
+// Job Link
+{
+  "connectionObject" : "connection",
+  "jobObject": "job",
+  "status": 1, // (1=potential match, 2=introduced, 3=connected)
+  "info": "description" 
+}
+
+
