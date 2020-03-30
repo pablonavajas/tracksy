@@ -10,11 +10,21 @@
         Limit posting additional information to Startups that belong to user
 """
 
-from startups.models import Startup
-from rest_framework import viewsets, permissions, generics
+from rest_framework import viewsets, permissions
+from rest_framework.request import Request
+from rest_framework.decorators import api_view
+from rest_framework.views import APIView
 from .serializers import *
 from .models import *
+from .models import Startup
 from rest_framework.response import Response
+
+
+class InfoView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+    def get(self, request):
+        print("hello world")
+        return Response({'hello': 1})
 
 
 # Startup Viewset (crud API, without specifying requests, managed by django)

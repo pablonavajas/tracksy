@@ -6,7 +6,7 @@
 
 from rest_framework import serializers
 from .models import *
-from accounts.serializers import RegisterSerializer
+from accounts.models import Info
 from django.contrib.auth.models import User
 
 
@@ -74,6 +74,8 @@ class StartupSerializer(serializers.ModelSerializer):
             username,
             email,
             password)
+
+        Info.objects.create(user=user, isStartup=True)
 
         validated_data['startupAuthId'] = user
 

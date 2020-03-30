@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 
 class Startup(models.Model):
     vcAuthId = models.ForeignKey(
-        User, related_name="portfolio", on_delete=models.CASCADE, null=True)
+        User, related_name="startups", on_delete=models.CASCADE, null=True)
     startupAuthId = models.ForeignKey(
         User, related_name="startup", on_delete=models.CASCADE, blank=True, null=True)
     startupEmail = models.EmailField()
@@ -14,6 +14,9 @@ class Startup(models.Model):
     website = models.CharField(max_length=100, blank=True, unique=True)
     ownership = models.IntegerField(blank=True, null=True)
     board = models.CharField(max_length=30, blank=True, null=True)
+
+    def __str__(self):
+        return self.name
 
 
 class Investment(models.Model):
