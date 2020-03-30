@@ -2,37 +2,22 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { updateStartup } from "../../actions/startupsActions";
-//import moment from "moment/src/moment";
-//var moment = require("moment");
-import CurrencyFormat from "react-currency-format";
-// import M from "materialize-css";
 
 const EditStartupModal = ({ current, updateStartup }) => {
   const [name, setName] = useState("");
   const [website, setWebsite] = useState("");
   const [ownership, setOwnership] = useState("");
-  const [currency, setCurrency] = useState("");
+  const [startupEmail, setStartupEmail] = useState("");
   const [board, setBoard] = useState("");
-  const [investment_1, setInvestment_1] = useState("");
-  const [type_1, setType_1] = useState("");
-  const [date_closed_1, setDate_1] = useState("");
-  const [investment_2, setInvestment_2] = useState("");
-  const [type_2, setType_2] = useState("");
-  const [date_closed_2, setDate_2] = useState("");
 
   useEffect(() => {
     if (current) {
       setName(current.name);
       setWebsite(current.website);
       setOwnership(current.ownership);
-      setCurrency(current.currency);
+
       setBoard(current.board);
-      setInvestment_1(current.investment_1);
-      setDate_1(current.date_closed_1);
-      setType_1(current.type_1);
-      setInvestment_2(current.investment_2);
-      setDate_2(current.date_closed_2);
-      setType_2(current.type_2);
+      setStartupEmail(current.startupEmail);
     }
   }, [current]);
 
@@ -42,30 +27,10 @@ const EditStartupModal = ({ current, updateStartup }) => {
       name,
       website,
       ownership,
-      currency,
       board,
-      investment_1,
-      investment_2,
-      type_1,
-      type_2,
-      date_closed_1,
-      date_closed_2
+      startupEmail
     };
-
     updateStartup(updStartup);
-
-    // Clear fields
-    setName("");
-    setWebsite("");
-    setOwnership("");
-    setCurrency("");
-    setBoard("");
-    setInvestment_1("");
-    setDate_1("");
-    setType_1("");
-    setInvestment_2("");
-    setDate_2("");
-    setType_2("");
   };
 
   return (
@@ -124,134 +89,18 @@ const EditStartupModal = ({ current, updateStartup }) => {
           </div>
         </div>
 
-        {/** Currency */}
-        <div className="row">
-          <div className="input-field col s12">
-            <select
-              id="currency"
-              name="currency"
-              value={currency}
-              className="browser-default"
-              onChange={e => setCurrency(e.target.value)}
-            >
-              <option value="" disabled>
-                Choose your option
-              </option>
-              <option value="£">£</option>
-              <option value="$">$</option>
-              <option value="€">€</option>
-            </select>
-            <label className="active">Currency</label>
-          </div>
-        </div>
-
-        {/** Investment 1 */}
-        <div className="row">
-          <div className="input-field col s12">
-            <CurrencyFormat
-              placeholder=""
-              id="investment_1"
-              value={investment_1 ? investment_1 : ""}
-              thousandSeparator={true}
-              prefix={currency}
-              allowNegative={false}
-              onValueChange={values => {
-                const { formattedValue, value } = values;
-                // formattedValue = $2,223
-                // value ie, 2223
-                setInvestment_1(value);
-              }}
-            />
-            <label htmlFor=" investment_1" className="active">
-              Investment 1
-            </label>
-          </div>
-        </div>
-        {/** Type of Investment 1 */}
+        {/** Startup Email */}
         <div className="row">
           <div className="input-field col s12">
             <input
               placeholder=""
-              id="type_1"
-              name="type_1"
+              id="startupEmail_add"
+              name="startupEmail"
               type="text"
-              value={type_1 ? type_1 : ""}
-              onChange={e => setType_1(e.target.value)}
+              value={startupEmail}
+              onChange={e => setStartupEmail(e.target.value)}
             />
-            <label htmlFor="type_1" className="active">
-              Type of investment 1
-            </label>
-          </div>
-        </div>
-        {/** Closing Date Investment 1 */}
-        <div className="row">
-          <div className="input-field col s12">
-            <input
-              id="date_1"
-              name="date_1"
-              value={date_closed_1 ? date_closed_1 : ""}
-              type="date"
-              onChange={e => setDate_1(e.target.value)}
-            />
-            <label htmlFor="date_1" className="active">
-              Close Date
-            </label>
-          </div>
-        </div>
-
-        {/** Investment 2 */}
-        <div className="row">
-          <div className="input-field col s12">
-            <CurrencyFormat
-              placeholder=""
-              id="investment_2"
-              value={investment_2 ? investment_2 : ""}
-              thousandSeparator={true}
-              prefix={currency}
-              allowNegative={false}
-              onValueChange={values => {
-                const { formattedValue, value } = values;
-                // formattedValue = $2,223
-                // value ie, 2223
-                setInvestment_1(value);
-              }}
-            />
-            <label htmlFor="investment_2" className="active">
-              Investment 2
-            </label>
-          </div>
-        </div>
-
-        {/** Type of Investment 2 */}
-        <div className="row">
-          <div className="input-field col s12">
-            <input
-              placeholder=""
-              id="type_2"
-              name="type_2"
-              type="text"
-              value={type_2 ? type_2 : ""}
-              onChange={e => setType_2(e.target.value)}
-            />
-            <label htmlFor="type_2" className="active">
-              Type of investment 2
-            </label>
-          </div>
-        </div>
-
-        {/** Closing Date Investment 2 */}
-        <div className="row">
-          <div className="input-field col s12">
-            <input
-              id="date_2"
-              name="date_2"
-              value={date_closed_2}
-              type="date"
-              onChange={e => setDate_2(e.target.value)}
-            />
-            <label htmlFor="date_2" className="active">
-              Close Date
-            </label>
+            <label htmlFor="startupEmail_add">Startup Email</label>
           </div>
         </div>
 

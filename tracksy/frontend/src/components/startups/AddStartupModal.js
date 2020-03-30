@@ -1,32 +1,23 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { addStartup } from "../../actions/startupsActions";
+import { addStartup, setCurrent } from "../../actions/startupsActions";
 import CurrencyFormat from "react-currency-format";
 
-const AddStartupModal = ({ addStartup }) => {
+const AddStartupModal = ({ addStartup, setCurrent }) => {
   const [name, setName] = useState("");
   const [website, setWebsite] = useState("");
   const [board, setBoard] = useState("");
   const [ownership, setOwnership] = useState("");
-  const [investments, setInvestments] = useState([]);
-  const [currency, setCurrency] = useState("");
-  const [investment_1, setInvestment_1] = useState("");
-  const [type_1, setType_1] = useState("");
-  const [date_closed_1, setDate_1] = useState("");
+  const [startupEmail, setStartupEmail] = useState("");
 
   const onSubmit = () => {
     const newStartup = {
       name,
       website,
       ownership,
-      board,
-      investment_1,
-      investment_2,
-      type_1,
-      type_2,
-      date_closed_1,
-      date_closed_2
+      startupEmail,
+      board
     };
 
     addStartup(newStartup);
@@ -35,82 +26,7 @@ const AddStartupModal = ({ addStartup }) => {
     setName("");
     setWebsite("");
     setOwnership("");
-    setCurrency("");
     setBoard("");
-    setInvestment_1("");
-    setDate_1("");
-    setType_1("");
-  };
-
-  const appendInvestments = () => {
-    setInvestments([
-      ...investments,
-      {
-        value: 0,
-        type: "",
-        date_closed: ""
-      }
-    ]);
-    console.log(investments);
-  };
-
-  const returnInvestmentJSX = () => {
-    return (
-      <div className="row">
-        <div className="input-field col s1">
-          <select
-            id="currency_add"
-            name="currency"
-            value={currency}
-            className="browser-default"
-            onChange={e => setCurrency(e.target.value)}
-          >
-            <option value="£">£</option>
-            <option value="$">$</option>
-            <option value="€">€</option>
-          </select>
-          <label htmlFor="currency_add" className="active">
-            Currency
-          </label>
-        </div>
-        <div className="input-field col s4">
-          <CurrencyFormat
-            id="investment_1_add"
-            value={investment_1}
-            thousandSeparator={true}
-            prefix={currency}
-            allowNegative={false}
-            onValueChange={values => {
-              const { formattedValue, value } = values;
-              // formattedValue = $2,223
-              // value ie, 2223
-              setInvestment_1(value);
-            }}
-          />
-          <label htmlFor="investment_1_add">Investment</label>
-        </div>
-        <div className="input-field col s4">
-          <input
-            id="type_1_add"
-            name="type_1"
-            type="text"
-            value={type_1}
-            onChange={e => setType_1(e.target.value)}
-          />
-          <label htmlFor="type_1_add">Type of Investment</label>
-        </div>
-        <div className="input-field col s3">
-          <input
-            id="date_1_add"
-            name="date_1"
-            value={date_closed_1}
-            type="date"
-            onChange={e => setDate_1(e.target.value)}
-          />
-          <label htmlFor="date_1_add">Close Date</label>
-        </div>
-      </div>
-    );
   };
 
   return (
@@ -156,6 +72,19 @@ const AddStartupModal = ({ addStartup }) => {
             <label htmlFor="ownership_add">Ownership (%)</label>
           </div>
         </div>
+        {/** Startup Email */}
+        <div className="row">
+          <div className="input-field col s12">
+            <input
+              id="startupEmail_add"
+              name="startupEmail"
+              type="text"
+              value={startupEmail}
+              onChange={e => setStartupEmail(e.target.value)}
+            />
+            <label htmlFor="startupEmail_add">Startup Email</label>
+          </div>
+        </div>
         {/* Membership */}
         <div className="row">
           <div className="input-field col s12">
@@ -174,21 +103,13 @@ const AddStartupModal = ({ addStartup }) => {
             </select>
           </div>
         </div>
-        {investments.map(investment => returnInvestmentJSX())}
-        <div className="center">
-          <a
-            className="btn waves-effect waves-light light-blue"
-            onClick={appendInvestments}
-          >
-            Add Investment
-          </a>
-        </div>
       </div>
 
       <div className="modal-footer">
         <a
+          // href="#add-investments-modal"
           onClick={onSubmit}
-          className="modal-close waves-effect blue waves-light btn-flat"
+          className="modal-close waves-effect blue waves-light btn-flat secondary-content modal-trigger"
         >
           Submit
         </a>
@@ -206,4 +127,7 @@ AddStartupModal.propTypes = {
   addStartup: PropTypes.func.isRequired
 };
 
-export default connect(null, { addStartup })(AddStartupModal);
+export default connect(null, {
+  addStartup,
+  setCurrent
+})(AddStartupModal);

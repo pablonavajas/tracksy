@@ -32,7 +32,7 @@ function StartupForm() {
 
   const [list, setList] = React.useState(fields);
 
-  console.log(JSON.stringify(list));
+  // console.log(JSON.stringify(list));
   return (
     <div className="row">
       <form className="col s12">
@@ -46,7 +46,7 @@ function StartupForm() {
               onChange={e => {
                 list[i].value = e.target.value;
                 setList([...list]);
-                console.log(JSON.stringify(list));
+                // console.log(JSON.stringify(list));
               }}
             />
             <label htmlFor={i} className="active">

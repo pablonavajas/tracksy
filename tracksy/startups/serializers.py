@@ -77,6 +77,6 @@ class StartupSerializer(serializers.ModelSerializer):
 
         validated_data['startupAuthId'] = user
 
-        Startup.objects.create(**validated_data)
+        startup = Startup.objects.create(**validated_data)
 
-        return validated_data
+        return startup

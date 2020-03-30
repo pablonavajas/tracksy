@@ -10,8 +10,7 @@ export class Register extends Component {
     username: "",
     email: "",
     password: "",
-    password2: "",
-    is_staff: "" // is VC_fund?
+    password2: ""
   };
 
   static propTypes = {
@@ -21,15 +20,14 @@ export class Register extends Component {
 
   onSubmit = e => {
     e.preventDefault();
-    const { username, email, password, password2, is_staff } = this.state;
+    const { username, email, password, password2 } = this.state;
     if (password != password2) {
       this.props.createMessage({ passwordsNotMatch: "Password do not match" });
     } else {
       const newUser = {
         username,
         email,
-        password,
-        is_staff
+        password
       };
       this.props.register(newUser);
     }
@@ -38,20 +36,11 @@ export class Register extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  handleRadioChange = e => {
-    console.log(e.target.name);
-    console.log(e.target.value);
-
-    this.setState({ [e.target.name]: e.target.value });
-    const { is_staff } = this.state;
-    console.log(is_staff);
-  };
-
   render() {
     if (this.props.isAuthenticated) {
       return <Redirect to="/" />;
     }
-    const { username, email, password, password2, is_staff } = this.state;
+    const { username, email, password, password2 } = this.state;
     return (
       <div>
         <section className="section section-login">
@@ -60,30 +49,6 @@ export class Register extends Component {
               <div className="col s12 m8 offset-m2 l6 offset-l3">
                 <div className="card-panel login blue white-text center">
                   <h2>Register</h2>
-                  <form>
-                    <label>
-                      <input
-                        name="is_staff"
-                        className="with-gap"
-                        type="radio"
-                        value={true}
-                        onChange={this.onChange}
-                      />
-                      <span className="white-text">VC Fund</span>
-                    </label>
-
-                    <label className="radio-buttons-container">
-                      <input
-                        name="is_staff"
-                        className="with-gap"
-                        type="radio"
-                        value={false}
-                        onChange={this.onChange}
-                      />
-                      <span className="white-text">Startup</span>
-                    </label>
-                  </form>
-
                   <form onSubmit={this.onSubmit}>
                     <div className="input-field">
                       <i className="material-icons prefix">account_box</i>

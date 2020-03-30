@@ -6,8 +6,9 @@ import {
   UPDATE_STARTUP,
   DELETE_STARTUP,
   SET_CURRENT,
-  CLEAR_CURRENT
-} from '../actions/types';
+  CLEAR_CURRENT,
+  SET_CURRENT_BASED_ON_NAME_AND_WEBSITE
+} from "../actions/types";
 
 const initialState = {
   startups: null,
@@ -50,6 +51,20 @@ export default (state = initialState, action) => {
       return {
         ...state,
         current: action.payload
+      };
+    case SET_CURRENT_BASED_ON_NAME_AND_WEBSITE:
+      return {
+        ...state,
+        current: state.startups.filter(startup => {
+          if (
+            startup.name === action.payload.name &&
+            startup.website === action.payload.website
+          ) {
+            return startup;
+          } else {
+            return null;
+          }
+        })
       };
     case CLEAR_CURRENT:
       return {

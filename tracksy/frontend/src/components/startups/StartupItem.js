@@ -20,12 +20,14 @@ const StartupItem = ({ startup, setCurrent, deleteStartup }) => {
         <div>{startup.name}</div>
       </th>
       <td className="center">
-        <div>{startup.ownership}</div>
+        <div className="chip center">{startup.ownership}</div>
       </td>
-      <td className="center">{startup.board}</td>
+      <td className="center">
+        <div className="chip center">{startup.board}</div>
+      </td>
 
       <td className="center">
-        {startup.investment.map((investment, i) => (
+        {startup.investments.map((investment, i) => (
           <div className="center" key={investment.id}>
             <div className="chip center">
               <p>
@@ -43,20 +45,29 @@ const StartupItem = ({ startup, setCurrent, deleteStartup }) => {
         ))}
       </td>
       <td className="center">
-        {startup.investment.map(investment => (
+        {startup.investments.map(investment => (
           <div className="center" key={investment.id}>
-            <div className="chip center">{investment.type}</div>
+            <div className="chip center">{investment.investmentType}</div>
           </div>
         ))}
       </td>
       <td>
-        {startup.investment.map(investment => (
+        {startup.investments.map(investment => (
           <div className="center" key={investment.id}>
             <div className="chip center">
-              {moment(investment.date_closed).format("DD/MM/YYYY")}
+              {moment(investment.date).format("DD/MM/YYYY")}
             </div>
           </div>
         ))}
+      </td>
+      <td>
+        <a
+          href="#add-investments-modal"
+          onClick={() => setCurrent(startup)}
+          className="secondary-content modal-trigger"
+        >
+          <i className="material-icons grey-text">attach_money</i>
+        </a>
       </td>
       <td>
         <a

@@ -9,8 +9,8 @@ const PrivateRoute = ({ component: Component, auth, ...rest }) => (
     render={props => {
       if (auth.isLoading) {
         return (
-          <div class="progress">
-            <div class="indeterminate" />
+          <div className="progress">
+            <div className="indeterminate" />
           </div>
         );
       } else if (!auth.isAuthenticated && !localStorage.token) {

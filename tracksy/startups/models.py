@@ -22,6 +22,7 @@ class Investment(models.Model):
                                   on_delete=models.CASCADE)
     value = models.FloatField(blank=True)
     currency = models.CharField(max_length=1)
+    investmentType = models.CharField(max_length=20, blank=True, null=True)
     date = models.DateField(blank=True, null=True)
 
 
