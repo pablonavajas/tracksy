@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Route, Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
 
-const PrivateRoute = ({ component: Component, auth, ...rest }) => (
+const VCPrivateRoute = ({ component: Component, auth, ...rest }) => (
   <Route
     {...rest}
     render={props => {
@@ -15,6 +15,9 @@ const PrivateRoute = ({ component: Component, auth, ...rest }) => (
         );
       } else if (!auth.isAuthenticated && !localStorage.token) {
         return <Redirect to="/login" />;
+      } else if (auth.isStartup) {
+        // console.log(auth.isStartup);
+        return <Redirect to="/startupForm" />;
       } else {
         return <Component {...props} />;
       }
@@ -26,4 +29,4 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps)(PrivateRoute);
+export default connect(mapStateToProps)(VCPrivateRoute);
