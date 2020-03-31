@@ -23,7 +23,7 @@ class KpiNameSerializer(serializers.ModelSerializer):
 class KpiSerializer(serializers.ModelSerializer):
     class Meta:
         model = Kpi
-        fields = '__all__'
+        fields = ['id', 'name', 'value', 'financialId']
 
 
 class FinancialSerializer(serializers.ModelSerializer):
@@ -45,6 +45,26 @@ class FinancialSerializer(serializers.ModelSerializer):
                 Kpi.objects.create(financialId=financials, **kpiData)
 
         return financials
+
+    def update_all(self, obj, data):
+        for (key, value) in data.items():
+            setattr(obj, key, value)
+        return obj
+
+    def update(self, instance, validated_data):
+        kpisData = None
+        if 'kpis' in validated_data:
+            kpisData = validated_data.pop('kpis')
+
+        instance = self.update_all(instance, validated_data)
+        instance.save()
+
+        instance.kpis.all().delete()
+        if kpisData is not None:
+            for kpiData in kpisData:
+                Kpi.objects.create(**kpiData)
+
+        return instance
 
 
 class StartupSerializer(serializers.ModelSerializer):

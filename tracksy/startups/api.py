@@ -8,23 +8,14 @@
     TODO:
         Limit GET for all APIs except the Startup API
         Limit posting additional information to Startups that belong to user
+        KpiNames confirm functionality
 """
 
 from rest_framework import viewsets, permissions
-from rest_framework.request import Request
 from rest_framework.views import APIView
 from .serializers import *
-from .models import *
-from .models import Startup
 from rest_framework.response import Response
 from rest_framework.serializers import ValidationError
-
-
-class InfoView(APIView):
-    permission_classes = [permissions.IsAuthenticated]
-    def get(self, request):
-        print("hello world")
-        return Response({'hello': 1})
 
 
 # Startup Viewset (crud API, without specifying requests, managed by django)
@@ -80,22 +71,18 @@ class KpiNameAPI(APIView):
         return Response(serializer.data)
 
 
-class KpiViewSet(viewsets.ModelViewSet):
-    permission_classes = [
-        permissions.IsAuthenticated
-    ]
+class FinancialAPI(APIView):
+    permission_classes = [permissions.IsAuthenticated]
 
-    serializer_class = KpiSerializer
-    queryset = Kpi.objects.all()
-
-
-class FinancialViewSet(viewsets.ModelViewSet):
-    perform_create = [permissions.IsAuthenticated]
-
-    serializer_class = FinancialSerializer
-    queryset = Financial.objects.all()
-
-    # Override perform_create method
-    # to save the startup owner when creating a startup.
-    def perform_create(self, serializer):
+    def post(self, request):
+        startup = get_startup(request)
+        id = request.data.get('id')
+        if id is None:
+            serializer = FinancialSerializer(data=request.data)
+        else:
+            financial_instance = startup.financials.get(pk=id)
+            serializer = FinancialSerializer(instance=financial_instance, data=request.data)
+        serializer.is_valid(raise_exception=True)
         serializer.save()
+        return Response(serializer.data)
+
