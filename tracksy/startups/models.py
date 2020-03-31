@@ -5,13 +5,11 @@ from django.contrib.auth.models import User
 
 
 class Startup(models.Model):
-    vcAuthId = models.ForeignKey(
-        User, related_name="portfolio", on_delete=models.CASCADE, null=True)
-    startupAuthId = models.ForeignKey(
-        User, related_name="startup", on_delete=models.CASCADE, blank=True, null=True)
+    users = models.ManyToManyField(User, related_name="startups", blank=True, null=True)
     startupEmail = models.EmailField()
-    name = models.CharField(max_length=20, unique=True)
-    website = models.CharField(max_length=100, blank=True, unique=True)
+
+    name = models.CharField(max_length=100)
+    website = models.CharField(max_length=100, blank=True, null=True)
     ownership = models.IntegerField(blank=True, null=True)
     board = models.CharField(max_length=30, blank=True, null=True)
 
@@ -33,9 +31,6 @@ class KpiName(models.Model):
     startupId = models.ForeignKey(
         Startup, related_name='kpinames', on_delete=models.CASCADE)
     name = models.CharField(max_length=20)
-
-
-# Will have to have a create and an edit function (as KPIs will be nested)
 
 
 class Financial(models.Model):

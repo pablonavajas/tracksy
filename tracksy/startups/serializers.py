@@ -1,7 +1,5 @@
 """
-    Note:
-        Adding the same startup for two (or more) different VC
-        funds is not a feature built here (to be resolved later)
+        TODO: sort out emailing of password (printed atm)
 """
 
 from rest_framework import serializers
@@ -56,29 +54,29 @@ class StartupSerializer(serializers.ModelSerializer):
         Updating has to be done through other apis, because update 
         function is not defined for editing nested functionality.
     """
-    kpinames = KpiNameSerializer(many=True, required=False)
-    investments = InvestmentSerializer(many=True, required=False)
-    financials = FinancialSerializer(many=True, required=False)
+    kpinames = KpiNameSerializer(many=True, read_only=True)
+    investments = InvestmentSerializer(many=True, read_only=True)
+    financials = FinancialSerializer(many=True, read_only=True)
 
     class Meta:
         model = Startup
         fields = '__all__'  # (name, website, etc.)
 
     def create(self, validated_data):
+        vc_user = validated_data.pop('users')
         email = validated_data.get('startupEmail')
         username = email[:email.find("@")]
         password = User.objects.make_random_password()
         print(password)
 
-        user = User.objects.create_user(
+        startup_user = User.objects.create_user(
             username,
             email,
             password)
-
-        Info.objects.create(user=user, isStartup=True)
-
-        validated_data['startupAuthId'] = user
+        Info.objects.create(user=startup_user, isStartup=True)
 
         startup = Startup.objects.create(**validated_data)
+        startup.users.add(startup_user)
+        startup.users.add(vc_user)
 
         return startup

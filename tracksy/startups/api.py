@@ -29,24 +29,15 @@ class InfoView(APIView):
 
 # Startup Viewset (crud API, without specifying requests, managed by django)
 class StartupViewSet(viewsets.ModelViewSet):
-    permission_classes = [
-        permissions.IsAuthenticated
-    ]
+    permission_classes = [permissions.IsAuthenticated]
 
     serializer_class = StartupSerializer
 
-    # Only return the startups that the user owns
     def get_queryset(self):
-        # returns the startup that belongs to the user
-        # (this only exists if user is a startup)
-        if self.request.user.startup.all():
-            return self.request.user.startup.all()
-
-        # returns all the startups in the VC Fund's portfolio
-        return self.request.user.portfolio.all()
+        return self.request.user.startups.all()
 
     def perform_create(self, serializer):
-        serializer.save(vcAuthId=self.request.user)
+        serializer.save(users=self.request.user)
 
 
 class InvestmentViewSet(viewsets.ModelViewSet):
