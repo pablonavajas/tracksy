@@ -3,6 +3,7 @@ from rest_framework.views import APIView
 from rest_framework import permissions
 from django.contrib.auth import authenticate
 from django.core.exceptions import FieldError
+from rest_framework import serializers
 from knox.models import AuthToken
 from .serializers import UserSerializer
 from .models import Info
@@ -18,14 +19,14 @@ class UserAPI(APIView):
             data['token'] = token
             data['isStartup'] = user.info.isStartup
             return Response(data)
-        return Response("Incorrect Credentials")
+        raise serializers.ValidationError("Incorrect Credentials")
 
     # Register
     def post(self, request):
         try:
             isStartup = request.data.pop('isStartup')
         except KeyError:
-            raise FieldError("'vc field not provided")
+            raise FieldError("'isStartup' field not provided")
         serializer_user = UserSerializer(data=request.data)
         serializer_user.is_valid(raise_exception=True)
         user = serializer_user.save()
