@@ -55,6 +55,9 @@ export class Alerts extends Component {
       if (message.kpiNameAdded) {
         alert.success(message.kpiNameAdded);
       }
+      if (message.financialAdded) {
+        alert.success(message.financialAdded);
+      }
     }
   }
 
