@@ -8,9 +8,12 @@ const PrivateRoute = ({ component: Component, auth, ...rest }) => (
     {...rest}
     render={props => {
       if (auth.isLoading) {
-        //can be replaced by a spinner
-        return <h2>Loading...</h2>;
-      } else if (!auth.isAuthenticated) {
+        return (
+          <div className="progress">
+            <div className="indeterminate" />
+          </div>
+        );
+      } else if (!auth.isAuthenticated && !localStorage.token) {
         return <Redirect to="/login" />;
       } else {
         return <Component {...props} />;

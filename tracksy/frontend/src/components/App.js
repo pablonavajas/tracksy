@@ -18,10 +18,8 @@ import store from "../store";
 import { loadUser } from "../actions/authActions";
 
 import "./App.css";
-// import store from './store';
-import Home from "./home/Home";
-// import Login from "./components/auth/Login";
 
+import Home from "./home/Home";
 import Startups from "./startups/Startups";
 import EditStartupModal from "./startups/EditStartupModal";
 import AddStartupModal from "./startups/AddStartupModal";
@@ -31,6 +29,9 @@ import Register from "./accounts/Register";
 import PrivateRoute from "./common/PrivateRoute";
 
 import M from "materialize-css";
+import StartupForm from "./startupForm/StartupForm";
+import AddInvestmentModal from "./startups/AddInvestmentModal";
+import AddKpiNamesModal from "./startups/AddKpiNamesModal";
 
 // Alert Options
 const alertOptions = {
@@ -56,10 +57,13 @@ class App extends Component {
                 <div className="container">
                   <AddStartupModal />
                   <EditStartupModal />
+                  <AddInvestmentModal />
+                  <AddKpiNamesModal />
                   <Switch>
                     <PrivateRoute exact path="/" component={Startups} />
                     <Route exact path="/register" component={Register} />
                     <Route exact path="/login" component={Login} />
+                    <Route exact path="/form" component={StartupForm} />
                   </Switch>
                 </div>
               </main>

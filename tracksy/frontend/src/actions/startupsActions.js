@@ -8,7 +8,8 @@ import {
   DELETE_STARTUP,
   SET_CURRENT,
   CLEAR_CURRENT,
-  CREATE_MESSAGE
+  CREATE_MESSAGE,
+  SET_CURRENT_BASED_ON_NAME_AND_WEBSITE
 } from "./types";
 import axios from "axios";
 import { createMessage, returnErrors } from "./messageActions";
@@ -22,6 +23,7 @@ export const getStartups = () => async (dispatch, getState) => {
     setLoading();
 
     const res = await axios.get("/api/startups", tokenConfig(getState));
+
     dispatch({
       type: GET_STARTUPS,
       payload: res.data
@@ -42,13 +44,9 @@ export const addStartup = startup => async (dispatch, getState) => {
       startup,
       tokenConfig(getState)
     );
-
     dispatch(createMessage({ startupAdded: "Startup has been added" }));
-
-    dispatch({
-      type: ADD_STARTUP,
-      payload: res.data
-    });
+    dispatch({ type: SET_CURRENT, payload: res.data });
+    dispatch({ type: ADD_STARTUP, payload: res.data });
   } catch (err) {
     dispatch(returnErrors(err.response.data, err.response.status));
   }
@@ -98,6 +96,13 @@ export const deleteStartup = id => async (dispatch, getState) => {
   } catch (err) {
     dispatch(returnErrors(err.response.data, err.response.status));
   }
+};
+
+export const setCurrentBasedOnNameAndWebsite = async ({ name, website }) => {
+  return {
+    type: SET_CURRENT_BASED_ON_NAME_AND_WEBSITE,
+    payload: { name, website }
+  };
 };
 
 //Set current startup

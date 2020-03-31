@@ -30,11 +30,12 @@ class InfoView(APIView):
 # Startup Viewset (crud API, without specifying requests, managed by django)
 class StartupViewSet(viewsets.ModelViewSet):
     permission_classes = [
-        permissions.IsAuthenticated  # for now anybody can access any startups
+        permissions.IsAuthenticated
     ]
 
     serializer_class = StartupSerializer
 
+    # Only return the startups that the user owns
     def get_queryset(self):
         # returns the startup that belongs to the user
         # (this only exists if user is a startup)
@@ -81,5 +82,7 @@ class FinancialViewSet(viewsets.ModelViewSet):
     serializer_class = FinancialSerializer
     queryset = Financial.objects.all()
 
+    # Override perform_create method
+    # to save the startup owner when creating a startup.
     def perform_create(self, serializer):
         serializer.save()

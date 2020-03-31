@@ -6,21 +6,33 @@ import StartupItem from "./StartupItem";
 import { getStartups } from "../../actions/startupsActions";
 import AddStartupBtn from "./../layout/AddStartupBtn";
 
-export const Startups = ({ startup: { startups, loading }, getStartups }) => {
+export const Startups = ({
+  investments,
+  startup: { startups, loading },
+  getStartups
+}) => {
   //everything inside useEffect hook, gets called at page start up if [] is empty
   useEffect(() => {
     getStartups();
     // eslint-disable-next-line
   }, []);
 
+  useEffect(() => {
+    getStartups();
+  }, [investments]);
+
   if (loading || startups === null) {
-    return <h4>Loading ...</h4>;
+    return (
+      <div className="progress">
+        <div className="indeterminate"></div>
+      </div>
+    );
   }
 
   if (!loading && startups.length === 0) {
     return (
       <div>
-        <h5 className="left">No logs to show...</h5>
+        <h5 className="left">No startups to show...</h5>
         <AddStartupBtn />
       </div>
     );
@@ -39,12 +51,10 @@ export const Startups = ({ startup: { startups, loading }, getStartups }) => {
                     <th>Logo</th>
                     <th>Ownership (%)</th>
                     <th>Board</th>
-                    <th className="center">Investment 1</th>
+                    <th className="center">Investment</th>
                     <td className="center">Type</td>
                     <td className="center">Closed</td>
-                    <th className="center">Investment 2</th>
-                    <td className="center">Type</td>
-                    <td className="center">Closed</td>
+                    <th></th>
                     <th></th>
                   </tr>
                 </thead>
@@ -76,7 +86,8 @@ Startups.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  startup: state.startup //state.startups is from rootReducer from index.js
+  startup: state.startup, //state.startups is from rootReducer from index.js
+  investments: state.investments
 });
 
 //first argument (to get anything from AppLevelState and get it into the component)

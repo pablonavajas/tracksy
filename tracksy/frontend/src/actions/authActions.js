@@ -14,24 +14,20 @@ import {
 } from "./types";
 
 // CHECK TOKEN AND LOAD USER
-export const loadUser = () => (dispatch, getState) => {
-  // User Loading
-  dispatch({ type: USER_LOADING });
+export const loadUser = () => async (dispatch, getState) => {
+  try {
+    // User Loading
+    dispatch({ type: USER_LOADING });
 
-  axios
-    .get("/api/auth/user", tokenConfig(getState))
-    .then(res => {
-      dispatch({
-        type: USER_LOADED,
-        payload: res.data
-      });
-    })
-    .catch(err => {
-      dispatch(returnErrors(err.response.data, err.response.status));
-      dispatch({
-        type: AUTH_ERROR
-      });
+    const res = await axios.get("/api/auth/user", tokenConfig(getState));
+
+    dispatch({ type: USER_LOADED, payload: res.data });
+  } catch (err) {
+    dispatch(returnErrors(err.response.data, err.response.status));
+    dispatch({
+      type: AUTH_ERROR
     });
+  }
 };
 
 // LOGIN USER
@@ -80,7 +76,12 @@ export const logout = () => (dispatch, getState) => {
 };
 
 // REGISTER USER
-export const register = ({ username, email, password }) => dispatch => {
+export const register = ({
+  username,
+  email,
+  password,
+  is_staff
+}) => dispatch => {
   // Headers
   const config = {
     headers: {
@@ -92,16 +93,18 @@ export const register = ({ username, email, password }) => dispatch => {
   const body = JSON.stringify({
     username: username,
     email: email,
-    password: password
+    password: password,
+    is_staff: is_staff
   });
 
   axios
     .post("/api/auth/register", body, config)
     .then(res => {
-      dispatch({
-        type: REGISTER_SUCCESS,
-        payload: res.data
-      });
+      console.log(res.data),
+        dispatch({
+          type: REGISTER_SUCCESS,
+          payload: res.data
+        });
     })
     .catch(err => {
       dispatch(returnErrors(err.response.data, err.response.status));
