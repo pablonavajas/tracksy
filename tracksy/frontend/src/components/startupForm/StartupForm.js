@@ -1,7 +1,17 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
 // import StartupFormField from "./StartupFormField";
+import { getStartups } from "../../actions/startupsActions";
 
-function StartupForm() {
+function StartupForm({ getStartups, startups }) {
+  useEffect(() => {
+    getStartups();
+  }, []);
+
+  let startup = {};
+  if (startups) startup = startups.pop();
+  console.log(startup);
+
   const fields = [
     {
       id: 1,
@@ -35,28 +45,32 @@ function StartupForm() {
   // console.log(JSON.stringify(list));
   return (
     <div className="row">
-      <form className="col s12">
-        {fields.map((n, i) => (
-          <div className="input-field col s12" key={i}>
-            <input
-              id={i}
-              type="number"
-              step="0.01"
-              className="validate"
-              onChange={e => {
-                list[i].value = e.target.value;
-                setList([...list]);
-                // console.log(JSON.stringify(list));
-              }}
-            />
-            <label htmlFor={i} className="active">
-              {n.name}
-            </label>
-          </div>
-        ))}
-      </form>
+      <div className="col s8 offset-s2">
+        <div className="card-panel white">
+          <h4 className="center">Please fill in montly report</h4>
+          <span className="black-text">
+            <input type="number" step="0.01" className="validate" />I am a very
+            simple card. I am good at containing small bits of information. I am
+            convenient because I require little markup to use effectively. I am
+            similar to what is called a panel in other I am a very simple card.
+            I am good at containing small bits of information. I am convenient
+            because I require little markup to use effectively. I am similar to
+            what is called a panel in other I am a very simple card. I am good
+            at containing small bits of information. I am convenient because I
+            require little markup to use effectively. I am similar to what is
+            called a panel in other I am a very simple card. I am good at
+            containing small bits of information. I am convenient because I
+            require little markup to use effectively. I am similar to what is
+            called a panel in other frameworks.
+          </span>
+        </div>
+      </div>
     </div>
   );
 }
 
-export default StartupForm;
+const mapStateToProps = state => ({
+  startups: state.startup.startups
+});
+
+export default connect(mapStateToProps, { getStartups })(StartupForm);
