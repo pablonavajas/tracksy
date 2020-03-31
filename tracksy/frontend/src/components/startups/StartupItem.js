@@ -62,6 +62,15 @@ const StartupItem = ({ startup, setCurrent, deleteStartup }) => {
       </td>
       <td>
         <a
+          href="#edit-startup-modal"
+          onClick={() => setCurrent(startup)}
+          className="secondary-content modal-trigger"
+        >
+          <i className="material-icons grey-text">edit</i>
+        </a>
+      </td>
+      <td>
+        <a
           href="#add-investments-modal"
           onClick={() => setCurrent(startup)}
           className="secondary-content modal-trigger"
@@ -71,13 +80,14 @@ const StartupItem = ({ startup, setCurrent, deleteStartup }) => {
       </td>
       <td>
         <a
-          href="#edit-startup-modal"
+          href="#add-kpi-names-modal"
           onClick={() => setCurrent(startup)}
           className="secondary-content modal-trigger"
         >
-          <i className="material-icons grey-text">edit</i>
+          <i className="material-icons grey-text">insert_chart</i>
         </a>
       </td>
+
       <td>
         <a
           href="#!"

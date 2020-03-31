@@ -30,7 +30,8 @@ import PrivateRoute from "./common/PrivateRoute";
 
 import M from "materialize-css";
 import StartupForm from "./startupForm/StartupForm";
-import AddInvestmentsModal from "./startups/AddInvestmentsModal";
+import AddInvestmentModal from "./startups/AddInvestmentModal";
+import AddKpiNamesModal from "./startups/AddKpiNamesModal";
 
 // Alert Options
 const alertOptions = {
@@ -56,7 +57,8 @@ class App extends Component {
                 <div className="container">
                   <AddStartupModal />
                   <EditStartupModal />
-                  <AddInvestmentsModal />
+                  <AddInvestmentModal />
+                  <AddKpiNamesModal />
                   <Switch>
                     <PrivateRoute exact path="/" component={Startups} />
                     <Route exact path="/register" component={Register} />

@@ -6,7 +6,7 @@ import CurrencyFormat from "react-currency-format";
 import { setCurrent } from "../../actions/startupsActions";
 
 const addInvestmentModal = ({ addInvestment, current }) => {
-  const [currentName, setCurrentName] = useState("Hello");
+  const [currentName, setCurrentName] = useState("");
   const [list, setList] = useState([
     {
       startupId: null,
