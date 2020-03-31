@@ -40,20 +40,27 @@ class StartupViewSet(viewsets.ModelViewSet):
         serializer.save(users=self.request.user)
 
 
+def get_startup(request):
+    """ Returns startup object using startupId in the request,
+            throws error if unable to get the startup """
+
+    pk = request.data.get('startupId')
+    if pk is None:
+        raise ValidationError("'startupId' not provided")
+    startup = request.user.startups.get(pk=pk)
+    return startup
+
+
 class InvestmentAPI(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request):
-        startupId = request.data.get('startupId')
-        if startupId is None:
-            raise ValidationError("'startupId' not provided")
-
-        startup = request.user.startups.get(pk=startupId)
+        startup = get_startup(request)
 
         id = request.data.get('id')
         data = request.data
         if id is None:
-            serializer = InvestmentSerializer(data)
+            serializer = InvestmentSerializer(data=data)
         else:
             investment = startup.investments.get(pk=id)
             serializer = InvestmentSerializer(instance=investment, data=data)
@@ -62,13 +69,15 @@ class InvestmentAPI(APIView):
         return Response(serializer.data)
 
 
-class KpiNameViewSet(viewsets.ModelViewSet):
-    permission_classes = [
-        permissions.IsAuthenticated
-    ]
+class KpiNameAPI(APIView):
+    permission_classes = [permissions.IsAuthenticated]
 
-    serializer_class = KpiNameSerializer
-    queryset = KpiName.objects.all()
+    def post(self, request):
+        get_startup(request)
+        serializer = KpiNameSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
 
 
 class KpiViewSet(viewsets.ModelViewSet):
