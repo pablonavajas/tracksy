@@ -46,14 +46,16 @@ export const login = (username, password) => dispatch => {
   });
 
   axios
-    .get("/api/auth/login", body, config)
+    .post("/api/auth/login", body, config)
     .then(res => {
+      console.log(res);
       dispatch({
         type: LOGIN_SUCCESS,
         payload: res.data
       });
     })
     .catch(err => {
+      console.log(err.response.data);
       dispatch(returnErrors(err.response.data, err.response.status));
       dispatch({
         type: LOGIN_FAIL
