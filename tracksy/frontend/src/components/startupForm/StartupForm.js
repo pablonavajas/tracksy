@@ -9,40 +9,32 @@ function StartupForm({ getStartups, startups }) {
   }, []);
 
   let startup = {};
-  if (startups) startup = startups.pop();
-  console.log(startup);
+  if (startups) {
+    startup = startups.pop();
+    console.log(startup);
+  }
 
-  const fields = [
-    {
-      id: 1,
-      value: "",
-      name: "Revenue"
-    },
-    {
-      id: 2,
-      value: "",
-      name: "LVC"
-    },
-    {
-      id: 3,
-      value: "",
-      name: "CAC"
-    },
-    {
-      id: 4,
-      value: "",
-      name: ""
-    },
-    {
-      id: 5,
-      name: "",
-      value: ""
-    }
-  ];
+  const [comment, setComment] = useState("");
+  const [currency, setCurrency] = useState("");
+  const [revenue, setRevenue] = useState("");
+  const [cashBalance, setCashBalance] = useState("");
+  const [monthlyBurn, setMonthlyBurn] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
 
-  const [list, setList] = React.useState(fields);
+  const onSubmit = () => {
+    const newFinancial = {
+      startupId: startup.id,
+      comment,
+      currency,
+      revenue,
+      cashBalance,
+      monthlyBurn,
+      startDate,
+      endDate
+    };
+  };
 
-  // console.log(JSON.stringify(list));
   return (
     <div className="row">
       <div className="col s8 offset-s2">
