@@ -12,12 +12,12 @@
 
 from rest_framework import viewsets, permissions
 from rest_framework.request import Request
-from rest_framework.decorators import api_view
 from rest_framework.views import APIView
 from .serializers import *
 from .models import *
 from .models import Startup
 from rest_framework.response import Response
+from rest_framework.serializers import ValidationError
 
 
 class InfoView(APIView):
@@ -40,13 +40,26 @@ class StartupViewSet(viewsets.ModelViewSet):
         serializer.save(users=self.request.user)
 
 
-class InvestmentViewSet(viewsets.ModelViewSet):
-    permission_classes = [
-        permissions.IsAuthenticated
-    ]
+class InvestmentAPI(APIView):
+    permission_classes = [permissions.IsAuthenticated]
 
-    serializer_class = InvestmentSerializer
-    queryset = Investment.objects.all()
+    def post(self, request):
+        startupId = request.data.get('startupId')
+        if startupId is None:
+            raise ValidationError("'startupId' not provided")
+
+        startup = request.user.startups.get(pk=startupId)
+
+        id = request.data.get('id')
+        data = request.data
+        if id is None:
+            serializer = InvestmentSerializer(data)
+        else:
+            investment = startup.investments.get(pk=id)
+            serializer = InvestmentSerializer(instance=investment, data=data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
 
 
 class KpiNameViewSet(viewsets.ModelViewSet):
