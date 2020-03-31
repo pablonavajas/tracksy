@@ -26,7 +26,8 @@ import AddStartupModal from "./startups/AddStartupModal";
 import Alerts from "./layout/Alerts";
 import Login from "./accounts/Login";
 import Register from "./accounts/Register";
-import PrivateRoute from "./common/PrivateRoute";
+import VCPrivateRoute from "./common/VCPrivateRoute";
+import StartupPrivateRoute from "./common/StartupPrivateRoute";
 
 import M from "materialize-css";
 import StartupForm from "./startupForm/StartupForm";
@@ -60,10 +61,14 @@ class App extends Component {
                   <AddInvestmentModal />
                   <AddKpiNamesModal />
                   <Switch>
-                    <PrivateRoute exact path="/" component={Startups} />
+                    <VCPrivateRoute exact path="/" component={Startups} />
+                    <StartupPrivateRoute
+                      exact
+                      path="/startupForm"
+                      component={StartupForm}
+                    />
                     <Route exact path="/register" component={Register} />
                     <Route exact path="/login" component={Login} />
-                    <Route exact path="/form" component={StartupForm} />
                   </Switch>
                 </div>
               </main>
