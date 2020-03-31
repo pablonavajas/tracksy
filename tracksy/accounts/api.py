@@ -10,16 +10,15 @@ from .models import Info
 
 
 class UserAPI(APIView):
+    # Get user info
     def get(self, request):
-        user = authenticate(**request.data)
-        if user is not None:
-            token = AuthToken.objects.create(user)[1]
-            serializer = UserSerializer(user)
+        print(request.user.is_authenticated)
+        if request.user.is_authenticated:
+            serializer = UserSerializer(request.user)
             data = serializer.data
-            data['token'] = token
-            data['isStartup'] = user.info.isStartup
+            data['isStartup'] = request.user.info.isStartup
             return Response(data)
-        raise serializers.ValidationError("Incorrect Credentials")
+        raise serializers.ValidationError("Not Logged In")
 
     # Register
     def post(self, request):
@@ -36,6 +35,19 @@ class UserAPI(APIView):
         data['token'] = token
         data['isStartup'] = user.info.isStartup
         return Response(data)
+
+
+class LoginAPI(APIView):
+    def post(self, request):
+        user = authenticate(**request.data)
+        if user is not None:
+            token = AuthToken.objects.create(user)[1]
+            serializer = UserSerializer(user)
+            data = serializer.data
+            data['token'] = token
+            data['isStartup'] = user.info.isStartup
+            return Response(data)
+        raise serializers.ValidationError("Incorrect Credentials")
 
 
 class IsStartUpAPI(APIView):
