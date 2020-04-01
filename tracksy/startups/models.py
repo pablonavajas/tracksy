@@ -27,7 +27,7 @@ class Investment(models.Model):
     date = models.DateField(blank=True, null=True)
 
     class Meta:
-        ordering = ['-date']
+        ordering = ['date']
 
 
 class KpiName(models.Model):
@@ -55,14 +55,3 @@ class Kpi(models.Model):
     financialId = models.ForeignKey(
         Financial, related_name='kpis', on_delete=models.CASCADE, blank=True, null=True)
     name = models.CharField(max_length=20, blank=True, null=True)
-    value = models.FloatField(blank=True, null=True)
-
-
-# class Connection(models.Model):
-#     vcAuthId = models.ForeignKey(
-#         User, related_name="connections", on_delete=models.CASCADE, blank=true
-#     )
-#     owner = models.CharField(max_length=50)
-#     name = models.CharField(max_length=50)
-#     url = models.CharField(max_length=100)  # TODO: add hyperlink field
-#     description = models.CharField(max_length=100)
