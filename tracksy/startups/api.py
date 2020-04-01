@@ -72,8 +72,14 @@ class KpiNameAPI(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request):
-        get_startup(request)
-        serializer = KpiNameSerializer(data=request.data)
+        startup = get_startup(request)
+        id = request.data.get('id')
+        data = request.data
+        if id is None:
+            serializer = KpiNameSerializer(data=request.data)
+        else:
+            kpiName = startup.kpinames.get(pk=id)
+            serializer = KpiNameSerializer(instance=kpiName, data=data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
