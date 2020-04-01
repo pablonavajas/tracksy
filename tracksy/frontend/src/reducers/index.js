@@ -6,6 +6,7 @@ import messagesReducer from "./messagesReducer";
 import authReducer from "./authReducer";
 import investmentsReducer from "./investmentsReducer";
 import kpisReducer from "./kpisReducer";
+import financialsReducer from "./financialsReducer";
 
 export default combineReducers({
   startup: startupsReducer,
@@ -13,5 +14,6 @@ export default combineReducers({
   messages: messagesReducer,
   investments: investmentsReducer,
   kpis: kpisReducer,
-  auth: authReducer
+  auth: authReducer,
+  financials: financialsReducer
 });
