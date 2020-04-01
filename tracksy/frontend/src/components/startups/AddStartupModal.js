@@ -106,13 +106,15 @@ const AddStartupModal = ({ addStartup, setCurrent }) => {
       </div>
 
       <div className="modal-footer">
-        <a
-          // href="#add-investments-modal"
-          onClick={onSubmit}
-          className="modal-close waves-effect blue waves-light btn-flat secondary-content modal-trigger"
-        >
-          Submit
-        </a>
+        <div className="center">
+          <a
+            // href="#add-investments-modal" (add modal-trigger to className)
+            onClick={onSubmit}
+            className="btn waves-effect waves-light light-blue modal-close"
+          >
+            Submit
+          </a>
+        </div>
       </div>
     </div>
   );

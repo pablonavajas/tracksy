@@ -5,30 +5,23 @@ import { tokenConfig } from "./authActions";
 import { setLoading } from "./startupsActions";
 
 //Getting All Startups
-export const addInvestment = startup => async (dispatch, getState) => {
-  console.log("startup in invActions");
-  console.log(startup);
-
+export const addInvestment = investment => async (dispatch, getState) => {
   try {
+    console.log(investment);
     setLoading();
-    // console.log("startup in invActions");
-    // console.log(startup);
 
     const res = await axios.post(
       "/api/investments/",
-      startup,
+      investment,
       tokenConfig(getState)
     );
 
-    console.log(res);
     dispatch(createMessage({ investmentAdded: "Investment has been added" }));
     dispatch({
       type: ADD_INVESTMENT,
       payload: res.data
     });
   } catch (err) {
-    console.log("error");
-    console.log(err);
     dispatch(returnErrors(err.response.data, err.response.status));
   }
 };

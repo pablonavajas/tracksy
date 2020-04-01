@@ -66,7 +66,7 @@ const StartupItem = ({ startup, setCurrent, deleteStartup }) => {
           onClick={() => setCurrent(startup)}
           className="secondary-content modal-trigger"
         >
-          <i className="material-icons grey-text">edit</i>
+          <i className="material-icons blue-text">edit</i>
         </a>
       </td>
       <td>
@@ -75,26 +75,35 @@ const StartupItem = ({ startup, setCurrent, deleteStartup }) => {
           onClick={() => setCurrent(startup)}
           className="secondary-content modal-trigger"
         >
-          <i className="material-icons grey-text">attach_money</i>
+          <i className="material-icons blue-text">attach_money</i>
         </a>
       </td>
-      <td>
-        <a
-          href="#add-kpi-names-modal"
-          onClick={() => setCurrent(startup)}
-          className="secondary-content modal-trigger"
-        >
-          <i className="material-icons grey-text">insert_chart</i>
-        </a>
-      </td>
+      {/* Display grey button with no functionality if some financials have already been added */}
+      {startup.financials.length === 0 ? (
+        <td>
+          <a
+            href="#add-kpi-names-modal"
+            onClick={() => setCurrent(startup)}
+            className="secondary-content modal-trigger"
+          >
+            <i className="material-icons blue-text">insert_chart</i>
+          </a>
+        </td>
+      ) : (
+        <td>
+          <a className="secondary-content modal-trigger">
+            <i className="material-icons grey-text">insert_chart</i>
+          </a>
+        </td>
+      )}
 
       <td>
         <a
-          href="#!"
+          href="/"
           onClick={() => deleteStartup(startup.id)}
           className="secondary-content"
         >
-          <i className="material-icons grey-text">delete</i>
+          <i className="material-icons blue-text">delete</i>
         </a>
       </td>
     </tr>
