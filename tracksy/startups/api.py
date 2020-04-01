@@ -16,6 +16,7 @@ from rest_framework.views import APIView
 from .serializers import *
 from rest_framework.response import Response
 from rest_framework.serializers import ValidationError
+from rest_framework import status
 
 
 # Startup Viewset (crud API, without specifying requests, managed by django)
@@ -31,11 +32,12 @@ class StartupViewSet(viewsets.ModelViewSet):
         serializer.save(users=self.request.user)
 
 
-def get_startup(request):
+def get_startup(request, pk=None):
     """ Returns startup object using startupId in the request,
             throws error if unable to get the startup """
 
-    pk = request.data.get('startupId')
+    if pk is None:
+        pk = request.data.get('startupId')
     if pk is None:
         raise ValidationError("'startupId' not provided")
     startup = request.user.startups.get(pk=pk)
@@ -59,6 +61,12 @@ class InvestmentAPI(APIView):
         serializer.save()
         return Response(serializer.data)
 
+    def delete(self, request, startupId, pk):
+        startup = get_startup(request, startupId)
+        investment = startup.investments.get(pk=pk)
+        investment.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
 
 class KpiNameAPI(APIView):
     permission_classes = [permissions.IsAuthenticated]
@@ -69,6 +77,12 @@ class KpiNameAPI(APIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
+
+    def delete(self, request, startupId, pk):
+        startup = get_startup(request, startupId)
+        kpiName = startup.kpinames.get(pk=pk)
+        kpiName.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class FinancialAPI(APIView):
@@ -86,3 +100,8 @@ class FinancialAPI(APIView):
         serializer.save()
         return Response(serializer.data)
 
+    def delete(self, request, startupId, pk):
+        startup = get_startup(request, startupId)
+        financial = startup.financials.get(pk=pk)
+        financial.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
