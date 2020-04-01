@@ -26,6 +26,9 @@ class Investment(models.Model):
     investmentType = models.CharField(max_length=20, blank=True, null=True)
     date = models.DateField(blank=True, null=True)
 
+    class Meta:
+        ordering = ['-date']
+
 
 class KpiName(models.Model):
     startupId = models.ForeignKey(
@@ -43,6 +46,9 @@ class Financial(models.Model):
     monthlyBurn = models.FloatField(blank=True, null=True)
     startDate = models.DateField(blank=True, null=True)
     endDate = models.DateField(blank=True, null=True)
+
+    class Meta:
+        ordering = ['-startDate']
 
 
 class Kpi(models.Model):
