@@ -20,7 +20,7 @@ function testSetup() {
 
 let status = {
     reset: false
-}
+};
 
 function pageSetup() {
     chrome.runtime.onMessage.addListener((message, sender) => {
@@ -29,7 +29,7 @@ function pageSetup() {
 
             function sendConnectionsToBackground() {
                 let profiles_list = createListOfJSONConnections();
-                chrome.runtime.sendMessage({profiles: profiles_list});
+                chrome.runtime.sendMessage({connections: profiles_list});
             }
 
             function sendProgress(visibleN, totalN) {
@@ -125,8 +125,8 @@ function stripProfileInfo(profile, owner) {
 
     return {
         owner: owner,
-        link: profile.href,
+        url: profile.href,
         name: profile.querySelector(selectors.connection.name).textContent.trim(),
-        occupation: profile.querySelector(selectors.connection.occupation).textContent.trim()
+        description: profile.querySelector(selectors.connection.occupation).textContent.trim()
     }
 }
