@@ -7,6 +7,23 @@ import { setCurrent } from "../../actions/startupsActions";
 
 const addKpiNamesModal = ({ addKpiName, current }) => {
   const [currentName, setCurrentName] = useState("");
+  const [defaultKpis, setDefaultKPIs] = useState([
+    {
+      name: "Revenue"
+    },
+    {
+      name: "Cash Balance"
+    },
+    {
+      name: "Monthly Burn"
+    }
+  ]);
+
+  let kpiNo = 0;
+  const incrementKpiNo = () => {
+    kpiNo += 1;
+  };
+
   const [list, setList] = useState([
     {
       startupId: null,
@@ -21,6 +38,7 @@ const addKpiNamesModal = ({ addKpiName, current }) => {
   }, [current]);
 
   const addInput = () => {
+    incrementKpiNo();
     list.push({
       startupId: current.id,
       name: ""
@@ -49,6 +67,21 @@ const addKpiNamesModal = ({ addKpiName, current }) => {
         <h4>Enter KPI Names for {currentName}</h4>
         <div className="center">
           <div className="row">
+            {defaultKpis.map(kpi => {
+              incrementKpiNo();
+              return (
+                <div className="input-field col s4" key={kpiNo}>
+                  <input
+                    disabled
+                    value={kpi.name}
+                    id={kpiNo}
+                    type="text"
+                    className="validate"
+                  />
+                  <label htmlFor={kpiNo}>Kpi Name {kpiNo} (default)</label>
+                </div>
+              );
+            })}
             {list.map((kpi, i) => (
               <div key={i}>
                 <div className="input-field col s4">
@@ -65,7 +98,7 @@ const addKpiNamesModal = ({ addKpiName, current }) => {
                     }}
                   />
                   <label htmlFor={"kpiName" + i} className="active">
-                    KPI Name {i + 1}
+                    KPI Name {kpiNo + 1 + i}
                   </label>
                 </div>
               </div>
@@ -80,12 +113,14 @@ const addKpiNamesModal = ({ addKpiName, current }) => {
         </div>
       </div>
       <div className="modal-footer">
-        <a
-          onClick={onSubmit}
-          className="modal-close waves-effect blue waves-light btn-flat"
-        >
-          Submit
-        </a>
+        <div className="center">
+          <a
+            onClick={onSubmit}
+            className="modal-close waves-effect light-blue waves-light btn"
+          >
+            Submit
+          </a>
+        </div>
       </div>
     </div>
   );

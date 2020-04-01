@@ -145,12 +145,14 @@ const addInvestmentModal = ({ addInvestment, current }) => {
         </div>
       </div>
       <div className="modal-footer">
-        <a
-          onClick={onSubmit}
-          className="modal-close waves-effect blue waves-light btn-flat"
-        >
-          Submit
-        </a>
+        <div className="center">
+          <a
+            onClick={onSubmit}
+            className="modal-close waves-effect light-blue waves-light btn"
+          >
+            Submit
+          </a>
+        </div>
       </div>
     </div>
   );
