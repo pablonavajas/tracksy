@@ -1,67 +1,59 @@
-// User Object
+// User Model
 {
   "username": "username",
   "email": "email1",
-  "password": "xxx",
-  "is_staff": true   // True if VC fund user
+  "password": "xxx"
 }
+
+
+// Info Model
+{
+  "user": "id1",   // OneToOne
+  "isStartup": false
+}
+
 
 // Startup Object
 {
-  "id": 1,
-  "vcAuthId": "userObject",
-  "startupAuthId": "userObject",
+  "users": ["id1", "id2"] // ManyToMany
   "startupEmail": "email",
-  "website": "amazingStartup2366.com", // Provided on Creation
-	"name": "amazingStartup2366", // Provided on Creation
-  "kpi_names": ["CAC", "LVC", "OTHER_METRIC"], // Provided on Creation
-  "investments": [ "InvestmentObject"], // Provided on Creation
-  "jobs" : ["jobObject"], // Not Present on creation
-  "jobLinks" : ["jobLinkObject"], // Not Present on creation
-  "financials": [ "financialObject"] // Not Present on creation 
+  "website": "a.com",
+  "name": "a",
+  "board": "member"
 }
-
-// Access
-{
-  "userObject": "user",
-  "startupObject": "startup"
-}
-
 
 // Investment
 {
   "startupId": "id", // foreign key
-  "date": "2020-01-01",
+  "date": "2020-01-01", // ordered by
   "currency": "£",
   "amount": 10000
 }
 
 // Financial
 {
-  "startupObject": "startup", // foreign key
-  "startData": "2020-01-01",
+  "startupId": "id1", // Foreign key
+  "startDate": 2020-01-01,
+  "endDate": 2020-02-20,
   "currency": "$",
   "revenue" : 100000,
   "cash_balance" : 1000,
   "monthly_burn" : 10,
-  // Confirm more
-  "kpis" : [
-    "kpiObject"
-  ]
 }
 
 
 // Kpi
 {
-  "financialId": "financial", // foreign key
+  "financialId": "financial", // Foreign key
   "name": "CAC",
   "value": 10
 }
 
 // Connection
 {
-  "userObject": "user",
-  "name": "name1",
+  "user": "id1", // Foreign key
+  "owenr": "name1",
+  "name": "name2", // Connection name
   "url": "https://linkedIn/name",
   "description": "Some Job"
 }

@@ -2,17 +2,17 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import permissions
 from django.contrib.auth import authenticate
+from django.contrib.auth.models import User
 from django.core.exceptions import FieldError
 from rest_framework import serializers
 from knox.models import AuthToken
-from .serializers import UserSerializer
+from .serializers import UserSerializer, ConnectionSerializer
 from .models import Info
 
 
 class UserAPI(APIView):
     # Get user info
     def get(self, request):
-        print(request.user.is_authenticated)
         if request.user.is_authenticated:
             serializer = UserSerializer(request.user)
             data = serializer.data
@@ -55,3 +55,25 @@ class IsStartUpAPI(APIView):
 
     def get(self, request):
         return Response(request.user.info.isStartup)
+
+
+class ConnectionsAPI(APIView):
+    def get(self, request):
+        if request.user.is_authenticated:
+            connections = request.user.connections.all()
+            serializer = ConnectionSerializer(connections, many=True)
+            return Response(serializer.data)
+        raise serializers.ValidationError("Not Logged In")
+
+    def post(self, request):
+        username = request.data.get("username")
+        connections = request.data.get("connections")
+        user = User.objects.get(username=username)
+        added = 0
+        for connection in connections:
+            connection['user'] = user.pk
+            serializer = ConnectionSerializer(data=connection)
+            if serializer.is_valid():
+                serializer.save(user=user)
+                added = added + 1
+        return Response({"ConnectionsAdded": added})
