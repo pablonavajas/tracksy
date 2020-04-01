@@ -156,3 +156,5 @@ dmypy.json
 
 #ignore django-rest
 backend/django-rest/
+/tracksy/accounts/migrations/
+/tracksy/startups/migrations/

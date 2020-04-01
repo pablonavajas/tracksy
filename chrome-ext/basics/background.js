@@ -7,16 +7,15 @@ let status = {
   tabId: undefined,
   inProgress: false,
   progress: "0%",
-  email: undefined
+  username: "david"
 };
 
 chrome.runtime.onMessage.addListener((message, sender) => {
   // TODO: check where the message is coming from (e.g. sender.tab.url)
-  if (message.profiles !== undefined) {
-    console.log(message);
+  if (message.connections !== undefined) {
     status.success = true;
     // Let the popup know
-    sendpost(message);
+    sendpost(message.connections);
     chrome.runtime.sendMessage({ status: status });
   } else if (message.getConnections !== undefined) {
     status.inProgress = true;
@@ -38,11 +37,12 @@ chrome.runtime.onMessage.addListener((message, sender) => {
   }
 });
 
-function getConnections(tabId) {
-  chrome.tabs.sendMessage(tabId, { getConnections: true });
-}
-
-function sendpost(data) {
+function sendpost(connections) {
+  let data = {
+    "username": status.username,
+    "connections": connections
+  };
+  console.log(data);
   console.log("Sending data!");
   let options = {
     method: "POST",
@@ -54,5 +54,5 @@ function sendpost(data) {
 
   chrome.runtime.sendMessage({ connectionsSent: true });
 
-  fetch("https://track-shsfw.run-us-west2.goorm.io/postThis/", options);
+  fetch("http://127.0.0.1:8000/api/connections", options);
 }

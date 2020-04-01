@@ -66,6 +66,7 @@ class ConnectionsAPI(APIView):
         raise serializers.ValidationError("Not Logged In")
 
     def post(self, request):
+        print(request.data)
         username = request.data.get("username")
         connections = request.data.get("connections")
         user = User.objects.get(username=username)

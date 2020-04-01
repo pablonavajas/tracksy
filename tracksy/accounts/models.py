@@ -11,5 +11,5 @@ class Connection(models.Model):
     user = models.ForeignKey(User, related_name="connections", on_delete=models.CASCADE)
     owner = models.CharField(max_length=100)
     name = models.CharField(max_length=100, blank=True, null=True)
-    url = models.URLField(blank=True, null=True)  # TODO: add hyperlink field
+    url = models.URLField(blank=True, null=True, unique=True)
     description = models.CharField(max_length=200, blank=True, null=True)
