@@ -1,11 +1,16 @@
 import React, { useState, useEffect, Fragment } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { addKpiName } from "../../actions/kpiActions";
+import { addKpiName, deleteKpiName } from "../../actions/kpiActions";
 import CurrencyFormat from "react-currency-format";
-import { setCurrent } from "../../actions/startupsActions";
+import { setCurrent, getStartups } from "../../actions/startupsActions";
 
-const addKpiNamesModal = ({ addKpiName, current }) => {
+const addKpiNamesModal = ({
+  addKpiName,
+  deleteKpiName,
+  getStartups,
+  current
+}) => {
   const [currentName, setCurrentName] = useState("");
   const [defaultKpis, setDefaultKPIs] = useState([
     {
@@ -23,6 +28,9 @@ const addKpiNamesModal = ({ addKpiName, current }) => {
   const incrementKpiNo = () => {
     kpiNo += 1;
   };
+  const decrementKpiNo = () => {
+    kpiNo -= 1;
+  };
 
   const [list, setList] = useState([
     {
@@ -34,6 +42,8 @@ const addKpiNamesModal = ({ addKpiName, current }) => {
   useEffect(() => {
     if (current) {
       setCurrentName(current.name);
+      console.log(current.kpinames);
+      setList(current.kpinames);
     }
   }, [current]);
 
@@ -44,21 +54,38 @@ const addKpiNamesModal = ({ addKpiName, current }) => {
       name: ""
     });
     setList([...list]);
+    console.log("After adding the input:");
+    console.log(list);
+  };
+
+  // 0-based index
+  const deleteInput = index => {
+    // delete the inputs from database if they were already there
+    if (list[index].id) {
+      deleteKpiName(current.id, list[index].id);
+    }
+
+    //delete the inputs from the modal
+    decrementKpiNo();
+    list.splice(index, 1);
+    setList([...list]);
+  };
+
+  const onSubmitHelper = callback => {
+    list.map(kpiName => {
+      if (kpiName.id) console.log(kpiName.id);
+      if (kpiName.name) addKpiName(kpiName);
+      // console.log("in map");
+    });
+    callback();
   };
 
   const onSubmit = () => {
-    list.map(kpiName => {
-      addKpiName(kpiName);
+    onSubmitHelper(() => {
+      // console.log("calling get");
+      // retrieve all the startups with changed KPI names
+      getStartups();
     });
-
-    // Clear fields
-    // setList([]);
-    setList([
-      {
-        startupId: null,
-        name: ""
-      }
-    ]);
   };
 
   return (
@@ -100,6 +127,11 @@ const addKpiNamesModal = ({ addKpiName, current }) => {
                   <label htmlFor={"kpiName" + i} className="active">
                     KPI Name {kpiNo + 1 + i}
                   </label>
+                  <a href="#" onClick={() => deleteInput(i)}>
+                    <i className=" material-icons grey-text postfix">
+                      delete_forever
+                    </i>
+                  </a>
                 </div>
               </div>
             ))}
@@ -141,4 +173,8 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps, { addKpiName })(addKpiNamesModal);
+export default connect(mapStateToProps, {
+  addKpiName,
+  getStartups,
+  deleteKpiName
+})(addKpiNamesModal);

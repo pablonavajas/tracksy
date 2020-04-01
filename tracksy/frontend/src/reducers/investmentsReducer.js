@@ -7,7 +7,8 @@ import {
   DELETE_STARTUP,
   SET_CURRENT,
   CLEAR_CURRENT,
-  ADD_INVESTMENT
+  ADD_INVESTMENT,
+  DELETE_INVESTMENT
 } from "../actions/types";
 
 const initialState = {
@@ -21,14 +22,14 @@ export default (state = initialState, action) => {
         ...state, // state is immutable
         investments: [...state.investments, action.payload]
       };
-    // case DELETE_STARTUP:
-    //   return {
-    //     ...state,
-    //     startups: state.startups.filter(
-    //       startup => startup.id !== action.payload
-    //     ),
-    //     loading: false
-    //   };
+    case DELETE_INVESTMENT:
+      return {
+        ...state,
+        investments: state.investments.filter(
+          investment => investment.id !== action.payload
+        )
+      };
+
     default:
       return state;
   }
