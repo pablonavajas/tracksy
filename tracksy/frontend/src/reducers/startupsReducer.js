@@ -8,7 +8,9 @@ import {
   SET_CURRENT,
   CLEAR_CURRENT,
   SET_CURRENT_BASED_ON_NAME_AND_WEBSITE,
-  ADD_FINANCIAL
+  ADD_FINANCIAL,
+  ADD_INVESTMENTS,
+  DELETE_INVESTMENT
 } from "../actions/types";
 
 const initialState = {
@@ -64,6 +66,30 @@ export default (state = initialState, action) => {
             return startup;
           }
         })
+      };
+    case ADD_INVESTMENTS:
+      return {
+        ...state,
+        startups: state.startups.map(startup => {
+          if (startup.id === action.payload.startupId) {
+            startup.investments = action.payload.investments;
+          }
+          return startup;
+        }),
+        loading: false
+      };
+    case DELETE_INVESTMENT:
+      return {
+        ...state,
+        startups: state.startups.map(startup => {
+          if (startup.id === action.payload.startupId) {
+            startup.investments = startup.investments.filter(
+              investment => investment.id !== action.payload.investmentId
+            );
+          }
+          return startup;
+        }),
+        loading: false
       };
     case CLEAR_CURRENT:
       return {

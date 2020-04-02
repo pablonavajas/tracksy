@@ -1,25 +1,30 @@
-import { ADD_INVESTMENT, DELETE_INVESTMENT } from "./types";
+import { ADD_INVESTMENTS, DELETE_INVESTMENT } from "./types";
 import axios from "axios";
 import { createMessage, returnErrors } from "./messageActions";
 import { tokenConfig } from "./authActions";
 import { setLoading } from "./startupsActions";
 
 //Getting All Startups
-export const addInvestment = investment => async (dispatch, getState) => {
+export const addInvestments = (startupId, investments) => async (
+  dispatch,
+  getState
+) => {
   try {
-    console.log(investment);
-    setLoading();
-
     const res = await axios.post(
-      "/api/investments/",
-      investment,
+      `/api/investments/${startupId}/`,
+      investments,
       tokenConfig(getState)
     );
 
-    dispatch(createMessage({ investmentAdded: "Investment has been added" }));
+    dispatch(
+      createMessage({
+        investmentsAdded: "Investments added/edited successfully"
+      })
+    );
+    console.log("dispatching action to add investments");
     dispatch({
-      type: ADD_INVESTMENT,
-      payload: res.data
+      type: ADD_INVESTMENTS,
+      payload: { investments: res.data, startupId }
     });
   } catch (err) {
     dispatch(returnErrors(err.response.data, err.response.status));
@@ -27,24 +32,21 @@ export const addInvestment = investment => async (dispatch, getState) => {
 };
 
 //Delete Investment
-export const deleteInvestment = (startupId, investmetntId) => async (
+export const deleteInvestment = (startupId, investmentId) => async (
   dispatch,
   getState
 ) => {
   try {
-    setLoading();
-
     await axios.delete(
-      `/api/investments/${startupId}/${investmetntId}/`,
+      `/api/investments/${startupId}/${investmentId}/`,
       tokenConfig(getState)
     );
 
     dispatch({
       type: DELETE_INVESTMENT,
-      payload: investmetntId
+      payload: { investmentId, startupId }
     });
   } catch (err) {
-    console.log(err);
     dispatch(returnErrors(err.response.data, err.response.status));
   }
 };

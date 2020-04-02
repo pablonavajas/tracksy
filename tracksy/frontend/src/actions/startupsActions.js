@@ -8,8 +8,7 @@ import {
   DELETE_STARTUP,
   SET_CURRENT,
   CLEAR_CURRENT,
-  CREATE_MESSAGE,
-  SET_CURRENT_BASED_ON_NAME_AND_WEBSITE
+  CREATE_MESSAGE
 } from "./types";
 import axios from "axios";
 import { createMessage, returnErrors } from "./messageActions";
@@ -35,8 +34,6 @@ export const getStartups = () => async (dispatch, getState) => {
 
 //Add New Startup
 export const addStartup = startup => async (dispatch, getState) => {
-  //const config = { headers: { "Content-Type": "application/json" } };
-
   try {
     setLoading();
     const res = await axios.post(
@@ -56,12 +53,6 @@ export const addStartup = startup => async (dispatch, getState) => {
 export const updateStartup = startup => async (dispatch, getState) => {
   try {
     setLoading();
-
-    const config = {
-      headers: {
-        "Content-Type": "application/json"
-      }
-    };
 
     const res = await axios.put(
       `/api/startups/${startup.id}/`,

@@ -57,8 +57,8 @@ export class Alerts extends Component {
       if (message.passwordsNotMatch) {
         alert.error(message.passwordsNotMatch);
       }
-      if (message.investmentAdded) {
-        alert.success(message.investmentAdded);
+      if (message.investmentsAdded) {
+        alert.success(message.investmentsAdded);
       }
       if (message.kpiNameAdded) {
         alert.success(message.kpiNameAdded);

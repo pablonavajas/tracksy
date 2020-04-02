@@ -115,4 +115,13 @@ StartupItem.propTypes = {
   setCurrent: PropTypes.func.isRequired
 };
 
-export default connect(null, { setCurrent, deleteStartup })(StartupItem);
+// Inject App Level state, so that
+// component updates upon an update of info
+// (e.g. added investment)
+const mapStateToProps = state => ({
+  startups: state.startup.startups
+});
+
+export default connect(mapStateToProps, { setCurrent, deleteStartup })(
+  StartupItem
+);
