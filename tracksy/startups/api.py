@@ -18,6 +18,7 @@ from rest_framework.response import Response
 from rest_framework.serializers import ValidationError
 from rest_framework import status
 from django.core.exceptions import ObjectDoesNotExist
+from .angel_get import get_description
 
 
 # Startup Viewset (crud API, without specifying requests, managed by django)
@@ -66,13 +67,12 @@ def startup_field_proccesor(request, startupId, Serializer, field, many=True):
         for data_item in data:
             process_field(data_item, startup, Serializer, field)
         query = getattr(startup, field).all()
+        serializer = Serializer(data=query, many=many)
+        serializer.is_valid()
+        return serializer.data
     else:
-        process_field(data, startup, Serializer, field)
-        query = getattr(startup, field).get(pk=data.get['id'])
+        return process_field(data, startup, Serializer, field)
 
-    serializer = Serializer(data=query, many=many)
-    serializer.is_valid()
-    return serializer.data
 
 
 class InvestmentAPI(APIView):
@@ -99,7 +99,7 @@ class KpiNameAPI(APIView):
         return Response(response)
 
     def delete(self, request, startupId, pk):
-        startup = get_startup(request, startupId)
+        startup = get_startup(request.user, startupId)
         kpiName = startup.kpinames.get(pk=pk)
         kpiName.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
@@ -110,13 +110,18 @@ class FinancialAPI(APIView):
 
     def post(self, request, startupId):
         response = startup_field_proccesor(request, startupId, FinancialSerializer,
-                                           "financials", many=True)
+                                           "financials", many=False)
         return Response(response)
 
     def delete(self, request, startupId, pk):
-        startup = get_startup(request, startupId)
+        startup = get_startup(request.user, startupId)
         financial = startup.financials.get(pk=pk)
         financial.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+class AngelJobAPI(APIView):
+    permission_classes = [permissions.IsAuthenticated]
 
+    def post(self, request):
+        job_description = get_description(request.data['url'])
+        return Response(job_description)
