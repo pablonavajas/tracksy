@@ -12,5 +12,3 @@ urlpatterns.append(path('api/kpiNames/', KpiNameAPI.as_view()))
 urlpatterns.append(path('api/kpiNames/<int:startupId>/<int:pk>/', KpiNameAPI.as_view()))
 urlpatterns.append(path('api/financials/', FinancialAPI.as_view()))
 urlpatterns.append(path('api/financials/<int:startupId>/<int:pk>/', FinancialAPI.as_view()))
-
-urlpatterns.append(path('api/info/', InfoAPI.as_view()))

@@ -17,6 +17,7 @@ from .serializers import *
 from rest_framework.response import Response
 from rest_framework.serializers import ValidationError
 from rest_framework import status
+from django.core.exceptions import ObjectDoesNotExist
 
 
 # Startup Viewset (crud API, without specifying requests, managed by django)
@@ -41,31 +42,40 @@ def get_startup(user, pk=None):
     return startup
 
 
+def list_processor(request, Serializer, field):
+    response = {"added": [], "error": []}
+    data_list = request.data
+    startup = None
+    if type(data_list) is dict:
+        data_list = [data_list]
+    for data in data_list:
+        try:
+            startup = get_startup(request.user, pk=data.get('startupId'))
+            fieldId = data.get('id')
+            if fieldId is None:
+                serializer = Serializer(data=data)
+            else:
+                instance = getattr(startup, field).get(pk=fieldId)
+                serializer = Serializer(instance=instance, data=data)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            response['added'].append(serializer.data)
+        except (ValidationError, ObjectDoesNotExist) as err:
+            data['error'] = "{0}".format(err)
+            response['error'].append(data)
+
+    print("response:", response)
+    query = getattr(startup, field).all()
+    serializer = Serializer(query, many=True)
+    return serializer.data
+
+
 class InvestmentAPI(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request):
-        response = {"added": [], "error": []}
-        data_list = request.data
-        if type(data_list) is dict:
-            data_list = [data_list]
-        for data in data_list:
-            startup = get_startup(request.user, pk=data.get('startupId'))
-            investmentId = data.get('id')
-            if investmentId is None:
-                serializer = InvestmentSerializer(data=data)
-            else:
-                investment = startup.investments.get(pk=investmentId)
-                serializer = InvestmentSerializer(instance=investment, data=data)
-
-            if serializer.is_valid():
-                serializer.save()
-                response['added'].append(serializer.data)
-            else:
-                response['error'].append(serializer.data)
-
+        response = list_processor(request, InvestmentSerializer, "investments")
         return Response(response)
-
 
     def delete(self, request, startupId, pk):
         startup = get_startup(request.user, pk=startupId)
@@ -78,25 +88,7 @@ class KpiNameAPI(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request):
-        response = {"added": [], "error": []}
-        data_list = request.data
-        if type(data_list) is dict:
-            data_list = [data_list]
-        for data in data_list:
-            startup = get_startup(request.user, data.get('startupId'))
-            kpiNameId = data.get('id')
-            if kpiNameId is None:
-                serializer = KpiNameSerializer(data=data)
-            else:
-                kpiName = startup.kpinames.get(pk=kpiNameId)
-                serializer = KpiNameSerializer(instance=kpiName, data=data)
-
-            if serializer.is_valid():
-                serializer.save()
-                response["added"].append(serializer.data)
-            else:
-                response["error"].append(serializer.data)
-
+        response = list_processor(request, KpiNameSerializer, "kpinames")
         return Response(response)
 
     def delete(self, request, startupId, pk):
@@ -128,11 +120,3 @@ class FinancialAPI(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-class InfoAPI(APIView):
-
-    def post(self, request):
-        if type(request.data) is list:
-            print("this is list")
-        print(type(request.data))
-        print(type(request.data[0]))
-        return Response({"hello":"world"})
