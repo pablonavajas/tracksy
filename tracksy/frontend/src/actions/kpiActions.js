@@ -18,7 +18,9 @@ export const addKpiNames = (startupId, kpiNames) => async (
       tokenConfig(getState)
     );
 
-    dispatch(createMessage("KPI names have been added/edited"));
+    dispatch(
+      createMessage({ succ: "KPI names have been added/edited successfully" })
+    );
     dispatch({
       type: ADD_KPI_NAMES,
       payload: { kpiNames: res.data, startupId }
@@ -42,7 +44,7 @@ export const deleteKpiName = (startupId, kpiNameId) => async (
       tokenConfig(getState)
     );
 
-    dispatch(createMessage("KPI name deleted"));
+    dispatch(createMessage({ succ: "KPI name deleted successfully" }));
 
     dispatch({
       type: DELETE_KPI_NAME,

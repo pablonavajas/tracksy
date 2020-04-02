@@ -15,8 +15,11 @@ export const addInvestments = (startupId, investments) => async (
       tokenConfig(getState)
     );
 
-    dispatch(createMessage("Investments added/edited successfully"));
-    console.log("dispatching action to add investments");
+    dispatch(
+      createMessage({
+        succ: "Investments added/edited successfully"
+      })
+    );
     dispatch({
       type: ADD_INVESTMENTS,
       payload: { investments: res.data, startupId }
@@ -36,7 +39,11 @@ export const deleteInvestment = (startupId, investmentId) => async (
       `/api/investments/${startupId}/${investmentId}/`,
       tokenConfig(getState)
     );
-    dispatch(createMessage("Investment deleted successfully"));
+    dispatch(
+      createMessage({
+        succ: "Investment deleted successfully"
+      })
+    );
 
     dispatch({
       type: DELETE_INVESTMENT,

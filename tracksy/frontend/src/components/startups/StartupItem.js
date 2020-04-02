@@ -9,9 +9,9 @@ const StartupItem = ({ startup, setCurrent, deleteStartup }) => {
   return (
     <tr>
       <th className="center">
-        <a href={"https://" + startup.website}>
+        <a href={`https://${startup.website}`}>
           <img
-            src={"http://logo.clearbit.com/" + startup.website}
+            src={`http://logo.clearbit.com/${startup.website}`}
             alt=""
             width="100"
             height="100"
@@ -27,12 +27,10 @@ const StartupItem = ({ startup, setCurrent, deleteStartup }) => {
       </td>
 
       <td className="center">
-        {startup.investments.map((investment, i) => (
+        {startup.investments.map(investment => (
           <div className="center" key={investment.id}>
             <div className="chip center">
               <p>
-                {i + 1}
-                {". "}
                 <CurrencyFormat
                   value={investment.value}
                   displayType={"text"}

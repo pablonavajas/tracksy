@@ -6,20 +6,12 @@ import StartupItem from "./StartupItem";
 import { getStartups } from "../../actions/startupsActions";
 import AddStartupBtn from "./../layout/AddStartupBtn";
 
-export const Startups = ({
-  investments,
-  startup: { startups, loading },
-  getStartups
-}) => {
+export const Startups = ({ startup: { startups, loading }, getStartups }) => {
   //everything inside useEffect hook, gets called at page start up if [] is empty
   useEffect(() => {
     getStartups();
     // eslint-disable-next-line
   }, []);
-
-  useEffect(() => {
-    getStartups();
-  }, [investments]);
 
   if (loading || startups === null) {
     return (
@@ -48,12 +40,14 @@ export const Startups = ({
               <table className="striped centered">
                 <thead>
                   <tr>
-                    <th>Logo</th>
+                    <th>Name</th>
                     <th>Ownership (%)</th>
                     <th>Board</th>
                     <th className="center">Investment</th>
-                    <td className="center">Type</td>
-                    <td className="center">Closed</td>
+                    <th className="center">Type</th>
+                    <th className="center">Closed</th>
+                    <th></th>
+                    <th></th>
                     <th></th>
                     <th></th>
                   </tr>

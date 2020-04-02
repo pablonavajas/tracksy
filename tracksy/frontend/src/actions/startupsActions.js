@@ -41,8 +41,7 @@ export const addStartup = startup => async (dispatch, getState) => {
       startup,
       tokenConfig(getState)
     );
-
-    dispatch(createMessage("Startup has been added"));
+    dispatch(createMessage({ succ: "Startup has been added" }));
     dispatch({ type: SET_CURRENT, payload: res.data });
     dispatch({ type: ADD_STARTUP, payload: res.data });
   } catch (err) {
@@ -61,7 +60,7 @@ export const updateStartup = startup => async (dispatch, getState) => {
       tokenConfig(getState)
     );
 
-    dispatch(createMessage("Startup information has been updated"));
+    dispatch(createMessage({ succ: "Startup information has been updated" }));
     dispatch({
       type: UPDATE_STARTUP,
       payload: res.data
@@ -78,7 +77,7 @@ export const deleteStartup = id => async (dispatch, getState) => {
 
     await axios.delete(`/api/startups/${id}/`, tokenConfig(getState));
 
-    dispatch(createMessage("Startup has been deleted"));
+    dispatch(createMessage({ succ: "Startup has been deleted" }));
     dispatch({
       type: DELETE_STARTUP,
       payload: id
