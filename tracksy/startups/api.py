@@ -67,13 +67,12 @@ def startup_field_proccesor(request, startupId, Serializer, field, many=True):
         for data_item in data:
             process_field(data_item, startup, Serializer, field)
         query = getattr(startup, field).all()
+        serializer = Serializer(data=query, many=many)
+        serializer.is_valid()
+        return serializer.data
     else:
-        process_field(data, startup, Serializer, field)
-        query = getattr(startup, field).get(pk=data.get['id'])
+        return process_field(data, startup, Serializer, field)
 
-    serializer = Serializer(data=query, many=many)
-    serializer.is_valid()
-    return serializer.data
 
 
 class InvestmentAPI(APIView):
