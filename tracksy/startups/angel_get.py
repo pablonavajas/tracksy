@@ -8,16 +8,11 @@
         https://angel.co/company/globe-7/jobs/761230-cloud-engineer
         https://angel.co/company/konghq/jobs/761395-senior-software-engineer-kubernetes-remote
         https://angel.co/company/konghq/jobs/675881-technical-solutions-engineer
-
-    TODO: agree on format for output
 """
 
 import sys
 import requests
 from bs4 import BeautifulSoup
-
-# from selenium import webdriver
-# from selenium.webdriver.chrome.options import Options
 
 
 class Selectors:
@@ -85,11 +80,10 @@ if "webdriver" in sys.modules:
         """ Set up headless chrome driver
 
         Requirements:
-            selenium
-            chrome webdriver
+            selenium (from selenium import webdriver)
+            chrome webdriver (from selenium.webdriver.chrome.options import Options)
         """
-
-            options = Options()
+        options = Options()
         options.headless = True
         options.add_argument(f'user-agent={user_agent}')
         return webdriver.Chrome('/Applications/chromedriver', options=options)
