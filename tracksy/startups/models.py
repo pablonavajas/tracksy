@@ -55,3 +55,4 @@ class Kpi(models.Model):
     financialId = models.ForeignKey(
         Financial, related_name='kpis', on_delete=models.CASCADE, blank=True, null=True)
     name = models.CharField(max_length=20, blank=True, null=True)
+    value = models.FloatField(blank=True, null=True)
