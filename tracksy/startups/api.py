@@ -18,6 +18,7 @@ from rest_framework.response import Response
 from rest_framework.serializers import ValidationError
 from rest_framework import status
 from django.core.exceptions import ObjectDoesNotExist
+from .angel_get import get_description
 
 
 # Startup Viewset (crud API, without specifying requests, managed by django)
@@ -119,4 +120,9 @@ class FinancialAPI(APIView):
         financial.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+class AngelJobAPI(APIView):
+    permission_classes = [permissions.IsAuthenticated]
 
+    def post(self, request):
+        job_description = get_description(request.data['url'])
+        return Response(job_description)
