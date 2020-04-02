@@ -100,7 +100,7 @@ class KpiNameAPI(APIView):
         return Response(response)
 
     def delete(self, request, startupId, pk):
-        startup = get_startup(request, startupId)
+        startup = get_startup(request.user, startupId)
         kpiName = startup.kpinames.get(pk=pk)
         kpiName.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
@@ -111,11 +111,11 @@ class FinancialAPI(APIView):
 
     def post(self, request, startupId):
         response = startup_field_proccesor(request, startupId, FinancialSerializer,
-                                           "financials", many=True)
+                                           "financials", many=False)
         return Response(response)
 
     def delete(self, request, startupId, pk):
-        startup = get_startup(request, startupId)
+        startup = get_startup(request.user, startupId)
         financial = startup.financials.get(pk=pk)
         financial.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
