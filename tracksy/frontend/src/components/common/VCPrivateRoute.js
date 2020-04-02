@@ -17,7 +17,7 @@ const VCPrivateRoute = ({ component: Component, auth, ...rest }) => (
         return <Redirect to="/login" />;
       } else if (auth.isStartup) {
         // console.log(auth.isStartup);
-        return <Redirect to="/startupForm" />;
+        return <Redirect to="/startupPage" />;
       } else {
         return <Component {...props} />;
       }

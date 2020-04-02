@@ -8,15 +8,16 @@ const VCPrivateRoute = ({ component: Component, auth, ...rest }) => (
     {...rest}
     render={props => {
       if (auth.isLoading) {
+        console.log("loading");
         return (
           <div className="progress">
             <div className="indeterminate" />
           </div>
         );
       } else if (!auth.isAuthenticated && !localStorage.token) {
-        console.log(auth.user);
+        console.log("/login");
         return <Redirect to="/login" />;
-      } else if (!auth.isStartup) {
+      } else if (auth.isStartup === false && auth.isLoading === false) {
         return <Redirect to="/" />;
       } else {
         return <Component {...props} />;
