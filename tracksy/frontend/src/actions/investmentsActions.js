@@ -1,4 +1,4 @@
-import { ADD_INVESTMENT } from "./types";
+import { ADD_INVESTMENT, DELETE_INVESTMENT } from "./types";
 import axios from "axios";
 import { createMessage, returnErrors } from "./messageActions";
 import { tokenConfig } from "./authActions";
@@ -22,6 +22,29 @@ export const addInvestment = investment => async (dispatch, getState) => {
       payload: res.data
     });
   } catch (err) {
+    dispatch(returnErrors(err.response.data, err.response.status));
+  }
+};
+
+//Delete Investment
+export const deleteInvestment = (startupId, investmetntId) => async (
+  dispatch,
+  getState
+) => {
+  try {
+    setLoading();
+
+    await axios.delete(
+      `/api/investments/${startupId}/${investmetntId}/`,
+      tokenConfig(getState)
+    );
+
+    dispatch({
+      type: DELETE_INVESTMENT,
+      payload: investmetntId
+    });
+  } catch (err) {
+    console.log(err);
     dispatch(returnErrors(err.response.data, err.response.status));
   }
 };

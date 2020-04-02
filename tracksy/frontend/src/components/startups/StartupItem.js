@@ -96,7 +96,6 @@ const StartupItem = ({ startup, setCurrent, deleteStartup }) => {
           </a>
         </td>
       )}
-
       <td>
         <a
           href="/"
