@@ -16,9 +16,7 @@ export const addFinancial = (startupId, financialObj) => async (
       tokenConfig(getState)
     );
 
-    dispatch(
-      createMessage({ financialAdded: "Form has been successfully submitted!" })
-    );
+    dispatch(createMessage("Form has been successfully submitted!"));
     dispatch({
       type: ADD_FINANCIAL,
       payload: res.data

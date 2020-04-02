@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 export class Alerts extends Component {
   static propTypes = {
     error: PropTypes.object.isRequired,
-    message: PropTypes.object.isRequired
+    message: PropTypes.string.isRequired
   };
 
   // prevProps (how does this get pulled in)
@@ -18,15 +18,10 @@ export class Alerts extends Component {
         alert.error(`Name: ${error.msg.name.join()}`);
       } else if (error.msg.ownership) {
         alert.error(`Ownership: ${error.msg.ownership.join()}`);
-      } else if (error.msg.investment_1) {
-        alert.error(`Investment 1: ${error.msg.investment_1.join()}`);
-      } else if (error.msg.investment_2) {
-        alert.error(`Investment 2: ${error.msg.investment_2.join()}`);
-      } else if (error.msg.date_closed_1) {
-        alert.error(`Date Closed 1: ${error.msg.date_closed_1.join()}`);
-      } else if (error.msg.date_closed_2) {
-        alert.error(`Date Closed 2: ${error.msg.date_closed_2.join()}`);
-      } else {
+      } else if (error.msg.website) {
+        alert.error(`Website: ${error.msg.website.join()}`);
+      } else if (error.msg.startupEmail) {
+        alert.error(`Startup Email: ${error.msg.startupEmail.join()}`);
       }
 
       if (error.msg.revenue) {
@@ -45,27 +40,7 @@ export class Alerts extends Component {
     }
 
     if (message !== prevProps.message) {
-      if (message.startupAdded) {
-        alert.success(message.startupAdded);
-      }
-      if (message.startupDeleted) {
-        alert.success(message.startupDeleted);
-      }
-      if (message.startupUpdated) {
-        alert.success(message.startupUpdated);
-      }
-      if (message.passwordsNotMatch) {
-        alert.error(message.passwordsNotMatch);
-      }
-      if (message.investmentsAdded) {
-        alert.success(message.investmentsAdded);
-      }
-      if (message.kpiNameAdded) {
-        alert.success(message.kpiNameAdded);
-      }
-      if (message.financialAdded) {
-        alert.success(message.financialAdded);
-      }
+      alert.success(message);
     }
   }
 

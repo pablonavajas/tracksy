@@ -98,8 +98,11 @@ const StartupItem = ({ startup, setCurrent, deleteStartup }) => {
       )}
       <td>
         <a
-          href="/"
-          onClick={() => deleteStartup(startup.id)}
+          href="#!"
+          onClick={e => {
+            e.preventDefault();
+            deleteStartup(startup.id);
+          }}
           className="secondary-content"
         >
           <i className="material-icons blue-text">delete</i>

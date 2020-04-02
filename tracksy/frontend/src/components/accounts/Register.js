@@ -22,7 +22,7 @@ export class Register extends Component {
     e.preventDefault();
     const { username, email, password, password2 } = this.state;
     if (password != password2) {
-      this.props.createMessage({ passwordsNotMatch: "Password do not match" });
+      this.props.createMessage("Password do not match");
     } else {
       const newUser = {
         username,
