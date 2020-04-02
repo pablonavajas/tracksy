@@ -21,7 +21,6 @@ export const addFinancial = financialObj => async (dispatch, getState) => {
       payload: res.data
     });
   } catch (err) {
-    console.log(err.response.data);
     dispatch(returnErrors(err.response.data, err.response.status));
   }
 };

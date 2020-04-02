@@ -33,6 +33,7 @@ import M from "materialize-css";
 import StartupForm from "./startupForm/StartupForm";
 import AddInvestmentModal from "./startups/AddInvestmentModal";
 import AddKpiNamesModal from "./startups/AddKpiNamesModal";
+import StartupPage from "./startupForm/StartupPage";
 
 // Alert Options
 const alertOptions = {
@@ -62,6 +63,11 @@ class App extends Component {
                   <AddKpiNamesModal />
                   <Switch>
                     <VCPrivateRoute exact path="/" component={Startups} />
+                    <StartupPrivateRoute
+                      exact
+                      path="/startupPage"
+                      component={StartupPage}
+                    />
                     <StartupPrivateRoute
                       exact
                       path="/startupForm"

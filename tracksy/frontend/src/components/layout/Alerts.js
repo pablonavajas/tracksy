@@ -29,6 +29,14 @@ export class Alerts extends Component {
       } else {
       }
 
+      if (error.msg.revenue) {
+        alert.error(`Revenue: ${error.msg.revenue.join()}`);
+      } else if (error.msg.cashBalance) {
+        alert.error(`Cash Balance: ${error.msg.cashBalance.join()}`);
+      } else if (error.msg.monthlyBurn) {
+        alert.error(`Cash Balance: ${error.msg.monthlyBurn.join()}`);
+      }
+
       if (error.msg.non_field_errors) {
         alert.error(error.msg.non_field_errors.join());
       } else if (error.msg.username) {

@@ -7,7 +7,8 @@ import {
   DELETE_STARTUP,
   SET_CURRENT,
   CLEAR_CURRENT,
-  SET_CURRENT_BASED_ON_NAME_AND_WEBSITE
+  SET_CURRENT_BASED_ON_NAME_AND_WEBSITE,
+  ADD_FINANCIAL
 } from "../actions/types";
 
 const initialState = {
@@ -52,17 +53,15 @@ export default (state = initialState, action) => {
         ...state,
         current: action.payload
       };
-    case SET_CURRENT_BASED_ON_NAME_AND_WEBSITE:
+    case ADD_FINANCIAL:
       return {
         ...state,
-        current: state.startups.filter(startup => {
-          if (
-            startup.name === action.payload.name &&
-            startup.website === action.payload.website
-          ) {
+        startups: state.startups.map(startup => {
+          if (startup.id === action.payload.startupId) {
+            startup.financials.push(action.payload);
             return startup;
           } else {
-            return null;
+            return startup;
           }
         })
       };
