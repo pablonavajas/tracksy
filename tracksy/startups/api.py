@@ -42,31 +42,36 @@ def get_startup(user, pk=None):
     return startup
 
 
-def list_processor(request, startupId, Serializer, field):
-    response = {"added": [], "error": []}
-    data_list = request.data
-    startup = get_startup(request.user, pk=startupId)
-    if type(data_list) is dict:
-        data_list = [data_list]
-    for data in data_list:
-        data['startupId'] = startupId
-        try:
-            fieldId = data.get('id')
-            if fieldId is None:
-                serializer = Serializer(data=data)
-            else:
-                instance = getattr(startup, field).get(pk=fieldId)
-                serializer = Serializer(instance=instance, data=data)
-            serializer.is_valid(raise_exception=True)
-            serializer.save()
-            response['added'].append(serializer.data)
-        except (ValidationError, ObjectDoesNotExist) as err:
-            data['error'] = "{0}".format(err)
-            response['error'].append(data)
+def process_field(data, startup, Serializer, field):
+    data['startupId'] = startup.pk
+    try:
+        field_id = data.get('id')
+        if field_id is None:
+            serializer = Serializer(data=data)
+        else:
+            instance = getattr(startup, field).get(pk=field_id)
+            serializer = Serializer(instance=instance, data=data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return serializer.data
+    except (ValidationError, ObjectDoesNotExist) as err:
+        print("Error ({}) when adding object: {}".format(err, data))
 
-    print("response:", response)
-    query = getattr(startup, field).all()
-    serializer = Serializer(query, many=True)
+def startup_field_proccesor(request, startupId, Serializer, field, many=True):
+    data = request.data
+    startup = get_startup(request.user, pk=startupId)
+    if many is True:
+        if type(data) is dict:
+            data = [data]
+        for data_item in data:
+            process_field(data_item, startup, Serializer, field)
+        query = getattr(startup, field).all()
+    else:
+        process_field(data, startup, Serializer, field)
+        query = getattr(startup, field).get(pk=data.get['id'])
+
+    serializer = Serializer(data=query, many=many)
+    serializer.is_valid()
     return serializer.data
 
 
@@ -74,7 +79,8 @@ class InvestmentAPI(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request, startupId):
-        response = list_processor(request, startupId, InvestmentSerializer, "investments")
+        response = startup_field_proccesor(request, startupId, InvestmentSerializer,
+                                           "investments", many=True)
         return Response(response)
 
     def delete(self, request, startupId, pk):
@@ -88,7 +94,8 @@ class KpiNameAPI(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request, startupId):
-        response = list_processor(request, startupId, KpiNameSerializer, "kpinames")
+        response = startup_field_proccesor(request, startupId, KpiNameSerializer,
+                                           "kpinames", many=True)
         return Response(response)
 
     def delete(self, request, startupId, pk):
@@ -102,18 +109,9 @@ class FinancialAPI(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request, startupId):
-        data = request.data
-        startup = get_startup(request.user, startupId)
-        data['startupId'] = startupId
-        id = data.get('id')
-        if id is None:
-            serializer = FinancialSerializer(data=data)
-        else:
-            financial_instance = startup.financials.get(pk=id)
-            serializer = FinancialSerializer(instance=financial_instance, data=data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data)
+        response = startup_field_proccesor(request, startupId, FinancialSerializer,
+                                           "financials", many=True)
+        return Response(response)
 
     def delete(self, request, startupId, pk):
         startup = get_startup(request, startupId)
