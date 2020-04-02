@@ -42,15 +42,15 @@ def get_startup(user, pk=None):
     return startup
 
 
-def list_processor(request, Serializer, field):
+def list_processor(request, startupId, Serializer, field):
     response = {"added": [], "error": []}
     data_list = request.data
-    startup = None
+    startup = get_startup(request.user, pk=startupId)
     if type(data_list) is dict:
         data_list = [data_list]
     for data in data_list:
+        data['startupId'] = startupId
         try:
-            startup = get_startup(request.user, pk=data.get('startupId'))
             fieldId = data.get('id')
             if fieldId is None:
                 serializer = Serializer(data=data)
@@ -73,8 +73,8 @@ def list_processor(request, Serializer, field):
 class InvestmentAPI(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
-    def post(self, request):
-        response = list_processor(request, InvestmentSerializer, "investments")
+    def post(self, request, startupId):
+        response = list_processor(request, startupId, InvestmentSerializer, "investments")
         return Response(response)
 
     def delete(self, request, startupId, pk):
@@ -87,8 +87,8 @@ class InvestmentAPI(APIView):
 class KpiNameAPI(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
-    def post(self, request):
-        response = list_processor(request, KpiNameSerializer, "kpinames")
+    def post(self, request, startupId):
+        response = list_processor(request, startupId, KpiNameSerializer, "kpinames")
         return Response(response)
 
     def delete(self, request, startupId, pk):
@@ -101,14 +101,16 @@ class KpiNameAPI(APIView):
 class FinancialAPI(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
-    def post(self, request):
-        startup = get_startup(request.user, request.data.get('startupId'))
-        id = request.data.get('id')
+    def post(self, request, startupId):
+        data = request.data
+        startup = get_startup(request.user, startupId)
+        data['startupId'] = startupId
+        id = data.get('id')
         if id is None:
-            serializer = FinancialSerializer(data=request.data)
+            serializer = FinancialSerializer(data=data)
         else:
             financial_instance = startup.financials.get(pk=id)
-            serializer = FinancialSerializer(instance=financial_instance, data=request.data)
+            serializer = FinancialSerializer(instance=financial_instance, data=data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
