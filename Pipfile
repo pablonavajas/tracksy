@@ -10,6 +10,8 @@ autopep8 = "*"
 django = "*"
 djangorestframework = "*"
 django-rest-knox = "*"
+requests = "*"
+bs4 = "*"
 
 [requires]
 python_version = "3.7"

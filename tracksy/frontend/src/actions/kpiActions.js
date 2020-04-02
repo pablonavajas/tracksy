@@ -1,6 +1,6 @@
 import { ADD_KPI_NAMES, DELETE_KPI_NAME } from "./types";
 import axios from "axios";
-import { returnErrors } from "./messageActions";
+import { returnErrors, createMessage } from "./messageActions";
 import { tokenConfig } from "./authActions";
 import { setLoading } from "./startupsActions";
 
@@ -18,15 +18,14 @@ export const addKpiNames = (startupId, kpiNames) => async (
       tokenConfig(getState)
     );
 
-    // dispatch(createMessage({ kpiNameAdded: "kpi Name has been added" }));
+    dispatch(
+      createMessage({ kpiNameAdded: "KPI names have been added/edited" })
+    );
     dispatch({
       type: ADD_KPI_NAMES,
       payload: { kpiNames: res.data, startupId }
     });
-
-    console.log(res.data);
   } catch (err) {
-    console.log("error");
     console.log(err);
     dispatch(returnErrors(err.response.data, err.response.status));
   }
@@ -45,11 +44,14 @@ export const deleteKpiName = (startupId, kpiNameId) => async (
       tokenConfig(getState)
     );
 
+    dispatch(createMessage({ kpiNameAdded: "KPI name deleted" }));
+
     dispatch({
-      type: DELETE_KPI_NAMES,
-      payload: kpiId
+      type: DELETE_KPI_NAME,
+      payload: kpiNameId
     });
   } catch (err) {
+    console.log(err);
     dispatch(returnErrors(err.response.data, err.response.status));
   }
 };
