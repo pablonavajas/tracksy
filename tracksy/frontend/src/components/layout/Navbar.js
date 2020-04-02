@@ -5,14 +5,30 @@ import { connect } from "react-redux";
 import { logout } from "../../actions/authActions";
 
 const Navbar = ({ title, icon, auth, logout }) => {
-  const { isAuthenticated, user } = auth;
-  const authLinks = (
+  const { isAuthenticated, username, isStartup } = auth;
+  const vcLinks = (
     <ul id="nav-mobile" className="right hide-on-med-and-down">
       <span className="mr-3">
-        <strong>{user ? `Welcome ${user.username}` : ""}</strong>
+        <strong>{username ? `Welcome ${username}` : ""}</strong>
       </span>
       <li className="right">
         <a onClick={logout}>Logout</a>
+      </li>
+    </ul>
+  );
+
+  const startupLinks = (
+    <ul id="nav-mobile" className="right hide-on-med-and-down">
+      <li>
+        <span className="mr-3">
+          <strong>{username ? `Welcome ${username}` : ""}</strong>
+        </span>
+      </li>
+      <li className="right">
+        <a onClick={logout}>Logout</a>
+      </li>
+      <li className="right">
+        <Link to="/startupPage">History</Link>
       </li>
     </ul>
   );
@@ -37,7 +53,7 @@ const Navbar = ({ title, icon, auth, logout }) => {
           </i>
           {title}
         </a>
-        {isAuthenticated ? authLinks : guestLinks}
+        {isAuthenticated ? (isStartup ? startupLinks : vcLinks) : guestLinks}
       </div>
     </nav>
   );

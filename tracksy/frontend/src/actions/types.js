@@ -22,7 +22,7 @@ export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 export const REGISTER_FAIL = "REGISTER_FAIL";
 
 export const ADD_INVESTMENTS = "ADD_INVESTMENT";
-export const ADD_KPI_NAME = "ADD_KPI_NAME";
+export const ADD_KPI_NAMES = "ADD_KPI_NAME";
 export const ADD_FINANCIAL = "ADD_FINANCIAL";
 
 export const DELETE_KPI_NAME = "DELETE_KPI_NAME";

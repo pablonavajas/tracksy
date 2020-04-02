@@ -7,10 +7,11 @@ import {
   DELETE_STARTUP,
   SET_CURRENT,
   CLEAR_CURRENT,
-  SET_CURRENT_BASED_ON_NAME_AND_WEBSITE,
   ADD_FINANCIAL,
   ADD_INVESTMENTS,
-  DELETE_INVESTMENT
+  DELETE_INVESTMENT,
+  ADD_KPI_NAMES,
+  DELETE_KPI_NAME
 } from "../actions/types";
 
 const initialState = {
@@ -75,8 +76,7 @@ export default (state = initialState, action) => {
             startup.investments = action.payload.investments;
           }
           return startup;
-        }),
-        loading: false
+        })
       };
     case DELETE_INVESTMENT:
       return {
@@ -88,8 +88,31 @@ export default (state = initialState, action) => {
             );
           }
           return startup;
-        }),
-        loading: false
+        })
+      };
+    case ADD_KPI_NAMES:
+      console.log("REDUCER FOR ADD KPI NAMES IS CALLED");
+      console.log(action.payload);
+      return {
+        ...state,
+        startups: state.startups.map(startup => {
+          if (startup.id === action.payload.startupId) {
+            startup.kpinames = action.payload.kpiNames;
+          }
+          return startup;
+        })
+      };
+    case DELETE_KPI_NAME:
+      return {
+        ...state,
+        startups: state.startups.map(startup => {
+          if (startup.id === action.payload.startupId) {
+            startup.kpinames = startup.investments.filter(
+              kpiName => kpiName.id !== action.payload.kpiNameId
+            );
+          }
+          return startup;
+        })
       };
     case CLEAR_CURRENT:
       return {

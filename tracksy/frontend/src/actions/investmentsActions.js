@@ -2,9 +2,8 @@ import { ADD_INVESTMENTS, DELETE_INVESTMENT } from "./types";
 import axios from "axios";
 import { createMessage, returnErrors } from "./messageActions";
 import { tokenConfig } from "./authActions";
-import { setLoading } from "./startupsActions";
 
-//Getting All Startups
+// Add a list of investments
 export const addInvestments = (startupId, investments) => async (
   dispatch,
   getState
@@ -40,6 +39,11 @@ export const deleteInvestment = (startupId, investmentId) => async (
     await axios.delete(
       `/api/investments/${startupId}/${investmentId}/`,
       tokenConfig(getState)
+    );
+    dispatch(
+      createMessage({
+        investmentsAdded: "Investment deleted successfully"
+      })
     );
 
     dispatch({

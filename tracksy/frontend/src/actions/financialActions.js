@@ -5,10 +5,13 @@ import { tokenConfig } from "./authActions";
 import { setLoading } from "./startupsActions";
 
 //Getting All Startups
-export const addFinancial = financialObj => async (dispatch, getState) => {
+export const addFinancial = (startupId, financialObj) => async (
+  dispatch,
+  getState
+) => {
   try {
     const res = await axios.post(
-      "/api/financials/",
+      `/api/financials/${startupId}/`,
       financialObj,
       tokenConfig(getState)
     );

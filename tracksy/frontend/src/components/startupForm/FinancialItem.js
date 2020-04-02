@@ -26,9 +26,9 @@ function FinancialItem({ financial }) {
         <div className="chip center">{financial.monthlyBurn}</div>
       </td>
       <td>
-        {financial.kpis.map(kpi => {
+        {financial.kpis.map((kpi, i) => {
           return (
-            <div>
+            <div key={i}>
               <div className="chip center">
                 {kpi.name}: {kpi.value}
               </div>

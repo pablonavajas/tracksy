@@ -49,7 +49,6 @@ function StartupForm({ getStartups, addFinancial, startups }) {
     // when the errors are equal to null
 
     const newFinancial = {
-      startupId: startups[0].id,
       comment: comment,
       currency: currency,
       revenue: revenue,
@@ -61,7 +60,7 @@ function StartupForm({ getStartups, addFinancial, startups }) {
     };
     console.log(newFinancial);
 
-    addFinancial(newFinancial);
+    addFinancial(startups[0].id, newFinancial);
     setSubmitted(true);
   };
 
