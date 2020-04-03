@@ -21,9 +21,10 @@ export const addKpiNames = (startupId, kpiNames) => async (
     dispatch(
       createMessage({ succ: "KPI names have been added/edited successfully" })
     );
+    dispatch(returnErrors(res.data.errors, null));
     dispatch({
       type: ADD_KPI_NAMES,
-      payload: { kpiNames: res.data, startupId }
+      payload: { kpiNames: res.data.added, startupId }
     });
   } catch (err) {
     console.log(err);

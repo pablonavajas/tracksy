@@ -1,14 +1,11 @@
 import {
-  GET_ERRORS,
   GET_STARTUPS,
   UPDATE_STARTUP,
   SET_LOADING,
-  STARTUPS_ERROR,
   ADD_STARTUP,
   DELETE_STARTUP,
   SET_CURRENT,
-  CLEAR_CURRENT,
-  CREATE_MESSAGE
+  CLEAR_CURRENT
 } from "./types";
 import axios from "axios";
 import { createMessage, returnErrors } from "./messageActions";
@@ -41,6 +38,8 @@ export const addStartup = startup => async (dispatch, getState) => {
       startup,
       tokenConfig(getState)
     );
+    console.log("RESPONSEEE HERE");
+    console.log(res);
     dispatch(createMessage({ succ: "Startup has been added" }));
     dispatch({ type: SET_CURRENT, payload: res.data });
     dispatch({ type: ADD_STARTUP, payload: res.data });

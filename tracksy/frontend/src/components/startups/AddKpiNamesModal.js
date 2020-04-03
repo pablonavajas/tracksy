@@ -36,10 +36,10 @@ const addKpiNamesModal = ({
 
   useEffect(() => {
     if (current) {
-      console.log("USe effect called and current is true");
+      // console.log("USe effect called and current is true");
       setCurrentName(current.name);
       setList(current.kpinames);
-      console.log(current);
+      // console.log(current);
     }
   }, [current]);
 
@@ -75,9 +75,9 @@ const addKpiNamesModal = ({
     setCurrent(null);
   };
 
-  console.log("KPIIIIISISISIS");
-  console.log(list);
-  console.log(defaultKpis);
+  // console.log("KPIIIIISISISIS");
+  // console.log(list);
+  // console.log(defaultKpis);
 
   return (
     <div id="add-kpi-names-modal" className="modal" style={modalStyle}>
@@ -89,13 +89,7 @@ const addKpiNamesModal = ({
               incrementKpiNo();
               return (
                 <div className="input-field col s4" key={kpiNo}>
-                  <input
-                    disabled
-                    value={kpi.name}
-                    id={kpiNo}
-                    type="text"
-                    className="validate"
-                  />
+                  <input disabled value={kpi.name} id={kpiNo} type="text" />
                   <label htmlFor={kpiNo}>Kpi Name {kpiNo} (default)</label>
                 </div>
               );
@@ -108,6 +102,7 @@ const addKpiNamesModal = ({
                     id={"kpiName" + i}
                     name="type_1"
                     type="text"
+                    className="validate"
                     value={kpi.name}
                     onChange={e => {
                       list[i].name = e.target.value;

@@ -18,11 +18,11 @@ const addInvestmentModal = ({
   const [list, setList] = useState([]);
 
   useEffect(() => {
-    console.log("useEffect is called in investment modal");
+    // console.log("useEffect is called in investment modal");
     if (current) {
       setCurrentName(current.name);
       setList(current.investments);
-      console.log(current.investments);
+      // console.log(current.investments);
     }
   }, [current]);
 
@@ -90,6 +90,7 @@ const addInvestmentModal = ({
                     id={"invValue" + i}
                     value={inv.value}
                     thousandSeparator={true}
+                    className="validate"
                     prefix={inv.currency ? inv.currency : "£"}
                     allowNegative={false}
                     onValueChange={values => {
@@ -110,6 +111,7 @@ const addInvestmentModal = ({
                     id={"invType" + i}
                     name="type_1"
                     type="text"
+                    className="validate"
                     value={inv.investmentType ? inv.investmentType : ""}
                     onChange={e => {
                       list[i].investmentType = e.target.value;
@@ -126,6 +128,7 @@ const addInvestmentModal = ({
                     name="date_1"
                     value={inv.date ? inv.date : ""}
                     type="date"
+                    className="validate"
                     onChange={e => {
                       list[i].date = e.target.value;
                       setList([...list]);
