@@ -5,6 +5,7 @@
 from rest_framework import serializers
 from .models import *
 from accounts.models import Info
+from accounts.serializers import ConnectionSerializer
 from django.contrib.auth.models import User
 
 
@@ -67,6 +68,22 @@ class FinancialSerializer(serializers.ModelSerializer):
         return instance
 
 
+class IntroductionSerializer(serializers.ModelSerializer):
+    connection = ConnectionSerializer(read_only=True)
+
+    class Meta:
+        model = Introduction
+        fields = '__all__'
+
+
+class JobSerializer(serializers.ModelSerializer):
+    introductions = IntroductionSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Job
+        fields = '__all__'
+
+
 class StartupSerializer(serializers.ModelSerializer):
     """ For Adding a Startup (KPI and Investments can be nested in)
 
@@ -77,6 +94,7 @@ class StartupSerializer(serializers.ModelSerializer):
     kpinames = KpiNameSerializer(many=True, read_only=True)
     investments = InvestmentSerializer(many=True, read_only=True)
     financials = FinancialSerializer(many=True, read_only=True)
+    jobs = JobSerializer(many=True, read_only=True)
 
     class Meta:
         model = Startup

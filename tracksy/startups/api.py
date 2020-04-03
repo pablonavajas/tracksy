@@ -116,9 +116,50 @@ class FinancialAPI(APIView):
         financial.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+
 class AngelJobAPI(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def post(self, request):
         job_description = get_description(request.data['url'])
         return Response(job_description)
+
+
+class JobAPI(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request, startupId):
+        startup = get_startup(request.user, startupId)
+        response = process_field(request.data, startup, JobSerializer, "jobs")
+        return Response(response)
+
+
+class IntroductionAPI(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request, startupId):
+        startup = get_startup(request.user, startupId)
+        data = request.data
+        job = startup.jobs.get(pk=data.get('job'))
+        connection = data.pop('connection')
+        connection = request.user.connections.get(pk=connection)
+        if data.get('id') is None:
+            serializer = IntroductionSerializer(data=data)
+        else:
+            instance = job.introductions.data.get('id')
+            serializer = IntroductionSerializer(instance=instance, data=data)
+
+        serializer.is_valid(raise_exception=True)
+        introduction = serializer.save()
+        connection.introductions.add(introduction)
+        return Response(serializer.data)
+
+    def delete(self, request, startupId):
+        startup = get_startup(request.user, startupId)
+        data = request.data
+        job = startup.jobs.get(pk=data.get('job'))
+        introduction = job.introductions.get(pk=data.get('id'))
+        introduction.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
