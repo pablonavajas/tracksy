@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, Fragment } from "react";
 import { connect } from "react-redux";
 import { getStartups } from "../../actions/startupsActions";
 import FinancialItem from "./FinancialItem";
+import PropTypes from "prop-types";
 
 function StartupPage({ startup, getStartups }) {
   useEffect(() => {
@@ -17,9 +18,37 @@ function StartupPage({ startup, getStartups }) {
       </div>
     );
   }
+  console.log(startups[0].financials);
+
+  const addButton = (
+    <div
+      className="right"
+      style={{
+        margin: "-60px 50px"
+      }}
+    >
+      <div className="fixed-action-btn">
+        <a
+          href="/#/startupForm"
+          className="btn-floating waves-effect waves-light btn-large red darken-1 "
+        >
+          <i className="large material-icons">add</i>
+        </a>
+      </div>
+    </div>
+  );
+
+  if (startups[0].financials.length === 0) {
+    return (
+      <Fragment>
+        <h4>There is not history to show ...</h4>
+        {addButton}
+      </Fragment>
+    );
+  }
 
   return (
-    <div>
+    <Fragment>
       <div className="row">
         <div className="col s12">
           <div className="card">
@@ -46,24 +75,15 @@ function StartupPage({ startup, getStartups }) {
           </div>
         </div>
       </div>
-      <div
-        className="right"
-        style={{
-          margin: "-60px 50px"
-        }}
-      >
-        <div className="fixed-action-btn">
-          <a
-            href="/#/startupForm"
-            className="btn-floating waves-effect waves-light btn-large red darken-1 "
-          >
-            <i className="large material-icons">add</i>
-          </a>
-        </div>
-      </div>
-    </div>
+      {addButton}
+    </Fragment>
   );
 }
+
+StartupPage.propTypes = {
+  startup: PropTypes.object.isRequired,
+  getStartups: PropTypes.func.isRequired
+};
 
 const mapStateToProps = state => ({
   startup: state.startup

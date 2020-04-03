@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { getStartups, setCurrent } from "../../actions/startupsActions";
 import CurrencyFormat from "react-currency-format";
 import { addFinancial } from "../../actions/financialActions";
+import PropTypes from "prop-types";
 
 function StartupForm({ getStartups, addFinancial, startups }) {
   const [startup, setStartup] = useState(null);
@@ -207,6 +208,11 @@ function StartupForm({ getStartups, addFinancial, startups }) {
     );
   }
 }
+
+StartupForm.propTypes = {
+  getStartups: PropTypes.func.isRequired,
+  addFinancial: PropTypes.func.isRequired
+};
 
 const mapStateToProps = state => ({
   startups: state.startup.startups
