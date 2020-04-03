@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { getStartups, setCurrent } from "../../actions/startupsActions";
 import CurrencyFormat from "react-currency-format";
 import { addFinancial } from "../../actions/financialActions";
+import PropTypes from "prop-types";
 
 function StartupForm({ getStartups, addFinancial, startups }) {
   const [startup, setStartup] = useState(null);
@@ -16,31 +17,39 @@ function StartupForm({ getStartups, addFinancial, startups }) {
   const [endDate, setEndDate] = useState("");
   const [kpis, setKpis] = useState([]);
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(true);
 
+  // runs when the component is rendered for the first time
   useEffect(() => {
+    console.log("useEffect for getStartups is called");
     getStartups();
+    //esling-disable-next-line
   }, []);
+
+  // runs when startups prop changes, as the startups are loaded
+  useEffect(() => {
+    console.log("useEffect for startups is called");
+    resetKpis();
+  }, [startups]);
 
   // reset KPIs to just names and no values
   const resetKpis = () => {
-    setKpis([]);
-    startup.kpinames.map(kpiname => {
-      kpis.push({
-        name: kpiname.name,
-        value: ""
-      });
-      setKpis([...kpis]);
-    });
+    console.log("resetKpis is called");
+    if (startups) {
+      setKpis([...startups[0].kpinames]);
+      setLoading(false);
+    }
   };
 
-  useEffect(() => {
-    if (startups) setStartup(startups[0]);
-    if (startup) resetKpis();
-  }, [startups, startup]);
+  const onSubmit = e => {
+    // TODO:
+    // e.preventDefault();
+    // prevent Default action
+    // and make a redirect to
+    // the report history page
+    // when the errors are equal to null
 
-  const onSubmit = () => {
     const newFinancial = {
-      startupId: startup.id,
       comment: comment,
       currency: currency,
       revenue: revenue,
@@ -50,12 +59,13 @@ function StartupForm({ getStartups, addFinancial, startups }) {
       endDate: endDate,
       kpis: kpis
     };
+    console.log(newFinancial);
 
-    addFinancial(newFinancial);
+    addFinancial(startups[0].id, newFinancial);
     setSubmitted(true);
   };
 
-  if (!submitted) {
+  if (!loading) {
     return (
       <div className="row">
         <div className="col s8 offset-s2">
@@ -179,8 +189,9 @@ function StartupForm({ getStartups, addFinancial, startups }) {
             <p></p>
             <div className="center">
               <a
+                href="/#/startupPage"
                 onClick={onSubmit}
-                className="waves-effect blue waves-light btn-flat"
+                className="btn waves-effect waves-light light-blue"
               >
                 Submit
               </a>
@@ -190,9 +201,18 @@ function StartupForm({ getStartups, addFinancial, startups }) {
       </div>
     );
   } else {
-    return <h4>Thank you for your submission</h4>;
+    return (
+      <div className="progress">
+        <div className="indeterminate" />
+      </div>
+    );
   }
 }
+
+StartupForm.propTypes = {
+  getStartups: PropTypes.func.isRequired,
+  addFinancial: PropTypes.func.isRequired
+};
 
 const mapStateToProps = state => ({
   startups: state.startup.startups

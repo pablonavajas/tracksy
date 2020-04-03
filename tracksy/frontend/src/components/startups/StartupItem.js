@@ -9,9 +9,9 @@ const StartupItem = ({ startup, setCurrent, deleteStartup }) => {
   return (
     <tr>
       <th className="center">
-        <a href={"https://" + startup.website}>
+        <a href={`https://${startup.website}`}>
           <img
-            src={"http://logo.clearbit.com/" + startup.website}
+            src={`http://logo.clearbit.com/${startup.website}`}
             alt=""
             width="100"
             height="100"
@@ -27,12 +27,10 @@ const StartupItem = ({ startup, setCurrent, deleteStartup }) => {
       </td>
 
       <td className="center">
-        {startup.investments.map((investment, i) => (
+        {startup.investments.map(investment => (
           <div className="center" key={investment.id}>
             <div className="chip center">
               <p>
-                {i + 1}
-                {". "}
                 <CurrencyFormat
                   value={investment.value}
                   displayType={"text"}
@@ -98,8 +96,11 @@ const StartupItem = ({ startup, setCurrent, deleteStartup }) => {
       )}
       <td>
         <a
-          href="/"
-          onClick={() => deleteStartup(startup.id)}
+          href="#!"
+          onClick={e => {
+            e.preventDefault();
+            deleteStartup(startup.id);
+          }}
           className="secondary-content"
         >
           <i className="material-icons blue-text">delete</i>
@@ -115,4 +116,13 @@ StartupItem.propTypes = {
   setCurrent: PropTypes.func.isRequired
 };
 
-export default connect(null, { setCurrent, deleteStartup })(StartupItem);
+// Inject App Level state, so that
+// component updates upon an update of info
+// (e.g. added investment)
+const mapStateToProps = state => ({
+  startups: state.startup.startups
+});
+
+export default connect(mapStateToProps, { setCurrent, deleteStartup })(
+  StartupItem
+);

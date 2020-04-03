@@ -1,35 +1,38 @@
-import { ADD_KPI_NAME, DELETE_KPI_NAME } from "./types";
+import { ADD_KPI_NAMES, DELETE_KPI_NAME } from "./types";
 import axios from "axios";
-import { createMessage, returnErrors } from "./messageActions";
+import { returnErrors, createMessage } from "./messageActions";
 import { tokenConfig } from "./authActions";
 import { setLoading } from "./startupsActions";
 
-//Getting All Startups
-export const addKpiName = kpiNameObj => async (dispatch, getState) => {
+// Adding a List of KPI names
+export const addKpiNames = (startupId, kpiNames) => async (
+  dispatch,
+  getState
+) => {
   try {
     setLoading();
 
     const res = await axios.post(
-      "/api/kpiNames/",
-      kpiNameObj,
+      `/api/kpiNames/${startupId}/`,
+      kpiNames,
       tokenConfig(getState)
     );
 
-    // console.log(res);
-    // dispatch(createMessage({ kpiNameAdded: "kpi Name has been added" }));
+    dispatch(
+      createMessage({ succ: "KPI names have been added/edited successfully" })
+    );
     dispatch({
-      type: ADD_KPI_NAME,
-      payload: res.data
+      type: ADD_KPI_NAMES,
+      payload: { kpiNames: res.data, startupId }
     });
   } catch (err) {
-    // console.log("error");
-    // console.log(err);
+    console.log(err);
     dispatch(returnErrors(err.response.data, err.response.status));
   }
 };
 
-//Delete Startup
-export const deleteKpiName = (startupId, kpiId) => async (
+//Delete Kpi Name
+export const deleteKpiName = (startupId, kpiNameId) => async (
   dispatch,
   getState
 ) => {
@@ -37,15 +40,18 @@ export const deleteKpiName = (startupId, kpiId) => async (
     setLoading();
 
     await axios.delete(
-      `/api/kpiNames/${startupId}/${kpiId}/`,
+      `/api/kpiNames/${startupId}/${kpiNameId}/`,
       tokenConfig(getState)
     );
 
+    dispatch(createMessage({ succ: "KPI name deleted successfully" }));
+
     dispatch({
       type: DELETE_KPI_NAME,
-      payload: kpiId
+      payload: kpiNameId
     });
   } catch (err) {
+    console.log(err);
     dispatch(returnErrors(err.response.data, err.response.status));
   }
 };

@@ -1,15 +1,15 @@
 import React, { useState, useEffect, Fragment } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { addKpiName, deleteKpiName } from "../../actions/kpiActions";
+import { addKpiNames, deleteKpiName } from "../../actions/kpiActions";
 import CurrencyFormat from "react-currency-format";
 import { setCurrent, getStartups } from "../../actions/startupsActions";
 
 const addKpiNamesModal = ({
-  addKpiName,
+  current,
+  addKpiNames,
   deleteKpiName,
-  getStartups,
-  current
+  setCurrent
 }) => {
   const [currentName, setCurrentName] = useState("");
   const [defaultKpis, setDefaultKPIs] = useState([
@@ -32,30 +32,20 @@ const addKpiNamesModal = ({
     kpiNo -= 1;
   };
 
-  const [list, setList] = useState([
-    {
-      startupId: null,
-      name: ""
-    }
-  ]);
+  const [list, setList] = useState([{ name: "" }]);
 
   useEffect(() => {
     if (current) {
+      console.log("USe effect called and current is true");
       setCurrentName(current.name);
-      console.log(current.kpinames);
       setList(current.kpinames);
+      console.log(current);
     }
   }, [current]);
 
   const addInput = () => {
     incrementKpiNo();
-    list.push({
-      startupId: current.id,
-      name: ""
-    });
-    setList([...list]);
-    console.log("After adding the input:");
-    console.log(list);
+    setList([...list, { name: "" }]);
   };
 
   // 0-based index
@@ -74,19 +64,20 @@ const addKpiNamesModal = ({
   const onSubmitHelper = callback => {
     list.map(kpiName => {
       if (kpiName.id) console.log(kpiName.id);
-      if (kpiName.name) addKpiName(kpiName);
+      if (kpiName.name) addKpiNames(current.id, kpiName);
       // console.log("in map");
     });
     callback();
   };
 
   const onSubmit = () => {
-    onSubmitHelper(() => {
-      // console.log("calling get");
-      // retrieve all the startups with changed KPI names
-      getStartups();
-    });
+    addKpiNames(current.id, list);
+    setCurrent(null);
   };
+
+  console.log("KPIIIIISISISIS");
+  console.log(list);
+  console.log(defaultKpis);
 
   return (
     <div id="add-kpi-names-modal" className="modal" style={modalStyle}>
@@ -119,7 +110,6 @@ const addKpiNamesModal = ({
                     type="text"
                     value={kpi.name}
                     onChange={e => {
-                      list[i].startupId = current.id;
                       list[i].name = e.target.value;
                       setList([...list]);
                     }}
@@ -164,7 +154,7 @@ const modalStyle = {
 };
 
 addKpiNamesModal.propTypes = {
-  addKpiName: PropTypes.func.isRequired
+  addKpiNames: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => {
@@ -174,7 +164,7 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps, {
-  addKpiName,
-  getStartups,
-  deleteKpiName
+  addKpiNames,
+  deleteKpiName,
+  setCurrent
 })(addKpiNamesModal);
