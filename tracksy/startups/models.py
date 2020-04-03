@@ -10,7 +10,7 @@ class Startup(models.Model):
 
     name = models.CharField(max_length=100)
     website = models.CharField(max_length=100, blank=True, null=True)
-    ownership = models.IntegerField(blank=True, null=True)
+    ownership = models.FloatField(blank=True, null=True)
     board = models.CharField(max_length=30, blank=True, null=True)
 
     def __str__(self):
@@ -39,13 +39,13 @@ class KpiName(models.Model):
 class Financial(models.Model):
     startupId = models.ForeignKey(
         Startup, related_name='financials', on_delete=models.CASCADE)
-    comment = models.CharField(max_length=1000, blank=True, null=True)
+    comment = models.TextField(blank=True, null=True)
     currency = models.CharField(max_length=1)
-    revenue = models.FloatField(blank=True, null=True)
-    cashBalance = models.FloatField(blank=True, null=True)
-    monthlyBurn = models.FloatField(blank=True, null=True)
-    startDate = models.DateField(blank=True, null=True)
-    endDate = models.DateField(blank=True, null=True)
+    revenue = models.FloatField()
+    cashBalance = models.FloatField()
+    monthlyBurn = models.FloatField()
+    startDate = models.DateField()
+    endDate = models.DateField()
 
     class Meta:
         ordering = ['-startDate']
