@@ -6,8 +6,8 @@ function JobsTableItem() {
       <td>Cloud Engineer</td>
       <td>$80k</td>
       <td className="center">
-        <a href="#add-job-modal" className="modal-trigger">
-          <i className="centered material-icons grey-text">contacts</i>
+        <a href="#review-intros-modal" className="modal-trigger">
+          <i className="centered material-icons light-blue-text">contacts</i>
         </a>
       </td>
     </tr>

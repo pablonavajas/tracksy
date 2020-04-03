@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import { connect } from "react-redux";
 // import StartupFormField from "./StartupFormField";
 import { getStartups, setCurrent } from "../../actions/startupsActions";
@@ -193,12 +193,7 @@ function StartupForm({ startups, errors, getStartups, addFinancial }) {
                 </div>
               </form>
               <JobsTable />
-              <p></p>
-              <p></p>
-              <p></p>
-              <p></p>
-              <p></p>
-              <p></p>
+              {getExtraVerticalSpace()}
               <p className="center">
                 Please ensure all details are up to date and correct before
                 submitting this form.
@@ -220,6 +215,13 @@ function StartupForm({ startups, errors, getStartups, addFinancial }) {
     );
   }
 }
+const getExtraVerticalSpace = () => (
+  <Fragment>
+    <div className="row" />
+    <div className="row" />
+    <div className="row" />
+  </Fragment>
+);
 
 StartupForm.propTypes = {
   getStartups: PropTypes.func.isRequired,

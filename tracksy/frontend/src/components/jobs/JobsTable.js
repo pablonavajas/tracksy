@@ -27,18 +27,20 @@ function JobsTable() {
           </tr>
         </tbody>
       </table>
-      <div
-        className="right"
-        style={{
-          margin: "-1.4em 25em"
-        }}
-      >
-        <a className="fixed-action-button btn-floating waves-effect waves-light red">
+      <div className="center" style={addButtonStyle}>
+        <a
+          href="#add-job-modal"
+          className="modal-trigger btn-floating waves-effect waves-light light-blue"
+        >
           <i className="material-icons">add</i>
         </a>
       </div>
     </div>
   );
 }
+
+const addButtonStyle = {
+  margin: "-1.4em "
+};
 
 export default JobsTable;

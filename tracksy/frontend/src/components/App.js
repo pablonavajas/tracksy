@@ -37,7 +37,7 @@ import AddInvestmentModal from "./startups/AddInvestmentModal";
 import AddKpiNamesModal from "./startups/AddKpiNamesModal";
 import StartupPage from "./startupForm/StartupPage";
 import AddJobModal from "./jobs/AddJobModal";
-// import reviewIntrosModal from "./jobs/reviewIntrosModal";
+import ReviewIntrosModal from "./jobs/ReviewIntrosModal";
 
 // Alert Options
 const alertOptions = {
@@ -67,6 +67,7 @@ class App extends Component {
                   <AddInvestmentModal />
                   <AddKpiNamesModal />
                   <AddJobModal />
+                  <ReviewIntrosModal />
                   <Switch>
                     <VCPrivateRoute exact path="/" component={Startups} />
                     <StartupPrivateRoute
