@@ -23,7 +23,9 @@ import Home from "./home/Home";
 import Startups from "./startups/Startups";
 import EditStartupModal from "./startups/EditStartupModal";
 import AddStartupModal from "./startups/AddStartupModal";
-import Alerts from "./layout/Alerts";
+import MessageAlerts from "./layout/MessageAlerts";
+import ErrorAlerts from "./layout/ErrorAlerts";
+
 import Login from "./accounts/Login";
 import Register from "./accounts/Register";
 import VCPrivateRoute from "./common/VCPrivateRoute";
@@ -34,6 +36,8 @@ import StartupForm from "./startupForm/StartupForm";
 import AddInvestmentModal from "./startups/AddInvestmentModal";
 import AddKpiNamesModal from "./startups/AddKpiNamesModal";
 import StartupPage from "./startupForm/StartupPage";
+import AddJobModal from "./jobs/AddJobModal";
+import ReviewIntrosModal from "./jobs/ReviewIntrosModal";
 
 // Alert Options
 const alertOptions = {
@@ -55,12 +59,15 @@ class App extends Component {
             <div className="page-flexbox-wrapper">
               <main>
                 <Navbar />
-                <Alerts />
+                <MessageAlerts />
+                <ErrorAlerts />
                 <div className="container">
                   <AddStartupModal />
                   <EditStartupModal />
                   <AddInvestmentModal />
                   <AddKpiNamesModal />
+                  <AddJobModal />
+                  <ReviewIntrosModal />
                   <Switch>
                     <VCPrivateRoute exact path="/" component={Startups} />
                     <StartupPrivateRoute

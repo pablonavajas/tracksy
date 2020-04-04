@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import { connect } from "react-redux";
 // import StartupFormField from "./StartupFormField";
 import { getStartups, setCurrent } from "../../actions/startupsActions";
 import CurrencyFormat from "react-currency-format";
 import { addFinancial } from "../../actions/financialActions";
 import PropTypes from "prop-types";
+import { Link, Redirect } from "react-router-dom";
+import JobsTable from "../jobs/JobsTable";
 
-function StartupForm({ getStartups, addFinancial, startups }) {
-  const [startup, setStartup] = useState(null);
+function StartupForm({ startups, errors, getStartups, addFinancial }) {
   const [comment, setComment] = useState("");
   const [currency, setCurrency] = useState("£");
   const [revenue, setRevenue] = useState("");
@@ -16,25 +17,27 @@ function StartupForm({ getStartups, addFinancial, startups }) {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [kpis, setKpis] = useState([]);
-  const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(true);
+
+  //indicators whether the form submission was successful
+  const [localErrors, setLocalErrors] = useState(null);
 
   // runs when the component is rendered for the first time
   useEffect(() => {
-    console.log("useEffect for getStartups is called");
+    console.log(localErrors);
     getStartups();
     //esling-disable-next-line
   }, []);
 
   // runs when startups prop changes, as the startups are loaded
   useEffect(() => {
-    console.log("useEffect for startups is called");
+    // console.log("useEffect for startups is called");
     resetKpis();
   }, [startups]);
 
   // reset KPIs to just names and no values
   const resetKpis = () => {
-    console.log("resetKpis is called");
+    // console.log("resetKpis is called");
     if (startups) {
       setKpis([...startups[0].kpinames]);
       setLoading(false);
@@ -42,12 +45,8 @@ function StartupForm({ getStartups, addFinancial, startups }) {
   };
 
   const onSubmit = e => {
-    // TODO:
-    // e.preventDefault();
-    // prevent Default action
-    // and make a redirect to
-    // the report history page
-    // when the errors are equal to null
+    // precent default action
+    e.preventDefault();
 
     const newFinancial = {
       comment: comment,
@@ -59,13 +58,26 @@ function StartupForm({ getStartups, addFinancial, startups }) {
       endDate: endDate,
       kpis: kpis
     };
-    console.log(newFinancial);
 
     addFinancial(startups[0].id, newFinancial);
-    setSubmitted(true);
+
+    if (errors.status) {
+      setLocalErrors(true);
+    } else {
+      // will redirect to the history page
+      setLocalErrors(false);
+    }
   };
 
-  if (!loading) {
+  if (loading) {
+    return (
+      <div className="progress">
+        <div className="indeterminate" />
+      </div>
+    );
+  } else if (localErrors === false) {
+    return <Redirect to="/startupPage" />;
+  } else {
     return (
       <div className="row">
         <div className="col s8 offset-s2">
@@ -180,6 +192,8 @@ function StartupForm({ getStartups, addFinancial, startups }) {
                   </div>
                 </div>
               </form>
+              <JobsTable />
+              {getExtraVerticalSpace()}
               <p className="center">
                 Please ensure all details are up to date and correct before
                 submitting this form.
@@ -189,8 +203,7 @@ function StartupForm({ getStartups, addFinancial, startups }) {
             <p></p>
             <div className="center">
               <a
-                href="/#/startupPage"
-                onClick={onSubmit}
+                onClick={e => onSubmit(e)}
                 className="btn waves-effect waves-light light-blue"
               >
                 Submit
@@ -200,23 +213,27 @@ function StartupForm({ getStartups, addFinancial, startups }) {
         </div>
       </div>
     );
-  } else {
-    return (
-      <div className="progress">
-        <div className="indeterminate" />
-      </div>
-    );
   }
 }
+const getExtraVerticalSpace = () => (
+  <Fragment>
+    <div className="row" />
+    <div className="row" />
+    <div className="row" />
+  </Fragment>
+);
 
 StartupForm.propTypes = {
   getStartups: PropTypes.func.isRequired,
   addFinancial: PropTypes.func.isRequired
 };
 
-const mapStateToProps = state => ({
-  startups: state.startup.startups
-});
+const mapStateToProps = state => {
+  return {
+    startups: state.startup.startups,
+    errors: state.errors
+  };
+};
 
 export default connect(mapStateToProps, { getStartups, addFinancial })(
   StartupForm

@@ -20,9 +20,10 @@ export const addInvestments = (startupId, investments) => async (
         succ: "Investments added/edited successfully"
       })
     );
+    dispatch(returnErrors(res.data.errors, null));
     dispatch({
       type: ADD_INVESTMENTS,
-      payload: { investments: res.data, startupId }
+      payload: { investments: res.data.added, startupId }
     });
   } catch (err) {
     dispatch(returnErrors(err.response.data, err.response.status));

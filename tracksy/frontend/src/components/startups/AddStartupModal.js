@@ -39,6 +39,7 @@ const AddStartupModal = ({ addStartup, setCurrent }) => {
             <input
               id="name_add"
               type="text"
+              className="validate"
               name="name"
               value={name}
               onChange={e => setName(e.target.value)}
@@ -52,6 +53,7 @@ const AddStartupModal = ({ addStartup, setCurrent }) => {
             <input
               id="website_add"
               type="text"
+              className="validate"
               name="website"
               value={website}
               onChange={e => setWebsite(e.target.value)}
@@ -65,7 +67,8 @@ const AddStartupModal = ({ addStartup, setCurrent }) => {
             <input
               id="ownership_add"
               name="ownership"
-              type="text"
+              type="number"
+              className="validate"
               value={ownership}
               onChange={e => setOwnership(e.target.value)}
             />
@@ -78,7 +81,8 @@ const AddStartupModal = ({ addStartup, setCurrent }) => {
             <input
               id="startupEmail_add"
               name="startupEmail"
-              type="text"
+              type="email"
+              className="validate"
               value={startupEmail}
               onChange={e => setStartupEmail(e.target.value)}
             />

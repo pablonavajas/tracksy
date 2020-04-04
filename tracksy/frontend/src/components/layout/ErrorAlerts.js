@@ -3,7 +3,7 @@ import { withAlert } from "react-alert";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
-function Alerts({ error, message, alert }) {
+function ErrorAlerts({ error, alert }) {
   useEffect(() => {
     if (error.msg.name) alert.error(`Name: ${error.msg.name.join()}`);
     else if (error.msg.ownership)
@@ -22,23 +22,22 @@ function Alerts({ error, message, alert }) {
       alert.error(error.msg.non_field_errors.join());
     } else if (error.msg.username) {
       alert.error(error.msg.username.join());
+    } else if (error.msg && error.msg.length > 0) {
+      if (error.msg[0].date) alert.error(error.msg[0].date);
+      else if (error.msg[0]) alert.error(error.msg.join());
+    } else {
     }
-
-    if (message.succ) alert.success(message.succ);
-    if (message.fail) alert.error(message.fail);
   });
 
   return <Fragment />;
 }
 
-Alerts.propTypes = {
-  error: PropTypes.object.isRequired,
-  message: PropTypes.object.isRequired
+ErrorAlerts.propTypes = {
+  error: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  error: state.errors,
-  message: state.messages
+  error: state.errors
 });
 
-export default connect(mapStateToProps)(withAlert()(Alerts));
+export default connect(mapStateToProps)(withAlert()(ErrorAlerts));
