@@ -1,7 +1,12 @@
 import React from "react";
 import JobsTableItem from "./JobsTableItem";
+import { connect } from "react-redux";
+import { setCurrentJob } from "../../actions/jobActions";
 
-function JobsTable() {
+const JobsTable = ({ loading, startups }) => {
+  if (loading) {
+    return <h2>Loading ... </h2>;
+  }
   return (
     <div className="col s12">
       <table className="responsive-table highlight">
@@ -9,22 +14,15 @@ function JobsTable() {
           <tr>
             <th>Job Title</th>
             <th>Salary</th>
-            <th className="center">Introductions</th>
+            <th className="center"></th>
+            <th className="center"></th>
           </tr>
         </thead>
 
         <tbody>
-          <JobsTableItem />
-          <tr>
-            <td>Alan</td>
-            <td>Jellybean</td>
-            <td>$3.76</td>
-          </tr>
-          <tr>
-            <td>Jonathan</td>
-            <td>Lollipop</td>
-            <td>$7.00</td>
-          </tr>
+          {startups[0].jobs.map((job) => (
+            <JobsTableItem job={job} key={job.id} />
+          ))}
         </tbody>
       </table>
       <div className="center" style={addButtonStyle}>
@@ -37,10 +35,15 @@ function JobsTable() {
       </div>
     </div>
   );
-}
-
-const addButtonStyle = {
-  margin: "-1.4em "
 };
 
-export default JobsTable;
+const addButtonStyle = {
+  margin: "-1.4em ",
+};
+
+const mapStateToProps = (state) => ({
+  startups: state.startup.startups,
+  loading: state.startup.loading,
+});
+
+export default connect(mapStateToProps, null)(JobsTable);

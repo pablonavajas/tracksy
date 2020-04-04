@@ -1,10 +1,15 @@
+/* NOTES:
+- The startup account can only hold one 
+startup in it's list of startups in the db
+*/
+
 import React, { Component, Fragment } from "react";
 import ReactDOM from "react-dom";
 import {
   HashRouter as Router,
   Route,
   Switch,
-  Redirect
+  Redirect,
 } from "react-router-dom";
 
 import Navbar from "./layout/Navbar";
@@ -42,7 +47,7 @@ import ReviewIntrosModal from "./jobs/ReviewIntrosModal";
 // Alert Options
 const alertOptions = {
   timeout: 3000,
-  position: "top center"
+  position: "top center",
 };
 
 class App extends Component {

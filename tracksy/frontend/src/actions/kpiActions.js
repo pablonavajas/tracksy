@@ -24,7 +24,7 @@ export const addKpiNames = (startupId, kpiNames) => async (
     dispatch(returnErrors(res.data.errors, null));
     dispatch({
       type: ADD_KPI_NAMES,
-      payload: { kpiNames: res.data.added, startupId }
+      payload: { kpiNames: res.data.added, startupId },
     });
   } catch (err) {
     console.log(err);
@@ -49,7 +49,7 @@ export const deleteKpiName = (startupId, kpiNameId) => async (
 
     dispatch({
       type: DELETE_KPI_NAME,
-      payload: kpiNameId
+      payload: { kpiNameId, startupId },
     });
   } catch (err) {
     console.log(err);
