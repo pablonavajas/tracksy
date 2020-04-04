@@ -14,6 +14,7 @@ import {
   DELETE_KPI_NAME,
   ADD_JOB,
   DELETE_JOB,
+  UPDATE_INTRODUCTION_STATUS,
 } from "../actions/types";
 
 const initialState = {
@@ -132,6 +133,24 @@ export default (state = initialState, action) => {
             startup.jobs = startup.jobs.filter(
               (job) => job.id !== action.payload.jobId
             );
+          }
+          return startup;
+        }),
+      };
+    case UPDATE_INTRODUCTION_STATUS:
+      return {
+        ...state,
+        startups: state.startups.map((startup) => {
+          if (startup.id === action.payload.startupId) {
+            startup.jobs.map((job, i) => {
+              if (job.id === action.payload.jobId) {
+                startup.jobs[i].introductions.map((introduction) => {
+                  if (introduction.id === action.payload.introduction.id) {
+                    startup.jobs[i].introduction = action.payload.introduction;
+                  }
+                });
+              }
+            });
           }
           return startup;
         }),

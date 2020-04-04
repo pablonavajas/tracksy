@@ -42,7 +42,7 @@ import AddInvestmentModal from "./startups/AddInvestmentModal";
 import AddKpiNamesModal from "./startups/AddKpiNamesModal";
 import StartupPage from "./startupForm/StartupPage";
 import AddJobModal from "./jobs/AddJobModal";
-import ReviewIntrosModal from "./jobs/ReviewIntrosModal";
+import ReviewIntrosModal from "./introductions/ReviewIntrosModal";
 
 // Alert Options
 const alertOptions = {

@@ -21,7 +21,6 @@ export const addJob = (startupId, job) => async (dispatch, getState) => {
     dispatch(createMessage({ succ: "Job added successfully" }));
     dispatch({ type: ADD_JOB, payload: { job: res.data, startupId } });
   } catch (err) {
-    console.log(err);
     dispatch(returnErrors(err.response.data, err.response.status));
   }
 };

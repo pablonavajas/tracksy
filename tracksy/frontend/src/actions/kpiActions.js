@@ -27,7 +27,6 @@ export const addKpiNames = (startupId, kpiNames) => async (
       payload: { kpiNames: res.data.added, startupId },
     });
   } catch (err) {
-    console.log(err);
     dispatch(returnErrors(err.response.data, err.response.status));
   }
 };
@@ -52,7 +51,6 @@ export const deleteKpiName = (startupId, kpiNameId) => async (
       payload: { kpiNameId, startupId },
     });
   } catch (err) {
-    console.log(err);
     dispatch(returnErrors(err.response.data, err.response.status));
   }
 };
