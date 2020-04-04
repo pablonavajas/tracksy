@@ -143,28 +143,35 @@ class JobAPI(APIView):
 class IntroductionAPI(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
-    def post(self, request, startupId):
+    def post(self, request, startupId, jobId, pk):
         startup = get_startup(request.user, startupId)
         data = request.data
-        job = startup.jobs.get(pk=data.get('job'))
-        connection = data.pop('connection')
-        connection = request.user.connections.get(pk=connection)
-        if data.get('id') is None:
-            serializer = IntroductionSerializer(data=data)
-        else:
-            instance = job.introductions.data.get('id')
-            serializer = IntroductionSerializer(instance=instance, data=data)
+        job = startup.jobs.get(pk=jobId)
+        connection = request.user.connections.get(pk=pk)
 
+        serializer = IntroductionSerializer(data=data)
         serializer.is_valid(raise_exception=True)
         introduction = serializer.save()
         connection.introductions.add(introduction)
+        job.introductions.add(introduction)
         return Response(serializer.data)
 
-    def delete(self, request, startupId):
-        startup = get_startup(request.user, startupId)
+
+    def put(self, request, startupId, jobId, pk):
         data = request.data
-        job = startup.jobs.get(pk=data.get('job'))
-        introduction = job.introductions.get(pk=data.get('id'))
+        startup = get_startup(request.user, startupId)
+        job = startup.jobs.get(pk=jobId)
+        introduction = job.introductions.get(pk=pk)
+        serializer = IntroductionSerializer(instance=introduction, data=data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
+
+
+    def delete(self, request, startupId, jobId, pk):
+        startup = get_startup(request.user, startupId)
+        job = startup.jobs.get(pk=jobId)
+        introduction = job.introductions.get(pk=pk)
         introduction.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
