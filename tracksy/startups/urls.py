@@ -14,4 +14,5 @@ urlpatterns.append(path('api/financials/<int:startupId>/', FinancialAPI.as_view(
 urlpatterns.append(path('api/financials/<int:startupId>/<int:pk>/', FinancialAPI.as_view()))
 urlpatterns.append(path('api/jobDescription/', AngelJobAPI.as_view()))
 urlpatterns.append(path('api/job/<int:startupId>/', JobAPI.as_view()))
+urlpatterns.append(path('api/job/<int:startupId>/<int:pk>/', JobAPI.as_view()))
 urlpatterns.append(path('api/introduction/<int:startupId>/', IntroductionAPI.as_view()))

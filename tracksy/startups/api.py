@@ -133,6 +133,12 @@ class JobAPI(APIView):
         response = process_field(request.data, startup, JobSerializer, "jobs")
         return Response(response)
 
+    def delete(self, request, startupId, pk):
+        startup = get_startup(request.user, startupId)
+        job = startup.jobs.get(pk=pk)
+        job.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
 
 class IntroductionAPI(APIView):
     permission_classes = [permissions.IsAuthenticated]
