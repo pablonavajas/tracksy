@@ -12,7 +12,7 @@ class Apis:
         self.startup = "zoom"
         self.startupId = None
         self.jobId = None
-        self.connectionId = 1
+        self.connectionIds = None
 
         self._register = base + 'auth/register'  # POST
         self._login = base + 'auth/login'   # POST
@@ -29,7 +29,7 @@ class Apis:
             return {'Content-Type': 'application/json', 'Authorization': "Token " + token}
         return {'Content-Type': 'application/json'}
 
-    def post(self, url, headers, data, response = True):
+    def post(self, url, headers, data, response=True):
         data = json.dumps(data)
         response_json = r.post(url, headers=headers, data=data)
         if response is False:
@@ -37,7 +37,7 @@ class Apis:
         return json.loads(response_json.text)
 
     def get(self, url, headers):
-        response_json = r.post(url, headers=headers)
+        response_json = r.get(url, headers=headers)
         return json.loads(response_json.text)
 
     def register(self):
@@ -70,7 +70,6 @@ class Apis:
                 "startupEmail": name + "@gmail.com"
         }
         response = self.post(self._startup, header, data)
-        print(response)
         self.startupId = response['id']
         return response
 
@@ -179,16 +178,19 @@ class Apis:
                 ]
             }
         response = self.post(self._connections, header, data)
+        print(response)
+        self.connectionIds = response['connectionIds']
+        print(self.connectionIds)
         return response
 
     def addIntroductions(self):
         header = self.header(self.token)
-        for i in range(3):
+        for i in self.connectionIds:
             url = self._introduction + str(self.startupId) + '/' + str(self.jobId) + \
               '/' + str(i) + '/'
-            response = self.post(url, header, {"status": "connected"}, response=False)
+            self.post(url, header, {"status": "connected"}, response=False)
 
-    def create(self):
+    def create(self,):
         self.register()
         self.login()
         self.addStartup()    # can specify name of startup here
@@ -198,11 +200,15 @@ class Apis:
         self.addJob()
         self.addConnections()
         self.addIntroductions()
-        print("Username:" + self.username)
-        print("Password:" + self.password)
-        print("Startup:" + self.startup)
+        print("Username: " + self.username)
+        print("User Password: " + self.password)
+        print("Startup: " + self.startup)
+        print("\nResponse from GET startups:")
+        print(self.getStartups())
 
 
 if __name__ == '__main__':
     api = Apis()
+    api.username = "david"
+    api.startup = "zoom"
     api.create()
