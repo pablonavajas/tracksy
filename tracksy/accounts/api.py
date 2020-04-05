@@ -69,11 +69,11 @@ class ConnectionsAPI(APIView):
         username = request.data.get("username")
         connections = request.data.get("connections")
         user = User.objects.get(username=username)
-        added = 0
+        connectionIds = []
         for connection in connections:
             connection['user'] = user.pk
             serializer = ConnectionSerializer(data=connection)
             if serializer.is_valid():
                 serializer.save(user=user)
-                added = added + 1
-        return Response({"ConnectionsAdded": added})
+                connectionIds.append(serializer.data['id'])
+        return Response({"connectionIds": connectionIds})
