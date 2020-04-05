@@ -6,7 +6,8 @@ from accounts.models import Connection
 
 
 class Startup(models.Model):
-    users = models.ManyToManyField(User, related_name="startups", blank=True, null=True)
+    users = models.ManyToManyField(
+        User, related_name="startups", blank=True, null=True)
     startupEmail = models.EmailField()
 
     name = models.CharField(max_length=100)
@@ -60,7 +61,8 @@ class Kpi(models.Model):
 
 
 class Job(models.Model):
-    startupId = models.ForeignKey(Startup, related_name="jobs", on_delete=models.CASCADE)
+    startupId = models.ForeignKey(
+        Startup, related_name="jobs", on_delete=models.CASCADE)
     url = models.URLField(null=True, blank=True)
     title = models.TextField()
     description = models.TextField(null=True, blank=True)
@@ -70,6 +72,8 @@ class Job(models.Model):
 
 
 class Introduction(models.Model):
-    connection = models.ForeignKey(Connection, related_name="introductions", on_delete=models.CASCADE, null=True, blank=True)
-    job = models.ForeignKey(Job, related_name="introductions", on_delete=models.CASCADE, null=True, blank=True)
+    connection = models.ForeignKey(
+        Connection, related_name="introductions", on_delete=models.CASCADE, null=True, blank=True)
+    job = models.ForeignKey(Job, related_name="introductions",
+                            on_delete=models.CASCADE, null=True, blank=True)
     status = models.CharField(max_length=200, null=True, blank=True)

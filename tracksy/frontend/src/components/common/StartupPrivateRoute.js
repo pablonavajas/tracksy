@@ -6,16 +6,14 @@ import PropTypes from "prop-types";
 const VCPrivateRoute = ({ component: Component, auth, ...rest }) => (
   <Route
     {...rest}
-    render={props => {
+    render={(props) => {
       if (auth.isLoading) {
-        console.log("loading");
         return (
           <div className="progress">
             <div className="indeterminate" />
           </div>
         );
       } else if (!auth.isAuthenticated && !localStorage.token) {
-        console.log("/login");
         return <Redirect to="/login" />;
       } else if (auth.isStartup === false && auth.isLoading === false) {
         return <Redirect to="/" />;
@@ -26,8 +24,8 @@ const VCPrivateRoute = ({ component: Component, auth, ...rest }) => (
   />
 );
 
-const mapStateToProps = state => ({
-  auth: state.auth
+const mapStateToProps = (state) => ({
+  auth: state.auth,
 });
 
 export default connect(mapStateToProps)(VCPrivateRoute);
