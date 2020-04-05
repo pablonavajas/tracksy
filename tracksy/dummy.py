@@ -1,3 +1,5 @@
+""" Run this script to fill the database with some dummy data """
+
 import requests as r
 import json
 
