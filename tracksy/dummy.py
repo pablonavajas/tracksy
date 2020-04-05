@@ -29,9 +29,11 @@ class Apis:
             return {'Content-Type': 'application/json', 'Authorization': "Token " + token}
         return {'Content-Type': 'application/json'}
 
-    def post(self, url, headers, data):
+    def post(self, url, headers, data, response = True):
         data = json.dumps(data)
         response_json = r.post(url, headers=headers, data=data)
+        if response is False:
+            return None
         return json.loads(response_json.text)
 
     def get(self, url, headers):
@@ -184,10 +186,10 @@ class Apis:
         for i in range(3):
             url = self._introduction + str(self.startupId) + '/' + str(self.jobId) + \
               '/' + str(i) + '/'
-            response = self.post(url, header, {})
+            response = self.post(url, header, {"status": "connected"}, response=False)
 
     def create(self):
-        # self.register()
+        self.register()
         self.login()
         self.addStartup()    # can specify name of startup here
         self.addInvestments()
