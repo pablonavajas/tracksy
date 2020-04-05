@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { addStartup, setCurrent } from "../../actions/startupsActions";
-import CurrencyFormat from "react-currency-format";
+import { addStartup } from "../../actions/startupsActions";
 
-const AddStartupModal = ({ addStartup, setCurrent }) => {
+const AddStartupModal = ({ addStartup }) => {
   const [name, setName] = useState("");
   const [website, setWebsite] = useState("");
   const [board, setBoard] = useState("");
@@ -17,7 +16,7 @@ const AddStartupModal = ({ addStartup, setCurrent }) => {
       website,
       ownership,
       startupEmail,
-      board
+      board,
     };
 
     addStartup(newStartup);
@@ -42,7 +41,7 @@ const AddStartupModal = ({ addStartup, setCurrent }) => {
               className="validate"
               name="name"
               value={name}
-              onChange={e => setName(e.target.value)}
+              onChange={(e) => setName(e.target.value)}
             />
             <label htmlFor="name_add">Startup Name</label>
           </div>
@@ -56,7 +55,7 @@ const AddStartupModal = ({ addStartup, setCurrent }) => {
               className="validate"
               name="website"
               value={website}
-              onChange={e => setWebsite(e.target.value)}
+              onChange={(e) => setWebsite(e.target.value)}
             />
             <label htmlFor="website_add">Website</label>
           </div>
@@ -70,7 +69,7 @@ const AddStartupModal = ({ addStartup, setCurrent }) => {
               type="number"
               className="validate"
               value={ownership}
-              onChange={e => setOwnership(e.target.value)}
+              onChange={(e) => setOwnership(e.target.value)}
             />
             <label htmlFor="ownership_add">Ownership (%)</label>
           </div>
@@ -84,7 +83,7 @@ const AddStartupModal = ({ addStartup, setCurrent }) => {
               type="email"
               className="validate"
               value={startupEmail}
-              onChange={e => setStartupEmail(e.target.value)}
+              onChange={(e) => setStartupEmail(e.target.value)}
             />
             <label htmlFor="startupEmail_add">Startup Email</label>
           </div>
@@ -96,7 +95,7 @@ const AddStartupModal = ({ addStartup, setCurrent }) => {
               name="board"
               value={board}
               className="browser-default"
-              onChange={e => setBoard(e.target.value)}
+              onChange={(e) => setBoard(e.target.value)}
             >
               <option value="" disabled>
                 Select Board
@@ -126,14 +125,13 @@ const AddStartupModal = ({ addStartup, setCurrent }) => {
 
 const modalStyle = {
   width: "60%",
-  height: "75%"
+  height: "75%",
 };
 
 AddStartupModal.propTypes = {
-  addStartup: PropTypes.func.isRequired
+  addStartup: PropTypes.func.isRequired,
 };
 
 export default connect(null, {
   addStartup,
-  setCurrent
 })(AddStartupModal);

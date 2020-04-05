@@ -1,8 +1,10 @@
 import React, { useEffect, Fragment } from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
+
 import { getStartups } from "../../actions/startupsActions";
 import FinancialItem from "./FinancialItem";
-import PropTypes from "prop-types";
+import Preloader from "../layout/Preloader";
 
 function StartupPage({ startup, getStartups }) {
   useEffect(() => {
@@ -12,31 +14,8 @@ function StartupPage({ startup, getStartups }) {
   const { startups, loading } = startup;
 
   if (loading || startups === null) {
-    return (
-      <div className="progress">
-        <div className="indeterminate"></div>
-      </div>
-    );
+    return <Preloader />;
   }
-  console.log(startups[0].financials);
-
-  const addButton = (
-    <div
-      className="right"
-      style={{
-        margin: "-60px 50px"
-      }}
-    >
-      <div className="fixed-action-btn">
-        <a
-          href="/#/startupForm"
-          className="btn-floating waves-effect waves-light btn-large red darken-1 "
-        >
-          <i className="large material-icons">add</i>
-        </a>
-      </div>
-    </div>
-  );
 
   if (startups[0].financials.length === 0) {
     return (
@@ -66,7 +45,7 @@ function StartupPage({ startup, getStartups }) {
                   </tr>
                 </thead>
                 <tbody>
-                  {startups[0].financials.map(fin => (
+                  {startups[0].financials.map((fin) => (
                     <FinancialItem financial={fin} key={fin.id} />
                   ))}
                 </tbody>
@@ -80,13 +59,31 @@ function StartupPage({ startup, getStartups }) {
   );
 }
 
+const addButton = (
+  <div
+    className="right"
+    style={{
+      margin: "-60px 50px",
+    }}
+  >
+    <div className="fixed-action-btn">
+      <a
+        href="/#/startupForm"
+        className="btn-floating waves-effect waves-light btn-large red darken-1 "
+      >
+        <i className="large material-icons">add</i>
+      </a>
+    </div>
+  </div>
+);
+
 StartupPage.propTypes = {
   startup: PropTypes.object.isRequired,
-  getStartups: PropTypes.func.isRequired
+  getStartups: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => ({
-  startup: state.startup
+const mapStateToProps = (state) => ({
+  startup: state.startup,
 });
 
 export default connect(mapStateToProps, { getStartups })(StartupPage);

@@ -1,12 +1,10 @@
 import {
   GET_STARTUPS,
   SET_LOADING,
-  STARTUPS_ERROR,
   ADD_STARTUP,
   UPDATE_STARTUP,
   DELETE_STARTUP,
   SET_CURRENT,
-  CLEAR_CURRENT,
   ADD_FINANCIAL,
   ADD_INVESTMENTS,
   DELETE_INVESTMENT,
@@ -35,7 +33,6 @@ export default (state = initialState, action) => {
     case ADD_STARTUP:
       return {
         ...state,
-        //state is immutable
         startups: [...state.startups, action.payload],
         loading: false,
       };
@@ -155,20 +152,10 @@ export default (state = initialState, action) => {
           return startup;
         }),
       };
-    case CLEAR_CURRENT:
-      return {
-        ...state,
-        current: null,
-      };
     case SET_LOADING:
       return {
         ...state,
         loading: true,
-      };
-    case STARTUPS_ERROR:
-      return {
-        ...state,
-        error: action.payload,
       };
     default:
       return state;

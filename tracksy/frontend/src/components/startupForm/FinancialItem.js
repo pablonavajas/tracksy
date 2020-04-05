@@ -1,6 +1,6 @@
 import React from "react";
-var moment = require("moment");
 import CurrencyFormat from "react-currency-format";
+var moment = require("moment");
 
 function FinancialItem({ financial }) {
   const {

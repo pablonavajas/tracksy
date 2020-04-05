@@ -1,11 +1,12 @@
-import React, { Fragment, useState, useEffect } from "react";
-import { connect } from "react-redux";
-import { addJob, getJobDescription } from "../../actions/jobActions";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
+
+import { addJob, getJobDescription } from "../../actions/jobActions";
 
 const AddJobModal = ({
   startup: { startups },
-  currentJob,
+  jobs: { latestRetrieved },
   addJob,
   getJobDescription,
 }) => {
@@ -16,14 +17,14 @@ const AddJobModal = ({
   const [location, setLocation] = useState("");
 
   useEffect(() => {
-    if (currentJob) {
-      setUrl(currentJob.url);
-      setDescription(currentJob.description);
-      setTitle(currentJob.title);
-      setSalary(currentJob.salary);
-      setLocation(currentJob.specs.Location);
+    if (latestRetrieved) {
+      setUrl(latestRetrieved.url);
+      setDescription(latestRetrieved.description);
+      setTitle(latestRetrieved.title);
+      setSalary(latestRetrieved.salary);
+      setLocation(latestRetrieved.specs.Location);
     }
-  }, [currentJob]);
+  }, [latestRetrieved]);
 
   const onSubmit = () => {
     const newJob = {
@@ -35,6 +36,7 @@ const AddJobModal = ({
     };
 
     addJob(startups[0].id, newJob);
+
     setUrl("");
     setDescription("");
     setTitle("");
@@ -142,13 +144,15 @@ const modalStyle = {
 };
 
 AddJobModal.propTypes = {
-  addJob: PropTypes.func.isRequired,
   startup: PropTypes.object.isRequired,
+  jobs: PropTypes.object.isRequired,
+  addJob: PropTypes.func.isRequired,
+  getJobDescription: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   startup: state.startup,
-  currentJob: state.jobs.latestRetrieved,
+  jobs: state.jobs,
 });
 
 export default connect(mapStateToProps, { addJob, getJobDescription })(

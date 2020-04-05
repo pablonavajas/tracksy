@@ -1,12 +1,13 @@
 import React, { useState, useEffect, Fragment } from "react";
-import { connect } from "react-redux";
-// import StartupFormField from "./StartupFormField";
-import { getStartups, setCurrent } from "../../actions/startupsActions";
-import CurrencyFormat from "react-currency-format";
-import { addFinancial } from "../../actions/financialActions";
 import PropTypes from "prop-types";
-import { Link, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
+import CurrencyFormat from "react-currency-format";
+
+import { getStartups } from "../../actions/startupsActions";
+import { addFinancial } from "../../actions/financialActions";
 import JobsTable from "../jobs/JobsTable";
+import Preloader from "../layout/Preloader";
 
 function StartupForm({ startups, errors, getStartups, addFinancial }) {
   const [comment, setComment] = useState("");
@@ -18,63 +19,48 @@ function StartupForm({ startups, errors, getStartups, addFinancial }) {
   const [endDate, setEndDate] = useState("");
   const [kpis, setKpis] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  //indicators whether the form submission was successful
   const [localErrors, setLocalErrors] = useState(null);
 
   // runs when the component is rendered for the first time
   useEffect(() => {
-    console.log(localErrors);
     getStartups();
     //esling-disable-next-line
   }, []);
 
   // runs when startups prop changes, as the startups are loaded
   useEffect(() => {
-    // console.log("useEffect for startups is called");
     resetKpis();
   }, [startups]);
 
   // reset KPIs to just names and no values
   const resetKpis = () => {
-    // console.log("resetKpis is called");
     if (startups) {
       setKpis([...startups[0].kpinames]);
       setLoading(false);
     }
   };
 
-  const onSubmit = e => {
+  const onSubmit = (e) => {
     // precent default action
     e.preventDefault();
 
     const newFinancial = {
-      comment: comment,
-      currency: currency,
-      revenue: revenue,
-      cashBalance: cashBalance,
-      monthlyBurn: monthlyBurn,
-      startDate: startDate,
-      endDate: endDate,
-      kpis: kpis
+      comment,
+      currency,
+      revenue,
+      cashBalance,
+      monthlyBurn,
+      startDate,
+      endDate,
+      kpis,
     };
 
     addFinancial(startups[0].id, newFinancial);
-
-    if (errors.status) {
-      setLocalErrors(true);
-    } else {
-      // will redirect to the history page
-      setLocalErrors(false);
-    }
+    errors.status ? setLocalErrors(true) : setLocalErrors(false);
   };
 
   if (loading) {
-    return (
-      <div className="progress">
-        <div className="indeterminate" />
-      </div>
-    );
+    return <Preloader />;
   } else if (localErrors === false) {
     return <Redirect to="/startupPage" />;
   } else {
@@ -90,7 +76,7 @@ function StartupForm({ startups, errors, getStartups, addFinancial }) {
                   name="currency"
                   value={currency}
                   className="browser-default"
-                  onChange={e => setCurrency(e.target.value)}
+                  onChange={(e) => setCurrency(e.target.value)}
                 >
                   <option value=" " disabled>
                     Choose your option
@@ -110,7 +96,7 @@ function StartupForm({ startups, errors, getStartups, addFinancial }) {
                   thousandSeparator={true}
                   prefix={currency}
                   allowNegative={false}
-                  onValueChange={values => {
+                  onValueChange={(values) => {
                     const { value } = values; // destructuring to get the pure integer value
                     setRevenue(value);
                   }}
@@ -125,7 +111,7 @@ function StartupForm({ startups, errors, getStartups, addFinancial }) {
                   thousandSeparator={true}
                   prefix={currency}
                   allowNegative={false}
-                  onValueChange={values => {
+                  onValueChange={(values) => {
                     const { value } = values; // destructuring to get the pure integer value
                     setCashBalance(value);
                   }}
@@ -140,7 +126,7 @@ function StartupForm({ startups, errors, getStartups, addFinancial }) {
                   thousandSeparator={true}
                   prefix={currency}
                   allowNegative={false}
-                  onValueChange={values => {
+                  onValueChange={(values) => {
                     const { value } = values; // destructuring to get the pure integer value
                     setMonthlyBurn(value);
                   }}
@@ -155,7 +141,7 @@ function StartupForm({ startups, errors, getStartups, addFinancial }) {
                     id="monthlyBurn"
                     type="number"
                     name="monthlyBurn"
-                    onChange={e => {
+                    onChange={(e) => {
                       kpis[i].value = e.target.value;
                       // console.log(kpis[i].value);
                     }}
@@ -167,7 +153,7 @@ function StartupForm({ startups, errors, getStartups, addFinancial }) {
                 <input
                   id="startDate"
                   type="date"
-                  onChange={e => setStartDate(e.target.value)}
+                  onChange={(e) => setStartDate(e.target.value)}
                 />
                 <label htmlFor="startDate">Reporting Period Start Date</label>
               </div>
@@ -175,7 +161,7 @@ function StartupForm({ startups, errors, getStartups, addFinancial }) {
                 <input
                   id="endDate"
                   type="date"
-                  onChange={e => setEndDate(e.target.value)}
+                  onChange={(e) => setEndDate(e.target.value)}
                 />
                 <label htmlFor="endDate">Reporting Period End Date</label>
               </div>
@@ -186,7 +172,7 @@ function StartupForm({ startups, errors, getStartups, addFinancial }) {
                       id="comment"
                       className="materialize-textarea"
                       value={comment}
-                      onChange={e => setComment(e.target.value)}
+                      onChange={(e) => setComment(e.target.value)}
                     ></textarea>
                     <label htmlFor="comment">Comments</label>
                   </div>
@@ -203,7 +189,7 @@ function StartupForm({ startups, errors, getStartups, addFinancial }) {
             <p></p>
             <div className="center">
               <a
-                onClick={e => onSubmit(e)}
+                onClick={(e) => onSubmit(e)}
                 className="btn waves-effect waves-light light-blue"
               >
                 Submit
@@ -225,15 +211,13 @@ const getExtraVerticalSpace = () => (
 
 StartupForm.propTypes = {
   getStartups: PropTypes.func.isRequired,
-  addFinancial: PropTypes.func.isRequired
+  addFinancial: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => {
-  return {
-    startups: state.startup.startups,
-    errors: state.errors
-  };
-};
+const mapStateToProps = (state) => ({
+  startups: state.startup.startups,
+  errors: state.errors,
+});
 
 export default connect(mapStateToProps, { getStartups, addFinancial })(
   StartupForm

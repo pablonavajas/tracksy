@@ -1,9 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { deleteStartup, setCurrent } from "../../actions/startupsActions";
 import CurrencyFormat from "react-currency-format";
 var moment = require("moment");
+
+import { connect } from "react-redux";
+import { deleteStartup, setCurrent } from "../../actions/startupsActions";
 
 const StartupItem = ({ startup, setCurrent, deleteStartup }) => {
   return (
@@ -27,7 +28,7 @@ const StartupItem = ({ startup, setCurrent, deleteStartup }) => {
       </td>
 
       <td className="center">
-        {startup.investments.map(investment => (
+        {startup.investments.map((investment) => (
           <div className="center" key={investment.id}>
             <div className="chip center">
               <p>
@@ -43,14 +44,14 @@ const StartupItem = ({ startup, setCurrent, deleteStartup }) => {
         ))}
       </td>
       <td className="center">
-        {startup.investments.map(investment => (
+        {startup.investments.map((investment) => (
           <div className="center" key={investment.id}>
             <div className="chip center">{investment.investmentType}</div>
           </div>
         ))}
       </td>
       <td>
-        {startup.investments.map(investment => (
+        {startup.investments.map((investment) => (
           <div className="center" key={investment.id}>
             <div className="chip center">
               {moment(investment.date).format("DD/MM/YYYY")}
@@ -97,7 +98,7 @@ const StartupItem = ({ startup, setCurrent, deleteStartup }) => {
       <td>
         <a
           href="#!"
-          onClick={e => {
+          onClick={(e) => {
             e.preventDefault();
             deleteStartup(startup.id);
           }}
@@ -113,14 +114,14 @@ const StartupItem = ({ startup, setCurrent, deleteStartup }) => {
 StartupItem.propTypes = {
   startup: PropTypes.object.isRequired,
   deleteStartup: PropTypes.func.isRequired,
-  setCurrent: PropTypes.func.isRequired
+  setCurrent: PropTypes.func.isRequired,
 };
 
 // Inject App Level state, so that
 // component updates upon an update of info
 // (e.g. added investment)
-const mapStateToProps = state => ({
-  startups: state.startup.startups
+const mapStateToProps = (state) => ({
+  startups: state.startup.startups,
 });
 
 export default connect(mapStateToProps, { setCurrent, deleteStartup })(

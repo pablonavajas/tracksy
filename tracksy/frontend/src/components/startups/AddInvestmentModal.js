@@ -1,28 +1,27 @@
 import React, { useState, useEffect } from "react";
-import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import CurrencyFormat from "react-currency-format";
+
 import {
   deleteInvestment,
-  addInvestments
+  addInvestments,
 } from "../../actions/investmentsActions";
 import { setCurrent } from "../../actions/startupsActions";
-import CurrencyFormat from "react-currency-format";
 
 const addInvestmentModal = ({
   current,
   addInvestments,
   deleteInvestment,
-  setCurrent
+  setCurrent,
 }) => {
   const [currentName, setCurrentName] = useState("");
   const [list, setList] = useState([]);
 
   useEffect(() => {
-    // console.log("useEffect is called in investment modal");
     if (current) {
       setCurrentName(current.name);
       setList(current.investments);
-      // console.log(current.investments);
     }
   }, [current]);
 
@@ -30,7 +29,7 @@ const addInvestmentModal = ({
     value: "",
     currency: "£",
     investmentType: "",
-    date: ""
+    date: "",
   };
 
   const addInput = () => {
@@ -43,11 +42,9 @@ const addInvestmentModal = ({
   };
 
   // 0-based index
-  const deleteInput = index => {
+  const deleteInput = (index) => {
     // delete the inputs from database if they were already there
     if (list[index].id) {
-      console.log("INVESTMENT ID IN INV MODAL");
-      console.log(list[index].id);
       deleteInvestment(current.id, list[index].id);
     }
 
@@ -70,7 +67,7 @@ const addInvestmentModal = ({
                     name="currency"
                     value={inv.currency ? inv.currency : ""}
                     className="browser-default"
-                    onChange={e => {
+                    onChange={(e) => {
                       list[i].currency = e.target.value;
                       setList([...list]);
                     }}
@@ -93,7 +90,7 @@ const addInvestmentModal = ({
                     className="validate"
                     prefix={inv.currency ? inv.currency : "£"}
                     allowNegative={false}
-                    onValueChange={values => {
+                    onValueChange={(values) => {
                       const { formattedValue, value } = values;
                       // formattedValue = $2,223
                       // value ie, 2223
@@ -113,7 +110,7 @@ const addInvestmentModal = ({
                     type="text"
                     className="validate"
                     value={inv.investmentType ? inv.investmentType : ""}
-                    onChange={e => {
+                    onChange={(e) => {
                       list[i].investmentType = e.target.value;
                       setList([...list]);
                     }}
@@ -129,7 +126,7 @@ const addInvestmentModal = ({
                     value={inv.date ? inv.date : ""}
                     type="date"
                     className="validate"
-                    onChange={e => {
+                    onChange={(e) => {
                       list[i].date = e.target.value;
                       setList([...list]);
                     }}
@@ -171,19 +168,21 @@ const addInvestmentModal = ({
 
 const modalStyle = {
   width: "60%",
-  height: "75%"
+  height: "75%",
 };
 
 addInvestmentModal.propTypes = {
-  addInvestments: PropTypes.func.isRequired
+  addInvestments: PropTypes.func.isRequired,
+  deleteInvestment: PropTypes.func.isRequired,
+  setCurrent: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => ({
-  current: state.startup.current
+const mapStateToProps = (state) => ({
+  current: state.startup.current,
 });
 
 export default connect(mapStateToProps, {
   addInvestments,
   deleteInvestment,
-  setCurrent
+  setCurrent,
 })(addInvestmentModal);

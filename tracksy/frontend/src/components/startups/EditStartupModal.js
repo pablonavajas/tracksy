@@ -28,7 +28,7 @@ const EditStartupModal = ({ current, updateStartup }) => {
       website,
       ownership,
       board,
-      startupEmail
+      startupEmail,
     };
     updateStartup(updStartup);
   };
@@ -47,7 +47,7 @@ const EditStartupModal = ({ current, updateStartup }) => {
               type="text"
               name="name"
               value={name}
-              onChange={e => setName(e.target.value)}
+              onChange={(e) => setName(e.target.value)}
             />
             <label className="active" htmlFor="name">
               Startup Name
@@ -64,7 +64,7 @@ const EditStartupModal = ({ current, updateStartup }) => {
               type="text"
               name="website"
               value={website}
-              onChange={e => setWebsite(e.target.value)}
+              onChange={(e) => setWebsite(e.target.value)}
             />
             <label className="active" htmlFor="website">
               Website
@@ -81,7 +81,7 @@ const EditStartupModal = ({ current, updateStartup }) => {
               name="ownership"
               type="text"
               value={ownership ? ownership : ""}
-              onChange={e => setOwnership(e.target.value)}
+              onChange={(e) => setOwnership(e.target.value)}
             />
             <label className="active" htmlFor="ownership">
               Ownership (%)
@@ -94,13 +94,13 @@ const EditStartupModal = ({ current, updateStartup }) => {
           <div className="input-field col s12">
             <input
               placeholder=""
-              id="startupEmail_add"
+              id="startupEmail"
               name="startupEmail"
               type="text"
               value={startupEmail}
-              onChange={e => setStartupEmail(e.target.value)}
+              onChange={(e) => setStartupEmail(e.target.value)}
             />
-            <label htmlFor="startupEmail_add">Startup Email</label>
+            <label htmlFor="startupEmail">Startup Email</label>
           </div>
         </div>
 
@@ -111,7 +111,7 @@ const EditStartupModal = ({ current, updateStartup }) => {
               name="board"
               value={board ? board : ""}
               className="browser-default"
-              onChange={e => setBoard(e.target.value)}
+              onChange={(e) => setBoard(e.target.value)}
             >
               <option value=" " disabled>
                 Choose your option
@@ -141,16 +141,16 @@ const EditStartupModal = ({ current, updateStartup }) => {
 
 const modalStyle = {
   width: "60%",
-  height: "75%"
+  height: "75%",
 };
 
 EditStartupModal.propTypes = {
   current: PropTypes.object,
-  updateStartup: PropTypes.func.isRequired
+  updateStartup: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => ({
-  current: state.startup.current
+const mapStateToProps = (state) => ({
+  current: state.startup.current,
 });
 
 export default connect(mapStateToProps, { updateStartup })(EditStartupModal);

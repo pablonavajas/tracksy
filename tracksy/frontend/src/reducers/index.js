@@ -8,8 +8,8 @@ import jobsReducer from "./jobsReducer";
 
 export default combineReducers({
   startup: startupsReducer,
+  jobs: jobsReducer,
   errors: errorsReducer,
   messages: messagesReducer,
   auth: authReducer,
-  jobs: jobsReducer,
 });

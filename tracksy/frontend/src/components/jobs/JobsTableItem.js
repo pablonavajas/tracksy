@@ -1,6 +1,8 @@
 import React from "react";
-import { setCurrentJob, deleteJob } from "../../actions/jobActions";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
+
+import { setCurrentJob, deleteJob } from "../../actions/jobActions";
 
 function JobsTableItem({ job, setCurrentJob, deleteJob }) {
   return (
@@ -34,5 +36,11 @@ function JobsTableItem({ job, setCurrentJob, deleteJob }) {
     </tr>
   );
 }
+
+JobsTableItem.propTypes = {
+  job: PropTypes.object.isRequired,
+  setCurrentJob: PropTypes.func.isRequired,
+  deleteJob: PropTypes.func.isRequired,
+};
 
 export default connect(null, { setCurrentJob, deleteJob })(JobsTableItem);
