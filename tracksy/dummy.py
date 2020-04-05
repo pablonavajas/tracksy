@@ -161,18 +161,30 @@ class Apis:
                         "name": "Pablo",
                         "url": "https://PablosLinkeIn.com",
                         "description": "db eng"
+                    },
+                    {
+                        "owner": "David",
+                        "name": "Ed",
+                        "url": "https://Ed.com",
+                        "description": "Database dev"
+                    },
+                    {
+                        "owner": "David",
+                        "name": "Seb",
+                        "url": "https://Seb.com",
+                        "description": "Frontend eng"
                     }
                 ]
             }
         response = self.post(self._connections, header, data)
         return response
 
-    def addIntroduction(self):
+    def addIntroductions(self):
         header = self.header(self.token)
-        url = self._introduction + str(self.startupId) + '/' + str(self.jobId) + \
-              '/' + str(self.connectionId) + '/'
-        response = self.post(url, header, {})
-        return response
+        for i in range(3):
+            url = self._introduction + str(self.startupId) + '/' + str(self.jobId) + \
+              '/' + str(i) + '/'
+            response = self.post(url, header, {})
 
     def create(self):
         # self.register()
@@ -183,7 +195,7 @@ class Apis:
         self.addFinancial()
         self.addJob()
         self.addConnections()
-        self.addIntroduction()
+        self.addIntroductions()
         print("Username:" + self.username)
         print("Password:" + self.password)
         print("Startup:" + self.startup)
