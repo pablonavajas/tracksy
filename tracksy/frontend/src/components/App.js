@@ -14,17 +14,14 @@ import M from "materialize-css";
 
 import "./App.css";
 
-<<<<<<< HEAD
 import StartupOverview from "./startups/StartupOverview";
 import BusinessDevelopment from "./startups/BusinessDevelopment";
 import Fundraising from "./startups/Fundraising";
 import Hiring from "./startups/Hiring";
-=======
 import store from "../store";
 import { loadUser } from "../actions/authActions";
 import Navbar from "./layout/Navbar";
 import Footer from "./layout/Footer";
->>>>>>> master
 import Startups from "./startups/Startups";
 import EditStartupModal from "./startups/EditStartupModal";
 import AddStartupModal from "./startups/AddStartupModal";

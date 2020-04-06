@@ -1,9 +1,5 @@
 from django.contrib import admin
-<<<<<<< HEAD
-from .models import Startup
-=======
 from .models import *
->>>>>>> master
 
 # Register your models here.
 admin.site.register(Startup)
