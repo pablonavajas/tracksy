@@ -81,10 +81,10 @@ class App extends Component {
                     />
                     <Route exact path="/register" component={Register} />
                     <Route exact path="/login" component={Login} />
-                    <PrivateRoute exact path='/startup-overview' component={StartupOverview} />
-                    <PrivateRoute exact path='/business-development' component={BusinessDevelopment} />
-                    <PrivateRoute exact path='/hiring' component={Hiring} />
-                    <PrivateRoute exact path='/fundraising' component={Fundraising} />
+                    <VCPrivateRoute exact path='/startup-overview' component={StartupOverview} />
+                    <VCPrivateRoute exact path='/business-development' component={BusinessDevelopment} />
+                    <VCPrivateRoute exact path='/hiring' component={Hiring} />
+                    <VCPrivateRoute exact path='/fundraising' component={Fundraising} />
                   </Switch>
                 </div>
               </main>

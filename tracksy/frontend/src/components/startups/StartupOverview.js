@@ -19,10 +19,11 @@ const StartupOverview = ({ current, updateStartup }) => {
   const [investment_2, setInvestment_2] = useState("");
   const [type_2, setType_2] = useState("");
   const [date_closed_2, setDate_2] = useState("");
-  const [cash_balance, setCashBalance] = useState("");
-  const [monthly_burn, setMonthlyBurn] = useState("");
+  const [cashBalance, setCashBalance] = useState("");
+  const [monthlyBurn, setMonthlyBurn] = useState("");
 
   useEffect(() => {
+    console.log(current)
     if (current) {
       setName(current.name);
       setWebsite(current.website);
@@ -35,8 +36,8 @@ const StartupOverview = ({ current, updateStartup }) => {
       setInvestment_2(current.investment_2);
       setDate_2(current.date_closed_2);
       setType_2(current.type_2);
-      setCashBalance(current.cash_balance);
-      setMonthlyBurn(current.monthly_burn);
+      setCashBalance(current.financials[0].cashBalance);
+      setMonthlyBurn(current.financials[0].monthlyBurn);
     }
   }, [current]);
 
@@ -45,8 +46,8 @@ const StartupOverview = ({ current, updateStartup }) => {
     datasets: [
       {
         label: 'Monthly Revenue',
-        data: [cash_balance, 
-              monthly_burn
+        data: [cashBalance, 
+              monthlyBurn
             ],
         backgroundColor: [
           'rgba(66, 148, 136, 0.6)',
@@ -55,8 +56,8 @@ const StartupOverview = ({ current, updateStartup }) => {
     ],
   };
 
-  const runway = (cash_balance, monthly_burn) => {
-    const result = cash_balance / monthly_burn;
+  const runway = (cashBalance, monthlyBurn) => {
+    const result = cashBalance / monthlyBurn;
     return result
   }
 
@@ -83,19 +84,19 @@ const StartupOverview = ({ current, updateStartup }) => {
     <div className="col s12 m6 l3">
       <div className="card-panel center">
         <h5>Cash Balance</h5>
-        <h3>{cash_balance}</h3>
+        <h3>{cashBalance}</h3>
       </div>
     </div>
     <div className="col s12 m6 l3">
       <div className="card-panel blue lighten-1 white-text center">
         <h5>Monthly Burn</h5>
-        <h3>{monthly_burn}</h3>
+        <h3>{monthlyBurn}</h3>
       </div>
     </div>
     <div className="col s12 m6 l3">
       <div className="card-panel center">
         <h5>Runway</h5>
-        <h3>{runway(cash_balance, monthly_burn)}</h3>
+        <h3>{runway(cashBalance, monthlyBurn)}</h3>
       </div>
     </div>
   </div>
