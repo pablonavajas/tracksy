@@ -5,7 +5,6 @@ import {
   ADD_STARTUP,
   DELETE_STARTUP,
   SET_CURRENT,
-  CLEAR_CURRENT,
 } from "./types";
 import axios from "axios";
 import { createMessage, returnErrors } from "./messageActions";
@@ -84,25 +83,11 @@ export const deleteStartup = (id) => async (dispatch, getState) => {
   }
 };
 
-export const setCurrentBasedOnNameAndWebsite = async ({ name, website }) => {
-  return {
-    type: SET_CURRENT_BASED_ON_NAME_AND_WEBSITE,
-    payload: { name, website },
-  };
-};
-
 //Set current startup
 export const setCurrent = (startup) => {
   return {
     type: SET_CURRENT,
     payload: startup,
-  };
-};
-
-//Clear current startup
-export const clearCurrent = () => {
-  return {
-    type: CLEAR_CURRENT,
   };
 };
 

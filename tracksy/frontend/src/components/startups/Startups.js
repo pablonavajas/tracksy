@@ -50,6 +50,7 @@ export const Startups = ({ startup: { startups, loading }, getStartups }) => {
                     <th></th>
                     <th></th>
                     <th></th>
+                    <th></th>
                   </tr>
                 </thead>
                 <tbody>

@@ -15,6 +15,28 @@ class Startup(models.Model):
     ownership = models.FloatField(blank=True, null=True)
     board = models.CharField(max_length=30, blank=True, null=True)
 
+    #  # Date investments in round 1 and 2 were closed
+    # date_closed_1 = models.DateField(blank=True)
+    # date_closed_2 = models.DateField(blank=True)
+    
+    # owner = models.ForeignKey(
+    #     User, related_name="startups", on_delete=models.CASCADE, null=True)
+    
+    # # Overview Stats
+    # cash_balance = models.IntegerField(blank=True, default=0)
+    # monthly_burn = models.IntegerField(blank=True, default=0)
+
+    # # KPIs
+    # # kpi_string = ArrayField(models.CharField(max_length=10, blank=True, null=True), default=list)
+    # # kpi_value = ArrayField(ArrayField(models.IntegerField(blank=True), default=list)
+
+    # #chart
+    # name_1 = models.CharField(max_length=20, unique=True, null=True)
+    # money = models.IntegerField(blank=True, default=0)
+
+    # def __str__(self):
+    #     return "{}-{}".format(self.name_1, self.money)
+
     def __str__(self):
         return self.name
 
@@ -69,7 +91,6 @@ class Job(models.Model):
     salary = models.CharField(max_length=200, null=True, blank=True)
     location = models.CharField(max_length=100, null=True, blank=True)
     importance = models.CharField(max_length=50, null=True, blank=True)
-
 
 class Introduction(models.Model):
     connection = models.ForeignKey(

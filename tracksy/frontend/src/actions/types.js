@@ -5,7 +5,6 @@ export const DELETE_STARTUP = "DELETE_STARTUP";
 export const UPDATE_STARTUP = "UPDATE_STARTUP";
 export const STARTUPS_ERROR = "STARTUPS_ERROR";
 export const SET_CURRENT = "SET_CURRENT";
-export const CLEAR_CURRENT = "CLEAR_CURRENT";
 
 export const GET_ERRORS = "GET_ERRORS";
 export const CREATE_MESSAGE = "CREATE_MESSAGE";

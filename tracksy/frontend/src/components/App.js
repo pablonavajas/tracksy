@@ -1,8 +1,3 @@
-/* NOTES:
-- The startup account can only hold one 
-startup in it's list of startups in the db
-*/
-
 import React, { Component, Fragment } from "react";
 import ReactDOM from "react-dom";
 import {
@@ -11,38 +6,37 @@ import {
   Switch,
   Redirect,
 } from "react-router-dom";
-
-import Navbar from "./layout/Navbar";
-import Footer from "./layout/Footer";
-
 import { Provider } from "react-redux";
 import { Provider as AlertProvider } from "react-alert";
-import AlertTemplate from "react-alert-template-basic";
-import store from "../store";
 
-import { loadUser } from "../actions/authActions";
+import AlertTemplate from "react-alert-template-basic";
+import M from "materialize-css";
 
 import "./App.css";
 
-import Home from "./home/Home";
+import StartupOverview from "./startups/StartupOverview";
+import BusinessDevelopment from "./startups/BusinessDevelopment";
+import Fundraising from "./startups/Fundraising";
+import Hiring from "./startups/Hiring";
+import store from "../store";
+import { loadUser } from "../actions/authActions";
+import Navbar from "./layout/Navbar";
+import Footer from "./layout/Footer";
 import Startups from "./startups/Startups";
 import EditStartupModal from "./startups/EditStartupModal";
 import AddStartupModal from "./startups/AddStartupModal";
 import MessageAlerts from "./layout/MessageAlerts";
 import ErrorAlerts from "./layout/ErrorAlerts";
-
 import Login from "./accounts/Login";
 import Register from "./accounts/Register";
 import VCPrivateRoute from "./common/VCPrivateRoute";
 import StartupPrivateRoute from "./common/StartupPrivateRoute";
-
-import M from "materialize-css";
 import StartupForm from "./startupForm/StartupForm";
 import AddInvestmentModal from "./startups/AddInvestmentModal";
 import AddKpiNamesModal from "./startups/AddKpiNamesModal";
 import StartupPage from "./startupForm/StartupPage";
 import AddJobModal from "./jobs/AddJobModal";
-import ReviewIntrosModal from "./introductions/ReviewIntrosModal";
+import ReviewIntrosModal from "./jobs/ReviewIntrosModal";
 
 // Alert Options
 const alertOptions = {
@@ -87,6 +81,10 @@ class App extends Component {
                     />
                     <Route exact path="/register" component={Register} />
                     <Route exact path="/login" component={Login} />
+                    <VCPrivateRoute exact path='/startup-overview' component={StartupOverview} />
+                    <VCPrivateRoute exact path='/business-development' component={BusinessDevelopment} />
+                    <VCPrivateRoute exact path='/hiring' component={Hiring} />
+                    <VCPrivateRoute exact path='/fundraising' component={Fundraising} />
                   </Switch>
                 </div>
               </main>

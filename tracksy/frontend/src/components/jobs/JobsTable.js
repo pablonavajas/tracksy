@@ -1,12 +1,15 @@
 import React from "react";
-import JobsTableItem from "./JobsTableItem";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { setCurrentJob } from "../../actions/jobActions";
 
-const JobsTable = ({ loading, startups }) => {
+import JobsTableItem from "./JobsTableItem";
+import Preloader from "../layout/Preloader";
+
+const JobsTable = ({ startup: { startups, loading } }) => {
   if (loading) {
-    return <h2>Loading ... </h2>;
+    return <Preloader />;
   }
+
   return (
     <div className="col s12">
       <table className="responsive-table highlight">
@@ -38,12 +41,15 @@ const JobsTable = ({ loading, startups }) => {
 };
 
 const addButtonStyle = {
-  margin: "-1.4em ",
+  margin: "-1.1em ",
+};
+
+JobsTable.propTypes = {
+  startup: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  startups: state.startup.startups,
-  loading: state.startup.loading,
+  startup: state.startup,
 });
 
 export default connect(mapStateToProps, null)(JobsTable);
