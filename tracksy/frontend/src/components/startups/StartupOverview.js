@@ -109,13 +109,14 @@ const StartupOverview = ({ current, updateStartup }) => {
       options={{
         title: {
         display: true,
-        text:'Monthly Revenues',
+        text:'Monthly Revenue',
         fontSize: 25
       },
       legend: {
-        display: true,
+        display: false,
         position: 'right',
         labels: {
+          display: true,
           fontColor:'#000'
         }
       }
