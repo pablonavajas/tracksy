@@ -151,9 +151,8 @@ class Apis:
         return response
 
     def addConnections(self):
-        header = self.header()
+        header = self.header(token=self.token)
         data = {
-                "username": self.username,
                 "connections": [
                     {
                         "owner": "David",
