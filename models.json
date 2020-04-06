@@ -1,0 +1,78 @@
+// User Model
+{
+  "username": "username",
+  "email": "email1",
+  "password": "xxx"
+}
+
+
+// Info Model
+{
+  "user": "id1",   // OneToOne
+  "isStartup": false
+}
+
+
+// Startup Object
+{
+  "users": ["id1", "id2"] // ManyToMany
+  "startupEmail": "email",
+  "website": "a.com",
+  "name": "a",
+  "board": "member"
+}
+
+// Investment
+{
+  "startupId": "id", // foreign key
+  "date": "2020-01-01", // ordered by
+  "currency": "£",
+  "amount": 10000
+}
+
+// Financial
+{
+  "startupId": "id1", // Foreign key
+  "startDate": 2020-01-01,
+  "endDate": 2020-02-20,
+  "currency": "$",
+  "revenue" : 100000,
+  "cash_balance" : 1000,
+  "monthly_burn" : 10,
+}
+
+
+// Kpi
+{
+  "financialId": "financial", // Foreign key
+  "name": "CAC",
+  "value": 10
+}
+
+// Connection
+{
+  "user": "id1", // Foreign key
+  "owenr": "name1",
+  "name": "name2", // Connection name
+  "url": "https://linkedIn/name",
+  "description": "Some Job"
+}
+
+// Job (All fields can be blank)
+{
+  "startupObject": "startup",
+  "title": "title",
+  "salary": 1000,
+  "description": "description",  // allow for big chunk of text
+  "extra_info": "some more text"  // here as well
+}
+
+// Job Link
+{
+  "connectionObject" : "connection",
+  "jobObject": "job",
+  "status": 1, // (1=potential match, 2=introduced, 3=connected)
+  "info": "description" 
+}
+
+

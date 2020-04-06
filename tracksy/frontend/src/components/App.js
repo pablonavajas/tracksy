@@ -4,42 +4,47 @@ import {
   HashRouter as Router,
   Route,
   Switch,
-  Redirect
+  Redirect,
 } from "react-router-dom";
-
-import Navbar from "./layout/Navbar";
-import Footer from "./layout/Footer";
-
 import { Provider } from "react-redux";
 import { Provider as AlertProvider } from "react-alert";
-import AlertTemplate from "react-alert-template-basic";
-import store from "../store";
 
-import { loadUser } from "../actions/authActions";
+import AlertTemplate from "react-alert-template-basic";
+import M from "materialize-css";
 
 import "./App.css";
-// import store from './store';
-import Home from "./home/Home";
-// import Login from "./components/auth/Login";
 
+<<<<<<< HEAD
 import StartupOverview from "./startups/StartupOverview";
 import BusinessDevelopment from "./startups/BusinessDevelopment";
 import Fundraising from "./startups/Fundraising";
 import Hiring from "./startups/Hiring";
+=======
+import store from "../store";
+import { loadUser } from "../actions/authActions";
+import Navbar from "./layout/Navbar";
+import Footer from "./layout/Footer";
+>>>>>>> master
 import Startups from "./startups/Startups";
 import EditStartupModal from "./startups/EditStartupModal";
 import AddStartupModal from "./startups/AddStartupModal";
-import Alerts from "./layout/Alerts";
+import MessageAlerts from "./layout/MessageAlerts";
+import ErrorAlerts from "./layout/ErrorAlerts";
 import Login from "./accounts/Login";
 import Register from "./accounts/Register";
-import PrivateRoute from "./common/PrivateRoute";
-
-import M from "materialize-css";
+import VCPrivateRoute from "./common/VCPrivateRoute";
+import StartupPrivateRoute from "./common/StartupPrivateRoute";
+import StartupForm from "./startupForm/StartupForm";
+import AddInvestmentModal from "./startups/AddInvestmentModal";
+import AddKpiNamesModal from "./startups/AddKpiNamesModal";
+import StartupPage from "./startupForm/StartupPage";
+import AddJobModal from "./jobs/AddJobModal";
+import ReviewIntrosModal from "./jobs/ReviewIntrosModal";
 
 // Alert Options
 const alertOptions = {
   timeout: 3000,
-  position: "top center"
+  position: "top center",
 };
 
 class App extends Component {
@@ -56,12 +61,27 @@ class App extends Component {
             <div className="page-flexbox-wrapper">
               <main>
                 <Navbar />
-                <Alerts />
+                <MessageAlerts />
+                <ErrorAlerts />
                 <div className="container">
                   <AddStartupModal />
                   <EditStartupModal />
+                  <AddInvestmentModal />
+                  <AddKpiNamesModal />
+                  <AddJobModal />
+                  <ReviewIntrosModal />
                   <Switch>
-                    <PrivateRoute exact path="/" component={Startups} />
+                    <VCPrivateRoute exact path="/" component={Startups} />
+                    <StartupPrivateRoute
+                      exact
+                      path="/startupPage"
+                      component={StartupPage}
+                    />
+                    <StartupPrivateRoute
+                      exact
+                      path="/startupForm"
+                      component={StartupForm}
+                    />
                     <Route exact path="/register" component={Register} />
                     <Route exact path="/login" component={Login} />
                     <PrivateRoute exact path='/startup-overview' component={StartupOverview} />

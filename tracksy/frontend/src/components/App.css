@@ -21,3 +21,45 @@ main {
 }
 
 /* ********************************************* */
+
+[type="radio"]:checked+span:after, [type="radio"].with-gap:checked+span:before, [type="radio"].with-gap:checked+span:after {
+  border: 2px solid #ef5350;
+}
+
+[type="radio"]:checked+span:after, [type="radio"].with-gap:checked+span:after {
+  background-color: #ef5350;
+}
+
+.radio-buttons-container {
+  display: inline-block;
+  margin-left: 35px;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.input-field .postfix~input {
+  width: 80%;
+  width: calc(100% - 3rem);
+  margin-left: 0px;
+  margin-right: 3rem!important;
+}
+
+.input-field .postfix {
+  position: absolute;
+  width: 3rem;
+  right: 0px;
+  font-size: 2rem;
+  -webkit-transition: color .2s;
+  transition: color .2s;
+}
+
+.input-field .postfix.active {
+  color: #26a69a;
+}

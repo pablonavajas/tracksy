@@ -1,0 +1,10 @@
+@import "bootstrap.min.css";
+
+h2 {
+  text-decoration: underline;
+  text-decoration-color: #007bff;
+}
+
+:disabled{
+  cursor: default; 
+}

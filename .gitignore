@@ -1,4 +1,5 @@
 node_modules/
+coverage/
 
 # vscode setting files
 .vscode/
@@ -155,3 +156,6 @@ dmypy.json
 
 #ignore django-rest
 backend/django-rest/
+/tracksy/accounts/migrations/
+/tracksy/startups/migrations/
+/tracksy/accounts/migrations/

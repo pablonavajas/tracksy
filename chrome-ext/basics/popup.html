@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="popup.css" />
+    <title>LinkedIn Connections Retrieval</title>
+</head>
+
+<body style="text-align: center;">
+    <div class="p-2 container">
+        <div class="p-1 row justify-content-center">
+            <div class="col">
+                <h2>Tracksy</h2>
+            </div>
+        </div>
+
+        <form hidden>
+            <div class="p-1 form-row justify-content-center">
+                <div class="p-1 col-xs-12">
+                    <input type="text" class="form-control" placeholder="Email"></input>
+                </div>
+                <div class="p-1 col-xs-12">
+                    <input type="password" class="form-control" placeholder="Password"></input>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Log In</button>
+        </form>
+
+        <div class="p-2 row justify-content-center">
+            <div class="col">
+                <button type="button" id="btnToLinkedIn" class="btn btn-outline-primary text-nowrap">
+                    To LinkedIn </button>
+
+                <button type="button" id="btnConnections" class="btn btn-outline-primary text-nowrap" hidden disabled>
+                    Retrieve Connections </button>
+
+                <button type="button" id="success" class="btn btn-outline-success text-nowrap" hidden disabled>Success</button>
+            </div>
+        </div>
+
+        <div class="p-2 row justify-content-center" id="progress">
+            <div class="col">
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 31.23%;"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="p-2 row justify-content-center">
+            <div class="col">
+                <button type="button" id="reset" class="btn btn-outline-secondary text-nowrap" hidden>
+                    Reset</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="popup_controller.js"></script>
+
+</body>
+</html>
