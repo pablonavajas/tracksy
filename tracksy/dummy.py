@@ -2,6 +2,7 @@
 
 import requests as r
 import json
+from random import randint
 
 
 class Apis:
@@ -13,6 +14,11 @@ class Apis:
         self.startupId = None
         self.jobId = None
         self.connectionIds = None
+        self.valueRange = [1000, 10000]  # used for Financials and Investments
+        self.kpiNames = ["OEE", "Availability", "Performance"]
+        self.numberOfFinancials = 5
+        self.numberOfInvestments = 3
+        self.currency = "$"
 
         self._register = base + 'auth/register'  # POST
         self._login = base + 'auth/login'   # POST
@@ -34,7 +40,13 @@ class Apis:
         response_json = r.post(url, headers=headers, data=data)
         if response is False:
             return None
-        return json.loads(response_json.text)
+        try:
+            return json.loads(response_json.text)
+        except json.decoder.JSONDecodeError:
+            print(response_json.text)
+            print("\nError with request, this is likely because username is already registered")
+            print("Change api.username and api.startup at the end of file to names of your choice for a fix")
+            exit()
 
     def get(self, url, headers):
         response_json = r.get(url, headers=headers)
@@ -79,59 +91,51 @@ class Apis:
 
     def addInvestments(self):
         header = self.header(self.token)
-        data = [
-            {
-                "value": 100,
-                "currency": "$",
-                "date": "1900-04-04"
-            },
-            {
-                "value": 1000,
-                "currency": "$",
-                "date": "2000-01-01"
+        data = []
+        for i in range(self.numberOfInvestments):
+            investment = {
+                "value": randint(self.valueRange[0], self.valueRange[1]),
+                "currency": self.currency,
+                "date": "201{}-05-05".format(i)
             }
-        ]
+            data.append(investment)
         url = self._investments + str(self.startupId) + '/'
         response = self.post(url, header, data)
         return response
 
     def addKpiNames(self):
         header = self.header(self.token)
-        data = [
-            {
-                "name": "One"
-            },
-            {
-                "name": "Two"
-            }
-        ]
+        data = []
+        for kpiName in self.kpiNames:
+            data.append({'name': kpiName})
+
         url = self._kpiNames + str(self.startupId) + '/'
         response = self.post(url, header, data)
         return response
 
-    def addFinancial(self):
+    def addFinancial(self, number):
         header = self.header(self.token)
-        data = {
-            "comment": "First Report",
-            "currency": "$",
-            "revenue": 10,
-            "cashBalance":100,
-            "monthlyBurn":1000,
-            "startDate": "2005-04-04",
-            "endDate": "2005-05-05",
-            "kpis": [
-                {
-                    "name":"One",
-                    "value":0.1
-                },
-                {
-                    "name":"Two",
-                    "value":0.5
-                }
-            ]
-        }
-        url = self._kpiNames + str(self.startupId) + '/'
+        data = {}
+        data['comment'] = "Report number {}".format(number)
+        data['currency'] = "$"
+        data['revenue'] = randint(self.valueRange[0], self.valueRange[1])
+        data['cashBalance'] = randint(self.valueRange[0], self.valueRange[1])
+        data['monthlyBurn'] = randint(self.valueRange[0], self.valueRange[1])
+        data['startDate'] = "2019-0{}-0{}".format(number, number)
+        data['endDate'] = "2019-0{}-0{}".format(number+1, number+1)
+
+        kpis = []
+        for kpiName in self.kpiNames:
+            value = randint(1, 100) / 100
+            kpis.append({'name': kpiName, "value": value})
+        data['kpis'] = kpis
+
+        url = self._financials + str(self.startupId) + '/'
         return self.post(url, header, data)
+
+    def addFinancials(self):
+        for i in range(1, self.numberOfFinancials+1):
+            self.addFinancial(i)
 
     def addJob(self):
         header = self.header(self.token)
@@ -178,16 +182,14 @@ class Apis:
                 ]
             }
         response = self.post(self._connections, header, data)
-        print(response)
-        self.connectionIds = response['connectionIds']
-        print(self.connectionIds)
         return response
 
     def addIntroductions(self):
         header = self.header(self.token)
-        for i in self.connectionIds:
+        connections = self.get(self._connections, header)
+        for connection in connections:
             url = self._introduction + str(self.startupId) + '/' + str(self.jobId) + \
-              '/' + str(i) + '/'
+              '/' + str(connection['id']) + '/'
             self.post(url, header, {"status": "connected"}, response=False)
 
     def create(self,):
@@ -196,15 +198,13 @@ class Apis:
         self.addStartup()    # can specify name of startup here
         self.addInvestments()
         self.addKpiNames()
-        self.addFinancial()
+        self.addFinancials()
         self.addJob()
         self.addConnections()
         self.addIntroductions()
         print("Username: " + self.username)
         print("User Password: " + self.password)
         print("Startup: " + self.startup)
-        print("\nResponse from GET startups:")
-        print(self.getStartups())
 
 
 if __name__ == '__main__':
