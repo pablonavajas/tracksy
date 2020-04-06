@@ -58,22 +58,20 @@ class IsStartUpAPI(APIView):
 
 
 class ConnectionsAPI(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
     def get(self, request):
-        if request.user.is_authenticated:
-            connections = request.user.connections.all()
-            serializer = ConnectionSerializer(connections, many=True)
-            return Response(serializer.data)
-        raise serializers.ValidationError("Not Logged In")
+        connections = request.user.connections.all()
+        serializer = ConnectionSerializer(connections, many=True)
+        return Response(serializer.data)
 
     def post(self, request):
-        username = request.data.get("username")
-        connections = request.data.get("connections")
-        user = User.objects.get(username=username)
+        connections = request.data['connections']
         connectionIds = []
         for connection in connections:
-            connection['user'] = user.pk
+            connection['user'] = request.user.pk
             serializer = ConnectionSerializer(data=connection)
             if serializer.is_valid():
-                serializer.save(user=user)
+                serializer.save()
                 connectionIds.append(serializer.data['id'])
         return Response({"connectionIds": connectionIds})

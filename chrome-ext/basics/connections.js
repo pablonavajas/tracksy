@@ -23,6 +23,8 @@ let status = {
 };
 
 function pageSetup() {
+    chrome.runtime.sendMessage({loaded: true});
+
     chrome.runtime.onMessage.addListener((message, sender) => {
         if (message.getConnections !== undefined){
             status.reset = false;
@@ -130,3 +132,4 @@ function stripProfileInfo(profile, owner) {
         description: profile.querySelector(selectors.connection.occupation).textContent.trim()
     }
 }
+
