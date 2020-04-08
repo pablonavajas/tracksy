@@ -1,53 +1,65 @@
+from rest_framework import generics, permissions
 from rest_framework.response import Response
+from rest_framework.decorators import permission_classes
 from rest_framework.views import APIView
-from rest_framework import permissions
-from django.contrib.auth import authenticate
-from django.contrib.auth.models import User
+from rest_framework.authtoken.serializers import AuthTokenSerializer
+
+from django.contrib.auth import login
 from django.core.exceptions import FieldError
-from rest_framework import serializers
+
 from knox.models import AuthToken
-from .serializers import UserSerializer, ConnectionSerializer
+from knox.views import LoginView as KnoxLoginView
+from knox.auth import TokenAuthentication
+
+from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, ConnectionSerializer
 from .models import Info
 
 
+# API for retrieving a User's account
 class UserAPI(APIView):
-    # Get user info
-    def get(self, request):
-        if request.user.is_authenticated:
-            serializer = UserSerializer(request.user)
-            data = serializer.data
-            data['isStartup'] = request.user.info.isStartup
-            return Response(data)
-        raise serializers.ValidationError("Not Logged In")
+    
+    permission_classes = [
+        permissions.IsAuthenticated,
+    ]
+    serializer_class = UserSerializer
 
-    # Register
-    def post(self, request):
+    def get_object(self):
+        return self.request.user
+
+
+class RegisterAPI(generics.GenericAPIView):
+    authentication_classes = (TokenAuthentication,)
+    serializer_class = RegisterSerializer
+
+    def post(self, request, *args, **kwargs):
+
         try:
-            isStartup = request.data.pop('isStartup')
+            isStartup = request.data["isStartup"]
         except KeyError:
             raise FieldError("'isStartup' field not provided")
-        serializer_user = UserSerializer(data=request.data)
-        serializer_user.is_valid(raise_exception=True)
-        user = serializer_user.save()
+
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+
         Info.objects.create(user=user, isStartup=isStartup)
         token = AuthToken.objects.create(user)[1]
-        data = serializer_user.data
-        data['token'] = token
-        data['isStartup'] = user.info.isStartup
-        return Response(data)
+        user_data = UserSerializer(user, context=self.get_serializer_context()).data
+        user_data["token"] = token
+        user_data["isStartup"] = user.info.isStartup
+        return Response(user_data)
 
 
-class LoginAPI(APIView):
-    def post(self, request):
-        user = authenticate(**request.data)
-        if user is not None:
-            token = AuthToken.objects.create(user)[1]
-            serializer = UserSerializer(user)
-            data = serializer.data
-            data['token'] = token
-            data['isStartup'] = user.info.isStartup
-            return Response(data)
-        raise serializers.ValidationError("Incorrect Credentials")
+class LoginAPI(KnoxLoginView):
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (permissions.AllowAny,)
+
+    def post(self, request, format=None):
+        serializer = AuthTokenSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        login(request, user)
+        return super(LoginAPI, self).post(request, format=None)
 
 
 class IsStartUpAPI(APIView):
