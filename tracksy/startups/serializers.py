@@ -1,12 +1,12 @@
 """
-        TODO: sort out emailing of password (printed atm)
+        TO DO: sort out emailing of password (printed atm)
 """
 
 from rest_framework import serializers
+from django.contrib.auth.models import User
 from .models import *
 from accounts.models import Info
 from accounts.serializers import ConnectionSerializer
-from django.contrib.auth.models import User
 
 
 class InvestmentSerializer(serializers.ModelSerializer):
