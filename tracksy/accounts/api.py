@@ -6,6 +6,7 @@ from rest_framework.authtoken.serializers import AuthTokenSerializer
 from django.contrib.auth import login
 from django.core.exceptions import FieldError
 
+from knox.models import AuthToken
 from knox.views import LoginView as KnoxLoginView
 from knox.auth import TokenAuthentication
 
@@ -21,7 +22,7 @@ class UserAPI(APIView):
         serializer = UserSerializer(request.user)
         return Response(serializer.data)
 
-class RegisterAPI(KnoxLoginView):
+class RegisterAPI(APIView):
     authentication_classes = (TokenAuthentication,)
     permission_classes = (permissions.AllowAny,)
 
@@ -36,10 +37,11 @@ class RegisterAPI(KnoxLoginView):
         user = serializer.save()
         Info.objects.create(user=user, isStartup=isStartup)
 
-        login(request, user)
-        response = super(RegisterAPI, self).post(request, format=None)
-        response.data.update(UserSerializer(user).data)
-        return response
+        token = AuthToken.objects.create(user)[1]
+        user_data = serializer.data
+        user_data["token"] = token
+        user_data["isStartup"] = user.info.isStartup
+        return Response(user_data)
 
 
 class LoginAPI(KnoxLoginView):
