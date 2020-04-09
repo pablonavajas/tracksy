@@ -37,18 +37,22 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'startups',
+
     'rest_framework',
-    'frontend',
     'knox',
+
+    'startups',
+    'frontend',
     'accounts'
 ]
 
 # OPTIONS FOR AUTHENTICATION CLASSES
 # (KNOX - TOKEN AUTHENTICATION)
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES':
-    ('knox.auth.TokenAuthentication',)
+    'DEFAULT_AUTHENTICATION_CLASSES':(
+        'knox.auth.TokenAuthentication',
+    ),
+    'DATETIME_FORMAT': "%m/%d/%Y %H:%M:%S",
 }
 
 MIDDLEWARE = [
@@ -84,6 +88,16 @@ WSGI_APPLICATION = 'tracksy.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
+
+# Needs update to PostgreSQL:
+#    {
+#        'ENGINE': 'django.db.backends.postgresql',
+#        'NAME': 'postgres',     
+#        'USER': 'master_psql',
+#        'PASSWORD': 'tracksy5',
+#        'HOST': 'tracksydb.cjmgjfcswhtl.eu-west-2.rds.amazonaws.com',
+#        'PORT': '5432',
+#    }
 
 DATABASES = {
     'default': {

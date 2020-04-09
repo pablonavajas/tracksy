@@ -5,20 +5,22 @@
         Other APIs (e.g. Investment, Finanical, KPI) to be used to post info for other nested level info
         PUT not currently available 
     
-    TODO:
+    TO DO:
         Limit GET for all APIs except the Startup API
         Limit posting additional information to Startups that belong to user
         KpiNames confirm functionality
 """
 
 from rest_framework import viewsets, permissions
-from rest_framework.views import APIView
-from .serializers import *
 from rest_framework.response import Response
 from rest_framework.serializers import ValidationError
 from rest_framework import status
+from rest_framework.views import APIView
+
 from django.core.exceptions import ObjectDoesNotExist
 from .angel_get import get_description
+
+from .serializers import *
 
 
 # Startup Viewset (crud API, without specifying requests, managed by django)
