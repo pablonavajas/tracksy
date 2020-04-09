@@ -12,25 +12,20 @@
 """
 
 from rest_framework import viewsets, permissions
-from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.serializers import ValidationError
 from rest_framework import status
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 
 from django.core.exceptions import ObjectDoesNotExist
 from .angel_get import get_description
-
-from knox.auth import TokenAuthentication
 
 from .serializers import *
 
 
 # Startup Viewset (crud API, without specifying requests, managed by django)
 class StartupViewSet(viewsets.ModelViewSet):
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAuthenticated,)
+    permission_classes = [permissions.IsAuthenticated]
 
     serializer_class = StartupSerializer
 

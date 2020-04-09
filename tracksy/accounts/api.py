@@ -1,53 +1,45 @@
-from rest_framework import generics, permissions
+from rest_framework import permissions
 from rest_framework.response import Response
-from rest_framework.decorators import permission_classes
 from rest_framework.views import APIView
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 
 from django.contrib.auth import login
 from django.core.exceptions import FieldError
 
-from knox.models import AuthToken
 from knox.views import LoginView as KnoxLoginView
 from knox.auth import TokenAuthentication
 
-from .serializers import UserSerializer, RegisterSerializer, LoginSerializer, ConnectionSerializer
+from .serializers import UserSerializer, RegisterSerializer, ConnectionSerializer
 from .models import Info
 
 
 # API for retrieving a User's account
 class UserAPI(APIView):
-    
-    permission_classes = [
-        permissions.IsAuthenticated,
-    ]
-    serializer_class = UserSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
-    def get_object(self):
-        return self.request.user
+    def get(self, request):
+        serializer = UserSerializer(request.user)
+        return Response(serializer.data)
 
-
-class RegisterAPI(generics.GenericAPIView):
+class RegisterAPI(KnoxLoginView):
     authentication_classes = (TokenAuthentication,)
-    serializer_class = RegisterSerializer
+    permission_classes = (permissions.AllowAny,)
 
     def post(self, request, *args, **kwargs):
-
         try:
             isStartup = request.data["isStartup"]
         except KeyError:
             raise FieldError("'isStartup' field not provided")
 
-        serializer = self.get_serializer(data=request.data)
+        serializer = RegisterSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
-
         Info.objects.create(user=user, isStartup=isStartup)
-        token = AuthToken.objects.create(user)[1]
-        user_data = UserSerializer(user, context=self.get_serializer_context()).data
-        user_data["token"] = token
-        user_data["isStartup"] = user.info.isStartup
-        return Response(user_data)
+
+        login(request, user)
+        response = super(RegisterAPI, self).post(request, format=None)
+        response.data.update(UserSerializer(user).data)
+        return response
 
 
 class LoginAPI(KnoxLoginView):
@@ -59,7 +51,9 @@ class LoginAPI(KnoxLoginView):
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
         login(request, user)
-        return super(LoginAPI, self).post(request, format=None)
+        response = super(LoginAPI, self).post(request, format=None)
+        response.data.update(UserSerializer(user).data)
+        return response
 
 
 class IsStartUpAPI(APIView):
