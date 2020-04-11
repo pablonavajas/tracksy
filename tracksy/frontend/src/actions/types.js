@@ -1,4 +1,6 @@
 export const GET_STARTUPS = "GET_STARTUPS";
+export const GET_CONNECTIONS  = "GET_CONNECTIONS";
+
 export const SET_LOADING = "SET_LOADING";
 export const ADD_STARTUP = "ADD_STARTUP";
 export const DELETE_STARTUP = "DELETE_STARTUP";

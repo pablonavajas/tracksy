@@ -5,6 +5,8 @@ import errorsReducer from "./errorsReducer";
 import messagesReducer from "./messagesReducer";
 import authReducer from "./authReducer";
 import jobsReducer from "./jobsReducer";
+import connectionsReducer from "./connectionsReducer";
+
 
 export default combineReducers({
   startup: startupsReducer,
@@ -12,4 +14,5 @@ export default combineReducers({
   errors: errorsReducer,
   messages: messagesReducer,
   auth: authReducer,
+  connections: connectionsReducer
 });
