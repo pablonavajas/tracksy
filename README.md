@@ -29,8 +29,9 @@ The old file structure contains a backend and client/frontend folders as well as
 **The new file structure of the root directory is explained below.**\
 `chrome-ext` - chrome extension which allows extracting personal connections from a given LinkedIn account\
 `tracksy` - django project folder\
-[`.babelrc`](https://babeljs.io/) - contains configuration for JavaScript transcompiler that is mainly used to convert ECMAScript 2015+ code into a backwards compatible version of JavaScript that can be run by older JavaScript engines \
+[`babel.config.js`](https://babeljs.io/) - contains configuration for JavaScript transcompiler that is mainly used to convert ECMAScript 2015+ code into a backwards compatible version of JavaScript that can be run by older JavaScript engines \
 [`webpack.config.js`](https://webpack.js.org/) - contains configuration for webpack module bundler which bundles JavaScript modules with dependencies and generates static assets representing those modules\
+`jest.config.js` - is the jest configuration file, with ModuleNameMapper spcifying how to interpret the .css files\
 `Pipfile` - contains information for the python/django dependencies of the project \
 `Package.json` - contains information for the ReacJS dependencies of the project\
 `.pylintrc` - configuration file for static code checker
@@ -54,3 +55,7 @@ Run `python manage.py runserver` from the tracksy directory, and simultaneously 
 ## Miscellaneous
 
 `python manage.py startapp <appName>` - creates a new app called leads
+
+## Front-end Tests
+
+If major changes made to the testing setup, run `jest --clearCache` or `yarn jest --clearCache` if yarn package manager is installed.

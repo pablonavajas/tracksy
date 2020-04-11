@@ -13,20 +13,6 @@
     "type": "git",
     "url": "git@gitlab.doc.ic.ac.uk:g1953012/tracksy.git"
   },
-  "jest": {
-    "collectCoverage": true,
-    "collectCoverageFrom": [
-      "tracksy/frontend/src/**/*.{js,jsx}"
-    ],
-    "coverageThreshold": {
-      "global": {
-        "branches": 60,
-        "functions": 60,
-        "lines": 60,
-        "statements": -10
-      }
-    }
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",
