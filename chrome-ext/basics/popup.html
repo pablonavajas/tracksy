@@ -16,19 +16,19 @@
             </div>
         </div>
 
-        <form hidden>
+        <form>
             <div class="p-1 form-row justify-content-center">
                 <div class="p-1 col-xs-12">
-                    <input type="text" class="form-control" placeholder="Email"></input>
+                    <input id="username" type="text" class="form-control" placeholder="username"></input>
                 </div>
                 <div class="p-1 col-xs-12">
-                    <input type="password" class="form-control" placeholder="Password"></input>
+                    <input id="password" type="password" class="form-control" placeholder="password"></input>
                 </div>
             </div>
             <button type="submit" class="btn btn-primary">Log In</button>
         </form>
 
-        <div class="p-2 row justify-content-center">
+        <div class="p-2 row justify-content-center" id="control-buttons" hidden>
             <div class="col">
                 <button type="button" id="btnToLinkedIn" class="btn btn-outline-primary text-nowrap">
                     To LinkedIn </button>
@@ -40,7 +40,7 @@
             </div>
         </div>
 
-        <div class="p-2 row justify-content-center" id="progress">
+        <div class="p-2 row justify-content-center" id="progress" hidden>
             <div class="col">
                 <div class="progress">
                     <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 31.23%;"></div>

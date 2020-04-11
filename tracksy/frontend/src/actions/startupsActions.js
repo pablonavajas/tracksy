@@ -17,7 +17,7 @@ export const getStartups = () => async (dispatch, getState) => {
   try {
     setLoading();
 
-    const res = await axios.get("/api/startups", tokenConfig(getState));
+    const res = await axios.get("/api/startups/", tokenConfig(getState));
 
     dispatch({
       type: GET_STARTUPS,
