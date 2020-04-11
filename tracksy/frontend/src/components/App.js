@@ -81,10 +81,22 @@ class App extends Component {
                     />
                     <Route exact path="/register" component={Register} />
                     <Route exact path="/login" component={Login} />
-                    <VCPrivateRoute exact path='/startup-overview' component={StartupOverview} />
-                    <VCPrivateRoute exact path='/business-development' component={BusinessDevelopment} />
-                    <VCPrivateRoute exact path='/hiring' component={Hiring} />
-                    <VCPrivateRoute exact path='/fundraising' component={Fundraising} />
+                    <VCPrivateRoute
+                      exact
+                      path="/startup-overview"
+                      component={StartupOverview}
+                    />
+                    <VCPrivateRoute
+                      exact
+                      path="/business-development"
+                      component={BusinessDevelopment}
+                    />
+                    <VCPrivateRoute exact path="/hiring" component={Hiring} />
+                    <VCPrivateRoute
+                      exact
+                      path="/fundraising"
+                      component={Fundraising}
+                    />
                   </Switch>
                 </div>
               </main>
@@ -97,4 +109,4 @@ class App extends Component {
   }
 }
 
-ReactDOM.render(<App />, document.getElementById("app"));
+export default App;
