@@ -19,7 +19,6 @@ const initialState = {
   startups: null,
   current: null,
   loading: false,
-  error: null,
 };
 
 export default (state = initialState, action) => {
@@ -161,4 +160,3 @@ export default (state = initialState, action) => {
       return state;
   }
 };
-
