@@ -6,7 +6,7 @@ import {
   LOGIN_SUCCESS,
   LOGOUT_SUCCESS,
   REGISTER_SUCCESS,
-  REGISTER_FAIL
+  REGISTER_FAIL,
 } from "../actions/types";
 
 const initialState = {
@@ -15,15 +15,15 @@ const initialState = {
   isLoading: false,
   username: "",
   email: "",
-  isStartup: null
+  isStartup: null,
 };
 
-export default function(state = initialState, action) {
+export default function (state = initialState, action) {
   switch (action.type) {
     case USER_LOADING:
       return {
         ...state,
-        isLoading: true
+        isLoading: true,
       };
     case USER_LOADED:
       return {
@@ -32,7 +32,7 @@ export default function(state = initialState, action) {
         isLoading: false,
         username: action.payload.username,
         email: action.payload.email,
-        isStartup: action.payload.isStartup
+        isStartup: action.payload.isStartup,
       };
     case LOGIN_SUCCESS:
     case REGISTER_SUCCESS:
@@ -41,10 +41,11 @@ export default function(state = initialState, action) {
         ...state,
         ...action.payload,
         isAuthenticated: true,
-        isLoading: false
+        isLoading: false,
       };
-    case REGISTER_FAIL:
+
     case LOGOUT_SUCCESS:
+    case REGISTER_FAIL:
     case LOGIN_FAIL:
     case AUTH_ERROR:
       localStorage.removeItem("token");
@@ -55,7 +56,7 @@ export default function(state = initialState, action) {
         isLoading: false,
         username: "",
         email: "",
-        isStartup: null
+        isStartup: null,
       };
     default:
       return state;
