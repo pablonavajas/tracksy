@@ -2,9 +2,11 @@ import reducer from "../../tracksy/frontend/src/reducers/startupsReducer";
 import * as types from "../../tracksy/frontend/src/actions/types";
 
 const initialState = {
-  startups: [],
+  startups: null,
   current: null,
   loading: false,
+  connections: null,
+  error: null,
 };
 
 const startup1 = {
@@ -105,11 +107,7 @@ const newJob = {
 // is something gets added or deleted it also permanently modifies the state
 describe("Startup reducer", () => {
   it("should return the initial state", () => {
-    expect(reducer(undefined, {})).toEqual({
-      startups: null,
-      current: null,
-      loading: false,
-    });
+    expect(reducer(undefined, {})).toEqual(initialState);
   });
 
   it("should handle GET_STARTUPS", () => {

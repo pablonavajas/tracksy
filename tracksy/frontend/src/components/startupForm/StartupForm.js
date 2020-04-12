@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Fragment } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { Redirect, HashRouter as Router } from "react-router-dom";
 import CurrencyFormat from "react-currency-format";
 
 import { getStartups } from "../../actions/startupsActions";
@@ -62,7 +62,11 @@ function StartupForm({ startups, errors, getStartups, addFinancial }) {
   if (loading) {
     return <Preloader />;
   } else if (localErrors === false) {
-    return <Redirect to="/startupPage" />;
+    return (
+      <Router>
+        <Redirect to="/startupPage" />
+      </Router>
+    );
   } else {
     return (
       <div className="row">
@@ -89,50 +93,33 @@ function StartupForm({ startups, errors, getStartups, addFinancial }) {
                   Currency
                 </label>
               </div>
-              <div className="input-field col s12">
-                <CurrencyFormat
-                  id="revenue"
-                  value={revenue}
-                  thousandSeparator={true}
-                  prefix={currency}
-                  allowNegative={false}
-                  onValueChange={(values) => {
-                    const { value } = values; // destructuring to get the pure integer value
-                    setRevenue(value);
-                  }}
-                />
-                <label htmlFor="revenue">Revenue</label>
-              </div>
+
+              {/* Revenue */}
+              {currencyFormattedField(
+                "revenue",
+                "Revenue",
+                revenue,
+                currency,
+                setRevenue
+              )}
+
               {/* Cash Balance */}
-              <div className="input-field col s12">
-                <CurrencyFormat
-                  id="cashBalance"
-                  value={cashBalance}
-                  thousandSeparator={true}
-                  prefix={currency}
-                  allowNegative={false}
-                  onValueChange={(values) => {
-                    const { value } = values; // destructuring to get the pure integer value
-                    setCashBalance(value);
-                  }}
-                />
-                <label htmlFor="cashBalance">Cash Balance</label>
-              </div>
+              {currencyFormattedField(
+                "cashBalance",
+                "Cash Balance",
+                cashBalance,
+                currency,
+                setCashBalance
+              )}
+
               {/* Monthly Burn */}
-              <div className="input-field col s12">
-                <CurrencyFormat
-                  id="monthlyBurn"
-                  value={monthlyBurn}
-                  thousandSeparator={true}
-                  prefix={currency}
-                  allowNegative={false}
-                  onValueChange={(values) => {
-                    const { value } = values; // destructuring to get the pure integer value
-                    setMonthlyBurn(value);
-                  }}
-                />
-                <label htmlFor="monthlyBurn">Monthly Burn</label>
-              </div>
+              {currencyFormattedField(
+                "monthlyBurn",
+                "Monthly Burn",
+                monthlyBurn,
+                currency,
+                setMonthlyBurn
+              )}
 
               {/* LIST OF KPIS */}
               {kpis.map((value, i) => (
@@ -149,35 +136,14 @@ function StartupForm({ startups, errors, getStartups, addFinancial }) {
                   <label htmlFor="monthlyBurn">{kpis[i].name}</label>
                 </div>
               ))}
-              <div className="input-field col s12">
-                <input
-                  id="startDate"
-                  type="date"
-                  onChange={(e) => setStartDate(e.target.value)}
-                />
-                <label htmlFor="startDate">Reporting Period Start Date</label>
-              </div>
-              <div className="input-field col s12">
-                <input
-                  id="endDate"
-                  type="date"
-                  onChange={(e) => setEndDate(e.target.value)}
-                />
-                <label htmlFor="endDate">Reporting Period End Date</label>
-              </div>
-              <form className="col s12">
-                <div className="row">
-                  <div className="input-field col s12">
-                    <textarea
-                      id="comment"
-                      className="materialize-textarea"
-                      value={comment}
-                      onChange={(e) => setComment(e.target.value)}
-                    ></textarea>
-                    <label htmlFor="comment">Comments</label>
-                  </div>
-                </div>
-              </form>
+              {/* Start Date */}
+              {dateField(
+                "startDate",
+                "Reporting Period Start Date",
+                setStartDate
+              )}
+              {dateField("endDate", "Reporting Period End Date", setEndDate)}
+              {commentsField("comment", "Comments", comment, setComment)}
               <JobsTable />
               {getExtraVerticalSpace()}
               <p className="center">
@@ -189,6 +155,7 @@ function StartupForm({ startups, errors, getStartups, addFinancial }) {
             <p></p>
             <div className="center">
               <a
+                id="startupSubmitButton"
                 onClick={(e) => onSubmit(e)}
                 className="btn waves-effect waves-light light-blue"
               >
@@ -207,6 +174,46 @@ const getExtraVerticalSpace = () => (
     <div className="row" />
     <div className="row" />
   </Fragment>
+);
+
+const currencyFormattedField = (id, name, trueValue, currency, setFunction) => (
+  <div className="input-field col s12">
+    <CurrencyFormat
+      id={id}
+      value={trueValue}
+      thousandSeparator={true}
+      prefix={currency}
+      allowNegative={false}
+      onValueChange={(values) => {
+        const { value } = values; // destructuring to get the pure integer value
+        setFunction(value);
+      }}
+    />
+    <label htmlFor={id}>{name}</label>
+  </div>
+);
+
+const dateField = (id, name, setFunction) => (
+  <div className="input-field col s12">
+    <input id={id} type="date" onChange={(e) => setFunction(e.target.value)} />
+    <label htmlFor={id}>{name}</label>
+  </div>
+);
+
+const commentsField = (id, name, trueValue, setFunction) => (
+  <form className="col s12">
+    <div className="row">
+      <div className="input-field col s12">
+        <textarea
+          id={id}
+          className="materialize-textarea"
+          value={trueValue}
+          onChange={(e) => setFunction(e.target.value)}
+        ></textarea>
+        <label htmlFor={id}>{name}</label>
+      </div>
+    </div>
+  </form>
 );
 
 StartupForm.propTypes = {
