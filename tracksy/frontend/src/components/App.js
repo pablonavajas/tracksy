@@ -15,8 +15,6 @@ import M from "materialize-css";
 import "./App.css";
 
 import StartupOverview from "./startups/StartupOverview";
-import BusinessDevelopment from "./startups/BusinessDevelopment";
-import Fundraising from "./startups/Fundraising";
 import Hiring from "./startups/Hiring";
 import store from "../store";
 import { loadUser } from "../actions/authActions";
@@ -86,17 +84,7 @@ class App extends Component {
                       path="/startup-overview"
                       component={StartupOverview}
                     />
-                    <VCPrivateRoute
-                      exact
-                      path="/business-development"
-                      component={BusinessDevelopment}
-                    />
                     <VCPrivateRoute exact path="/hiring" component={Hiring} />
-                    <VCPrivateRoute
-                      exact
-                      path="/fundraising"
-                      component={Fundraising}
-                    />
                   </Switch>
                 </div>
               </main>

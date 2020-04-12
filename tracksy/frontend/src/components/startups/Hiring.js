@@ -24,15 +24,12 @@ const Hiring = ({ current, connections, updateStartup, getConnections }) => {
 
   useEffect(() => {
     getConnections();
-    console.log("connections:::")
-    console.log(connections)
-    if (connections) {
-      console.log("CONNECTIONS INSIDE USEEFFECT")
-      console.log(connections)
+    
+    if (connections) {  
       setName(connections[0].name);
     }
+    
     if (current) {
-      
       setWebsite(current.website);
       setOwnership(current.ownership);
       setCurrency(current.currency);
@@ -48,22 +45,15 @@ const Hiring = ({ current, connections, updateStartup, getConnections }) => {
     }
   }, [connections, current]);
 
-  const runway = (cash_balance, monthly_burn) => {
-    const result = cash_balance / monthly_burn;
-    return result
-  }
-
   return (
   // Section: Stats
   
   <section className="section section-stats center">
     <nav>
-    <div className="nav-wrapper blue darken-4">
+    <div className="nav-wrapper blue-grey darken-4">
       <ul id="nav-mobile" className="left hide-on-med-and-down">
         <li><a href="#startup-overview">Overview</a></li>
         <li className="active"><a href="#hiring">Hiring</a></li>
-        <li><a href="#business-development">Business Development</a></li>
-        <li><a href="#fundraising">Fundraising</a></li>
       </ul>
     </div>
   </nav>

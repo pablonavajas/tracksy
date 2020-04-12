@@ -61,8 +61,6 @@ const StartupOverview = ({ current, updateStartup }) => {
       list_data.splice(index, 1);
     }
 
-    console.log("final dates is ", final_dates)
-    console.log("final data is ", final_data)
     return [final_dates, final_data]
   }
 
@@ -105,9 +103,6 @@ const StartupOverview = ({ current, updateStartup }) => {
   var chartdates = theChartData()[0]
   var chartvalues = theChartData()[1]
 
-  console.log("chart dates ", chartdates)
-  console.log("chart values ", chartvalues)
-
   const chartData = {
     labels: chartdates,
     datasets: [
@@ -115,7 +110,7 @@ const StartupOverview = ({ current, updateStartup }) => {
         label: 'Monthly Revenue',
         data:  chartvalues,
         backgroundColor: [
-          'rgba(66, 148, 136, 0.6)',
+          'rgba(93, 165, 239, 0.6)',
         ]
       }
     ],
@@ -131,12 +126,10 @@ const StartupOverview = ({ current, updateStartup }) => {
   // Section: Stats
   <section className="section section-stats center">
       <nav>
-    <div className="nav-wrapper teal ligthen-2">
+    <div className="nav-wrapper blue-grey darken-4">
       <ul id="nav-mobile" className="left hide-on-med-and-down">
         <li className="active"><a href="#startup-overview">Overview</a></li>
         <li><a href="#hiring">Hiring</a></li>
-        <li><a href="#business-development">Business Development</a></li>
-        <li><a href="#fundraising">Fundraising</a></li>
       </ul>
     </div>
   </nav>
@@ -164,7 +157,7 @@ const StartupOverview = ({ current, updateStartup }) => {
     <div className="col s12 m6 l3">
       <div className="card-panel center">
         <h5>Runway</h5>
-        <h3>{runway(cashBalance, monthlyBurn)}</h3>
+        <h3>{String(runway(cashBalance, monthlyBurn))}</h3>
       </div>
     </div>
   </div>
@@ -207,7 +200,7 @@ const StartupOverview = ({ current, updateStartup }) => {
                 </thead>
                 <tbody>
                    {current.financials[index].kpis.map((kpi) => (
-                     <tr>
+                     <tr key={kpi.id}>
                        <td> {kpi.name} </td>
                        <td> {kpi.value} </td>
                    </tr>
@@ -231,7 +224,7 @@ const StartupOverview = ({ current, updateStartup }) => {
                 </thead>
                 <tbody>
                    {current.investments.map((investment) => (
-                     <tr>
+                     <tr key={investment.id}>
                        <td>{investment.id}</td>
                        <td> {investment.date} </td>
                        <td> {investment.value} </td>
