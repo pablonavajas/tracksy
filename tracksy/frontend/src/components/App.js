@@ -15,6 +15,8 @@ import M from "materialize-css";
 import "./App.css";
 
 import StartupOverview from "./startups/StartupOverview";
+import JobConnections from "./startups/JobConnections";
+import TotalConnections from "./startups/TotalConnections";
 import Hiring from "./startups/Hiring";
 import store from "../store";
 import { loadUser } from "../actions/authActions";
@@ -85,6 +87,8 @@ class App extends Component {
                       component={StartupOverview}
                     />
                     <VCPrivateRoute exact path="/hiring" component={Hiring} />
+                    <VCPrivateRoute exact path="/job-connections" component={JobConnections} />
+                    <VCPrivateRoute exact path="/total-connections" component={TotalConnections} />
                   </Switch>
                 </div>
               </main>

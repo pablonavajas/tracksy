@@ -1,13 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { updateStartup } from "../../actions/startupsActions";
-//import moment from "moment/src/moment";
-//var moment = require("moment");
-import CurrencyFormat from "react-currency-format";
 import { Line } from 'react-chartjs-2';
 
-const StartupOverview = ({ current, updateStartup }) => {
+const StartupOverview = ({ current}) => {
   const [name, setName] = useState("");
   const [website, setWebsite] = useState("");
   const [ownership, setOwnership] = useState("");
@@ -81,8 +77,6 @@ const StartupOverview = ({ current, updateStartup }) => {
   var index = indexc();
 
   useEffect(() => {
-    console.log(current)
-
     if (current) {
       setName(current.name);
       setWebsite(current.website);
@@ -130,6 +124,7 @@ const StartupOverview = ({ current, updateStartup }) => {
       <ul id="nav-mobile" className="left hide-on-med-and-down">
         <li className="active"><a href="#startup-overview">Overview</a></li>
         <li><a href="#hiring">Hiring</a></li>
+        <li><a href="#total-connections">Connections</a></li>
       </ul>
     </div>
   </nav>
@@ -243,11 +238,10 @@ const StartupOverview = ({ current, updateStartup }) => {
 
 StartupOverview.propTypes = {
   current: PropTypes.object,
-  updateStartup: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
   current: state.startup.current
 });
 
-export default connect(mapStateToProps, { updateStartup })(StartupOverview);
+export default connect(mapStateToProps)(StartupOverview);

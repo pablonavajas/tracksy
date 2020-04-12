@@ -1,26 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { updateStartup } from "../../actions/startupsActions";
 import { getConnections} from  '../../actions/connectionsActions';
-//import moment from "moment/src/moment";
-//var moment = require("moment");
-import CurrencyFormat from "react-currency-format";
 
-const Hiring = ({ current, connections, updateStartup, getConnections }) => {
+const Hiring = ({ current, connections, getConnections}) => {
   const [name, setName] = useState("");
   const [website, setWebsite] = useState("");
-  const [ownership, setOwnership] = useState("");
-  const [currency, setCurrency] = useState("");
-  const [board, setBoard] = useState("");
-  const [investment_1, setInvestment_1] = useState("");
-  const [type_1, setType_1] = useState("");
-  const [date_closed_1, setDate_1] = useState("");
-  const [investment_2, setInvestment_2] = useState("");
-  const [type_2, setType_2] = useState("");
-  const [date_closed_2, setDate_2] = useState("");
-  const [cash_balance, setCashBalance] = useState("");
-  const [monthly_burn, setMonthlyBurn] = useState("");
+
 
   useEffect(() => {
     getConnections();
@@ -28,22 +14,31 @@ const Hiring = ({ current, connections, updateStartup, getConnections }) => {
     if (connections) {  
       setName(connections[0].name);
     }
-    
+
     if (current) {
       setWebsite(current.website);
-      setOwnership(current.ownership);
-      setCurrency(current.currency);
-      setBoard(current.board);
-      setInvestment_1(current.investment_1);
-      setDate_1(current.date_closed_1);
-      setType_1(current.type_1);
-      setInvestment_2(current.investment_2);
-      setDate_2(current.date_closed_2);
-      setType_2(current.type_2);
-      setCashBalance(current.cash_balance);
-      setMonthlyBurn(current.monthly_burn);
     }
   }, [connections, current]);
+
+  const num_jobs = () => {
+    var count = 0;
+    for(let item of current.jobs){
+    count = count + 1;
+    }
+    return count;
+  }
+
+  const num_intro = () => {
+    var count = 0;
+    for(let item of current.jobs){
+      for (let x of item.introductions) {
+        count = count + 1;
+      }
+    }
+    return count;
+  }
+
+  var job_id = 0;
 
   return (
   // Section: Stats
@@ -54,6 +49,7 @@ const Hiring = ({ current, connections, updateStartup, getConnections }) => {
       <ul id="nav-mobile" className="left hide-on-med-and-down">
         <li><a href="#startup-overview">Overview</a></li>
         <li className="active"><a href="#hiring">Hiring</a></li>
+        <li><a href="#total-connections">Connections</a></li>
       </ul>
     </div>
   </nav>
@@ -61,28 +57,69 @@ const Hiring = ({ current, connections, updateStartup, getConnections }) => {
     <div className="col s12 m6 l3">
       <div className="card-panel blue lighten-1 white-text center">
         <h5>Employees</h5>
-        <h3>{name}</h3>
+        <h3>NA</h3>
       </div>
     </div>
     <div className="col s12 m6 l3">
       <div className="card-panel center">
         <h5>Open Positions</h5>
-        <h3>{}</h3>
+        <h3>{num_jobs()}</h3>
       </div>
     </div>
     <div className="col s12 m6 l3">
       <div className="card-panel blue lighten-1 white-text center">
         <h5>Introductions</h5>
-        <h3>{}</h3>
+        <h3>{num_intro()}</h3>
       </div>
     </div>
     <div className="col s12 m6 l3">
       <div className="card-panel center">
         <h5>Hired</h5>
-        <h3>{}</h3>
+        <h3>NA</h3>
       </div>
     </div>
   </div>
+
+  <div className="col s12 m6 l4">
+          <div className="card">
+            <div className="card-content">
+              <table className="striped">
+                <thead>
+                  <tr className = "center">
+                    <th>Job</th>
+                    <th>Job Description</th>
+                    <th>Salary</th>
+                    <th>Location</th>
+                    <th>Link</th>
+                    <th>Introduced</th>
+
+                  </tr>
+                </thead>
+                <tbody>
+                   {current.jobs.map((job) => (
+                     <tr key={job.id}>
+                       <td> {job.title} </td>
+                       <td> {job.description} </td>
+                       <td> {job.salary} </td>
+                       <td> {job.location} </td>
+                       <td> {job.url} </td>
+                       <td>
+                      <a
+                      href="#job-connections"
+                      onClick={() => localStorage.setItem('jobid', job.id)}
+                      className="secondary-content modal-trigger"
+                      >
+                     <i className="material-icons grey-text">dehaze</i>
+                    </a>
+                   </td>
+                   </tr>
+                   ))}
+                </tbody>
+              </table>
+            </div>
+        </div>
+        </div>
+
       </section>
   );
 };
@@ -90,8 +127,7 @@ const Hiring = ({ current, connections, updateStartup, getConnections }) => {
 
 Hiring.propTypes = {
   current: PropTypes.object,
-  updateStartup: PropTypes.func.isRequired,
-  getConnections:PropTypes.func.isRequired
+  getConnections:PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -99,4 +135,5 @@ const mapStateToProps = state => ({
   current: state.startup.current
 });
 
-export default connect(mapStateToProps, { updateStartup, getConnections })(Hiring);
+export default connect(mapStateToProps, {getConnections})(Hiring);
+
