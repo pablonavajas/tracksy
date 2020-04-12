@@ -19,6 +19,8 @@ const initialState = {
   startups: null,
   current: null,
   loading: false,
+  error: null,
+  connections: null,
 };
 
 export default (state = initialState, action) => {

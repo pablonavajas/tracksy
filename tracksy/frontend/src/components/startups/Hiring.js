@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { updateStartup } from "../../actions/startupsActions";
+import { getConnections} from  '../../actions/connectionsActions';
 //import moment from "moment/src/moment";
 //var moment = require("moment");
 import CurrencyFormat from "react-currency-format";
 
-const Hiring = ({ current, updateStartup }) => {
+const Hiring = ({ current, connections, updateStartup, getConnections }) => {
   const [name, setName] = useState("");
   const [website, setWebsite] = useState("");
   const [ownership, setOwnership] = useState("");
@@ -22,8 +23,13 @@ const Hiring = ({ current, updateStartup }) => {
   const [monthly_burn, setMonthlyBurn] = useState("");
 
   useEffect(() => {
+    getConnections();
+    
+    if (connections) {  
+      setName(connections[0].name);
+    }
+    
     if (current) {
-      setName(current.name);
       setWebsite(current.website);
       setOwnership(current.ownership);
       setCurrency(current.currency);
@@ -37,24 +43,17 @@ const Hiring = ({ current, updateStartup }) => {
       setCashBalance(current.cash_balance);
       setMonthlyBurn(current.monthly_burn);
     }
-  }, [current]);
-
-  const runway = (cash_balance, monthly_burn) => {
-    const result = cash_balance / monthly_burn;
-    return result
-  }
+  }, [connections, current]);
 
   return (
   // Section: Stats
   
   <section className="section section-stats center">
     <nav>
-    <div className="nav-wrapper blue darken-4">
+    <div className="nav-wrapper blue-grey darken-4">
       <ul id="nav-mobile" className="left hide-on-med-and-down">
         <li><a href="#startup-overview">Overview</a></li>
         <li className="active"><a href="#hiring">Hiring</a></li>
-        <li><a href="#business-development">Business Development</a></li>
-        <li><a href="#fundraising">Fundraising</a></li>
       </ul>
     </div>
   </nav>
@@ -62,7 +61,7 @@ const Hiring = ({ current, updateStartup }) => {
     <div className="col s12 m6 l3">
       <div className="card-panel blue lighten-1 white-text center">
         <h5>Employees</h5>
-        <h3>{}</h3>
+        <h3>{name}</h3>
       </div>
     </div>
     <div className="col s12 m6 l3">
@@ -91,11 +90,13 @@ const Hiring = ({ current, updateStartup }) => {
 
 Hiring.propTypes = {
   current: PropTypes.object,
-  updateStartup: PropTypes.func.isRequired
+  updateStartup: PropTypes.func.isRequired,
+  getConnections:PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
+  connections: state.connections,
   current: state.startup.current
 });
 
-export default connect(mapStateToProps, { updateStartup })(Hiring);
+export default connect(mapStateToProps, { updateStartup, getConnections })(Hiring);
