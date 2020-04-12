@@ -12,7 +12,7 @@ class Apis:
         self.token = None
         self.startup = "zoom"
         self.startupId = None
-        self.jobId = None
+        self.jobIds = []
         self.connectionIds = None
         self.valueRange = [1000, 10000]  # used for Financials and Investments
         self.kpiNames = ["OEE", "Availability", "Performance"]
@@ -137,17 +137,26 @@ class Apis:
         for i in range(1, self.numberOfFinancials+1):
             self.addFinancial(i)
 
-    def addJob(self):
-        header = self.header(self.token)
+    def jobDescription(self, title="Job 1", description="soft engineer", salary="100,000",
+                       location="London", link=None):
+        if link is None:
+            link = "https://angel.co/company/konghq/jobs/761395-senior-software-engineer-kubernetes-remote"
         data = {
-            "title": "some job",
-            "description": "some interesting job description",
-            "salary": "1,000,000",
-            "url": "https://angel.co/company/globe-7/jobs/761230-cloud-engineer"
+            "title": title,
+            "description": description,
+            "salary": salary,
+            "location": location,
+            "url": link
         }
+        return data
+
+    def addJob(self, job_data=None):
+        header = self.header(self.token)
+        if job_data is None:
+            job_data = self.jobDescription()
         url = self._job + str(self.startupId) + '/'
-        response = self.post(url, header, data)
-        self.jobId = response['id']
+        response = self.post(url, header, job_data)
+        self.jobIds.append(response['id'])
         return response
 
     def addConnections(self):
@@ -177,6 +186,12 @@ class Apis:
                         "name": "Seb",
                         "url": "https://Seb.com",
                         "description": "Frontend eng"
+                    },
+                    {
+                        "owner": "David",
+                        "name": "Andrew",
+                        "url": "https://Andrew.com",
+                        "description": "Sales"
                     }
                 ]
             }
@@ -186,10 +201,11 @@ class Apis:
     def addIntroductions(self):
         header = self.header(self.token)
         connections = self.get(self._connections, header)
-        for connection in connections:
-            url = self._introduction + str(self.startupId) + '/' + str(self.jobId) + \
-              '/' + str(connection['id']) + '/'
-            self.post(url, header, {"status": "connected"}, response=False)
+        for jobId in self.jobIds:
+            for i in range(2):
+                url = self._introduction + str(self.startupId) + '/' + str(jobId) + \
+                    '/' + str(connections.pop()['id']) + '/'
+                self.post(url, header, {"status": "connected"}, response=False)
 
     def create(self,):
         self.register()
@@ -199,6 +215,11 @@ class Apis:
         self.addKpiNames()
         self.addFinancials()
         self.addJob()
+        job = self.jobDescription(title="Front End",
+                                  description="Driven software engineer, experience with Node.js and redux",
+                                  salary="10,000",
+                                  link="https://angel.co/company/code-for-america/jobs/776395-senior-consulting-engineer")
+        self.addJob(job_data=job)
         self.addConnections()
         self.addIntroductions()
         print("Username: " + self.username)
