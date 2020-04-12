@@ -20,7 +20,7 @@ function StartupPage({ startup, getStartups }) {
   if (startups[0].financials.length === 0) {
     return (
       <Fragment>
-        <h4>There is not history to show ...</h4>
+        <h4>There is no history to show ...</h4>
         {addButton}
       </Fragment>
     );
