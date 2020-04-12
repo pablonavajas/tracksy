@@ -32,7 +32,40 @@ const StartupOverview = ({ current, updateStartup }) => {
     }
     return date
   }
-  
+
+  var theChartData = () => {
+    var list_data = []
+    var list_date = []
+    var final_dates = []
+    var final_data = []
+    
+    for(let item of current.financials){
+      list_data.push(item.revenue)
+      list_date.push(item.startDate)
+    }
+    
+    while (list_date.length > 0) {
+      var latest_date = list_date[0];
+      var index = 0;
+      var count = 0;
+      for (let x of list_date) {
+        if (x < latest_date) {
+          latest_date = x
+          index = count
+        }
+        count = count + 1
+      }
+      final_dates.push(latest_date)
+      list_date.splice(index, 1);
+      final_data.push(list_data[index])
+      list_data.splice(index, 1);
+    }
+
+    console.log("final dates is ", final_dates)
+    console.log("final data is ", final_data)
+    return [final_dates, final_data]
+  }
+
   const indexc = () => {
     var count = 0;
     var the_index = 0
@@ -69,14 +102,18 @@ const StartupOverview = ({ current, updateStartup }) => {
     }
   }, [current]);
 
+  var chartdates = theChartData()[0]
+  var chartvalues = theChartData()[1]
+
+  console.log("chart dates ", chartdates)
+  console.log("chart values ", chartvalues)
+
   const chartData = {
-    labels: [name],
+    labels: chartdates,
     datasets: [
       {
         label: 'Monthly Revenue',
-        data: [cashBalance, 
-              monthlyBurn
-            ],
+        data:  chartvalues,
         backgroundColor: [
           'rgba(66, 148, 136, 0.6)',
         ]
