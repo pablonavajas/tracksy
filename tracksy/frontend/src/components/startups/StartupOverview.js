@@ -152,7 +152,7 @@ const StartupOverview = ({ current}) => {
     <div className="col s12 m6 l3">
       <div className="card-panel center">
         <h5>Runway</h5>
-        <h3>{String(runway(cashBalance, monthlyBurn))}</h3>
+        <h3>{String(Math.round(runway(cashBalance, monthlyBurn)))}</h3>
       </div>
     </div>
   </div>
