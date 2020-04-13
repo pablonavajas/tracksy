@@ -12,6 +12,7 @@ import {
   CommentsField,
   DateField,
   CurrencyFormattedField,
+  SelectField,
 } from "../smallComponents/inputFields";
 
 function StartupForm({ startups, errors, getStartups, addFinancial }) {
@@ -79,25 +80,12 @@ function StartupForm({ startups, errors, getStartups, addFinancial }) {
           <div className="card-panel white">
             <h4 className="center">Please fill in the montly report</h4>
             <span className="black-text">
-              <div className="input-field col s12">
-                <select
-                  id="currency"
-                  name="currency"
-                  value={currency}
-                  className="browser-default"
-                  onChange={(e) => setCurrency(e.target.value)}
-                >
-                  <option value=" " disabled>
-                    Choose your option
-                  </option>
-                  <option value="£">£</option>
-                  <option value=" $ "> $ </option>
-                  <option value="€"> € </option>
-                </select>
-                <label htmlFor="currency" className="active">
-                  Currency
-                </label>
-              </div>
+              <SelectField
+                id="currency"
+                value={currency}
+                setFunction={setCurrency}
+                options={["£", "$", "€"]}
+              />
 
               {/* Revenue */}
               <CurrencyFormattedField

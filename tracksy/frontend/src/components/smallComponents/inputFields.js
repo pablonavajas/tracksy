@@ -54,3 +54,27 @@ export const CurrencyFormattedField = ({
     <label htmlFor={id}>{name}</label>
   </div>
 );
+
+export const SelectField = ({ id, name, value, setFunction, options }) => (
+  <div className="input-field col s12">
+    <select
+      id={id}
+      // name={name}
+      value={value}
+      className="browser-default"
+      onChange={(e) => setFunction(e.target.value)}
+    >
+      <option value=" " disabled>
+        Choose your option
+      </option>
+      {options.map((op, i) => (
+        <option value={op} key={i}>
+          {op}
+        </option>
+      ))}
+    </select>
+    <label htmlFor={id} className="active">
+      {name}
+    </label>
+  </div>
+);

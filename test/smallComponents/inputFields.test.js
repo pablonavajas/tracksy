@@ -4,51 +4,69 @@ import Adapter from "enzyme-adapter-react-16";
 configure({ adapter: new Adapter() });
 
 import {
+  SelectField,
   CommentsField,
   DateField,
   CurrencyFormattedField,
 } from "../../tracksy/frontend/src/components/smallComponents/inputFields";
 
-it("will display the dateField correctly", () => {
-  const mockFn = jest.fn().mockImplementation((s) => s);
-  const mockEvent = {
-    target: {
-      name: "description",
-      value: "test",
-    },
-  };
+describe("Upon firing onChange event in the  ", () => {
+  let mockFn, mockEvent, id, name, trueValue, options;
 
-  const wrapper = shallow(
-    <DateField
-      id={"testId"}
-      name={"Test Name"}
-      trueValue={"01/01/2000"}
-      setFunction={mockFn}
-    />
-  );
+  beforeAll(() => {
+    mockFn = jest.fn().mockImplementation((s) => s);
+    mockEvent = {
+      target: {
+        name: "description",
+        value: "test",
+      },
+    };
+    id = "testId";
+    name = "Some Name";
+    trueValue = "";
+    options = ["test", "test1", "test2"];
+  });
 
-  wrapper.find("input").simulate("change", mockEvent);
-  expect(mockFn).toHaveBeenCalledWith("test");
-});
+  it("SelectField component, mockFunciton is called with correct params", () => {
+    const wrapper = shallow(
+      <SelectField
+        id={id}
+        name={name}
+        trueValue={trueValue}
+        setFunction={mockFn}
+        options={options}
+      />
+    );
 
-it("will display the dateField correctly", () => {
-  const mockFn = jest.fn().mockImplementation((s) => s);
-  const mockEvent = {
-    target: {
-      name: "description",
-      value: "test",
-    },
-  };
+    wrapper.find("select").simulate("change", mockEvent);
+    expect(mockFn).toHaveBeenCalledWith("test");
+  });
 
-  const wrapper = shallow(
-    <CommentsField
-      id={"testId"}
-      name={"Test Name"}
-      trueValue={"01/01/2000"}
-      setFunction={mockFn}
-    />
-  );
+  it("DateField component, mockFunciton is called with correct params", () => {
+    const wrapper = shallow(
+      <DateField
+        id={id}
+        name={name}
+        trueValue={trueValue}
+        setFunction={mockFn}
+      />
+    );
 
-  wrapper.find("textarea").simulate("change", mockEvent);
-  expect(mockFn).toHaveBeenCalledWith("test");
+    wrapper.find("input").simulate("change", mockEvent);
+    expect(mockFn).toHaveBeenCalledWith("test");
+  });
+
+  it("CommentsField compnent, mockFunciton is called with correct params", () => {
+    const wrapper = shallow(
+      <CommentsField
+        id={id}
+        name={name}
+        trueValue={trueValue}
+        setFunction={mockFn}
+      />
+    );
+
+    wrapper.find("textarea").simulate("change", mockEvent);
+    expect(mockFn).toHaveBeenCalledWith("test");
+  });
 });
