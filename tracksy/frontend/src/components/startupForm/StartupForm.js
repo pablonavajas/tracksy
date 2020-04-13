@@ -8,6 +8,11 @@ import { getStartups } from "../../actions/startupsActions";
 import { addFinancial } from "../../actions/financialActions";
 import JobsTable from "../jobs/JobsTable";
 import Preloader from "../layout/Preloader";
+import {
+  CommentsField,
+  DateField,
+  CurrencyFormattedField,
+} from "../smallComponents/inputFields";
 
 function StartupForm({ startups, errors, getStartups, addFinancial }) {
   const [comment, setComment] = useState("");
@@ -95,31 +100,28 @@ function StartupForm({ startups, errors, getStartups, addFinancial }) {
               </div>
 
               {/* Revenue */}
-              {currencyFormattedField(
-                "revenue",
-                "Revenue",
-                revenue,
-                currency,
-                setRevenue
-              )}
+              <CurrencyFormattedField
+                id="revenue"
+                name="Revenue"
+                trueValue={revenue}
+                currency={currency}
+                setFunction={setRevenue}
+              />
+              <CurrencyFormattedField
+                id="cashBalance"
+                name="Cash Balance"
+                trueValue={cashBalance}
+                currency={currency}
+                setFunction={setCashBalance}
+              />
 
-              {/* Cash Balance */}
-              {currencyFormattedField(
-                "cashBalance",
-                "Cash Balance",
-                cashBalance,
-                currency,
-                setCashBalance
-              )}
-
-              {/* Monthly Burn */}
-              {currencyFormattedField(
-                "monthlyBurn",
-                "Monthly Burn",
-                monthlyBurn,
-                currency,
-                setMonthlyBurn
-              )}
+              <CurrencyFormattedField
+                id="monthlyBurn"
+                name="Monthly Burn"
+                trueValue={monthlyBurn}
+                currency={currency}
+                setFunction={setMonthlyBurn}
+              />
 
               {/* LIST OF KPIS */}
               {kpis.map((value, i) => (
@@ -179,65 +181,13 @@ function StartupForm({ startups, errors, getStartups, addFinancial }) {
     );
   }
 }
+
 const getExtraVerticalSpace = () => (
   <Fragment>
     <div className="row" />
     <div className="row" />
     <div className="row" />
   </Fragment>
-);
-
-export const currencyFormattedField = (
-  id,
-  name,
-  trueValue,
-  currency,
-  setFunction
-) => (
-  <div className="input-field col s12">
-    <CurrencyFormat
-      id={id}
-      value={trueValue}
-      thousandSeparator={true}
-      prefix={currency}
-      allowNegative={false}
-      onValueChange={(values) => {
-        const { value } = values; // destructuring to get the pure integer value
-        setFunction(value);
-      }}
-    />
-    <label htmlFor={id}>{name}</label>
-  </div>
-);
-
-export const DateField = ({ id, name, trueValue, setFunction }) => {
-  return (
-    <div className="input-field col s12">
-      <input
-        id={id}
-        type="date"
-        value={trueValue}
-        onChange={(e) => setFunction(e.target.value)}
-      />
-      <label htmlFor={id}>{name}</label>
-    </div>
-  );
-};
-
-export const CommentsField = ({ id, name, trueValue, setFunction }) => (
-  <form className="col s12">
-    <div className="row">
-      <div className="input-field col s12">
-        <textarea
-          id={id}
-          className="materialize-textarea"
-          value={trueValue}
-          onChange={(e) => setFunction(e.target.value)}
-        />
-        <label htmlFor={id}>{name}</label>
-      </div>
-    </div>
-  </form>
 );
 
 StartupForm.propTypes = {
