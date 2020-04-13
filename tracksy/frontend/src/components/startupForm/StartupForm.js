@@ -137,13 +137,24 @@ function StartupForm({ startups, errors, getStartups, addFinancial }) {
                 </div>
               ))}
               {/* Start Date */}
-              {dateField(
-                "startDate",
-                "Reporting Period Start Date",
-                setStartDate
-              )}
-              {dateField("endDate", "Reporting Period End Date", setEndDate)}
-              {commentsField("comment", "Comments", comment, setComment)}
+              <DateField
+                id={"startDate"}
+                name={"Reporting Period Start Date"}
+                startDate={startDate}
+                setFunction={setStartDate}
+              />
+              <DateField
+                id={"endDate"}
+                name={"Reporting Period End Date"}
+                startDate={endDate}
+                setFunction={setEndDate}
+              />
+              <CommentsField
+                id="comment"
+                name="Comments"
+                trueValue={comment}
+                setFunction={setComment}
+              />
               <JobsTable />
               {getExtraVerticalSpace()}
               <p className="center">
@@ -176,7 +187,13 @@ const getExtraVerticalSpace = () => (
   </Fragment>
 );
 
-const currencyFormattedField = (id, name, trueValue, currency, setFunction) => (
+export const currencyFormattedField = (
+  id,
+  name,
+  trueValue,
+  currency,
+  setFunction
+) => (
   <div className="input-field col s12">
     <CurrencyFormat
       id={id}
@@ -193,14 +210,21 @@ const currencyFormattedField = (id, name, trueValue, currency, setFunction) => (
   </div>
 );
 
-const dateField = (id, name, setFunction) => (
-  <div className="input-field col s12">
-    <input id={id} type="date" onChange={(e) => setFunction(e.target.value)} />
-    <label htmlFor={id}>{name}</label>
-  </div>
-);
+export const DateField = ({ id, name, trueValue, setFunction }) => {
+  return (
+    <div className="input-field col s12">
+      <input
+        id={id}
+        type="date"
+        value={trueValue}
+        onChange={(e) => setFunction(e.target.value)}
+      />
+      <label htmlFor={id}>{name}</label>
+    </div>
+  );
+};
 
-const commentsField = (id, name, trueValue, setFunction) => (
+export const CommentsField = ({ id, name, trueValue, setFunction }) => (
   <form className="col s12">
     <div className="row">
       <div className="input-field col s12">
@@ -209,7 +233,7 @@ const commentsField = (id, name, trueValue, setFunction) => (
           className="materialize-textarea"
           value={trueValue}
           onChange={(e) => setFunction(e.target.value)}
-        ></textarea>
+        />
         <label htmlFor={id}>{name}</label>
       </div>
     </div>

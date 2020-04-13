@@ -1,4 +1,4 @@
-import { configure, mount } from "enzyme";
+import { configure, mount, shallow } from "enzyme";
 import React from "react";
 import { Provider } from "react-redux";
 import regeneratorRuntime from "regenerator-runtime";
@@ -14,9 +14,9 @@ import { getStartups } from "../../tracksy/frontend/src/actions/startupsActions"
 import { addFinancial } from "../../tracksy/frontend/src/actions/financialActions";
 import Preloader from "../../tracksy/frontend/src/components/layout/Preloader";
 import StartupForm, {
-  dateField,
+  DateField,
   currencyFormatField,
-  commentsField,
+  CommentsField,
 } from "../../tracksy/frontend/src/components/startupForm/StartupForm";
 
 configure({ adapter: new Adapter() });
@@ -98,4 +98,48 @@ describe("This test will", () => {
   //     dateField("startDate", "Reporting Period Start Date", mockFn)
   //   );
   // });
+});
+
+it("will display the dateField correctly", () => {
+  const mockFn = jest.fn().mockImplementation((s) => s);
+  const mockEvent = {
+    target: {
+      name: "description",
+      value: "test",
+    },
+  };
+
+  const wrapper = shallow(
+    <DateField
+      id={"testId"}
+      name={"Test Name"}
+      trueValue={"01/01/2000"}
+      setFunction={mockFn}
+    />
+  );
+
+  wrapper.find("input").simulate("change", mockEvent);
+  expect(mockFn).toHaveBeenCalledWith("test");
+});
+
+it("will display the dateField correctly", () => {
+  const mockFn = jest.fn().mockImplementation((s) => s);
+  const mockEvent = {
+    target: {
+      name: "description",
+      value: "test",
+    },
+  };
+
+  const wrapper = shallow(
+    <CommentsField
+      id={"testId"}
+      name={"Test Name"}
+      trueValue={"01/01/2000"}
+      setFunction={mockFn}
+    />
+  );
+
+  wrapper.find("textarea").simulate("change", mockEvent);
+  expect(mockFn).toHaveBeenCalledWith("test");
 });
