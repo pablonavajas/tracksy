@@ -10,7 +10,7 @@ import JobsTable from "../jobs/JobsTable";
 import Preloader from "../layout/Preloader";
 import {
   CommentsField,
-  DateField,
+  InputField,
   CurrencyFormattedField,
   SelectField,
 } from "../smallComponents/inputFields";
@@ -127,16 +127,18 @@ function StartupForm({ startups, errors, getStartups, addFinancial }) {
                 </div>
               ))}
               {/* Start Date */}
-              <DateField
+              <InputField
                 id={"startDate"}
                 name={"Reporting Period Start Date"}
-                startDate={startDate}
+                type={"date"}
+                value={startDate}
                 setFunction={setStartDate}
               />
-              <DateField
+              <InputField
                 id={"endDate"}
                 name={"Reporting Period End Date"}
-                startDate={endDate}
+                type={"date"}
+                value={endDate}
                 setFunction={setEndDate}
               />
               <CommentsField

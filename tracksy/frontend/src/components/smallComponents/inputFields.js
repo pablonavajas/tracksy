@@ -1,13 +1,13 @@
 import React from "react";
 import CurrencyFormat from "react-currency-format";
 
-export const DateField = ({ id, name, trueValue, setFunction }) => {
+export const InputField = ({ id, name, type, value, setFunction }) => {
   return (
     <div className="input-field col s12">
       <input
         id={id}
-        type="date"
-        value={trueValue}
+        type={type}
+        value={value}
         onChange={(e) => setFunction(e.target.value)}
       />
       <label htmlFor={id}>{name}</label>

@@ -6,7 +6,7 @@ configure({ adapter: new Adapter() });
 import {
   SelectField,
   CommentsField,
-  DateField,
+  InputField,
   CurrencyFormattedField,
 } from "../../tracksy/frontend/src/components/smallComponents/inputFields";
 
@@ -44,7 +44,7 @@ describe("Upon firing onChange event in the  ", () => {
 
   it("DateField component, mockFunciton is called with correct params", () => {
     const wrapper = shallow(
-      <DateField
+      <InputField
         id={id}
         name={name}
         trueValue={trueValue}

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { addStartup } from "../../actions/startupsActions";
+import { SelectField, InputField } from "../smallComponents/inputFields";
 
 const AddStartupModal = ({ addStartup }) => {
   const [name, setName] = useState("");
@@ -25,6 +26,7 @@ const AddStartupModal = ({ addStartup }) => {
     setName("");
     setWebsite("");
     setOwnership("");
+    setStartupEmail("");
     setBoard("");
   };
 
@@ -34,77 +36,53 @@ const AddStartupModal = ({ addStartup }) => {
         <h4>Enter New Startup</h4>
         {/** Name */}
         <div className="row">
-          <div className="input-field col s12">
-            <input
-              id="name_add"
-              type="text"
-              className="validate"
-              name="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-            <label htmlFor="name_add">Startup Name</label>
-          </div>
+          <InputField
+            id="addStartupName"
+            name="Startup Name"
+            type="text"
+            value={name}
+            setFunction={setName}
+          />
         </div>
         {/** Website */}
         <div className="row">
-          <div className="input-field col s12">
-            <input
-              id="website_add"
-              type="text"
-              className="validate"
-              name="website"
-              value={website}
-              onChange={(e) => setWebsite(e.target.value)}
-            />
-            <label htmlFor="website_add">Website</label>
-          </div>
+          <InputField
+            id="addWebsiteUrl"
+            name="Website URL"
+            type="text"
+            value={website}
+            setFunction={setWebsite}
+          />
         </div>
         {/** Ownership */}
         <div className="row">
-          <div className="input-field col s12">
-            <input
-              id="ownership_add"
-              name="ownership"
-              type="number"
-              className="validate"
-              value={ownership}
-              onChange={(e) => setOwnership(e.target.value)}
-            />
-            <label htmlFor="ownership_add">Ownership (%)</label>
-          </div>
+          <InputField
+            id="addOwnership"
+            name="Ownership (%)"
+            type="number"
+            value={ownership}
+            setFunction={setOwnership}
+          />
         </div>
         {/** Startup Email */}
         <div className="row">
-          <div className="input-field col s12">
-            <input
-              id="startupEmail_add"
-              name="startupEmail"
-              type="email"
-              className="validate"
-              value={startupEmail}
-              onChange={(e) => setStartupEmail(e.target.value)}
-            />
-            <label htmlFor="startupEmail_add">Startup Email</label>
-          </div>
+          <InputField
+            id="addStartupEmail"
+            name="Startup Email"
+            type="email"
+            value={startupEmail}
+            setFunction={setStartupEmail}
+          />
         </div>
         {/* Membership */}
         <div className="row">
-          <div className="input-field col s12">
-            <select
-              name="board"
-              value={board}
-              className="browser-default"
-              onChange={(e) => setBoard(e.target.value)}
-            >
-              <option value="" disabled>
-                Select Board
-              </option>
-              <option value="Member">Member</option>
-              <option value=" - "> - </option>
-              <option value="Observer"> Observer </option>
-            </select>
-          </div>
+          <SelectField
+            id="board"
+            name="Board"
+            value={board}
+            setFunction={setBoard}
+            options={[" - ", "Member", "Observer"]}
+          />
         </div>
       </div>
 
