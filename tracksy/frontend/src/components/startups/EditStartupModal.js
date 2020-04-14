@@ -5,7 +5,7 @@ import { updateStartup } from "../../actions/startupsActions";
 
 import { SelectField, InputField } from "../smallComponents/inputFields";
 
-const EditStartupModal = ({ current, updateStartup }) => {
+export const EditStartupModal = ({ current, updateStartup }) => {
   const [name, setName] = useState("");
   const [website, setWebsite] = useState("");
   const [ownership, setOwnership] = useState("");

@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { addStartup } from "../../actions/startupsActions";
 import { SelectField, InputField } from "../smallComponents/inputFields";
 
-const AddStartupModal = ({ addStartup }) => {
+export const AddStartupModal = ({ addStartup }) => {
   const [name, setName] = useState("");
   const [website, setWebsite] = useState("");
   const [board, setBoard] = useState("");
