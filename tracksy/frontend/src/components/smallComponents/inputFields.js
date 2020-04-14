@@ -1,16 +1,26 @@
 import React from "react";
 import CurrencyFormat from "react-currency-format";
 
-export const InputField = ({ id, name, type, value, setFunction }) => {
+export const InputField = ({
+  id,
+  name,
+  type,
+  value,
+  setFunction,
+  placeholder = undefined,
+}) => {
   return (
     <div className="input-field col s12">
       <input
+        placeholder={placeholder}
         id={id}
         type={type}
         value={value}
         onChange={(e) => setFunction(e.target.value)}
       />
-      <label htmlFor={id}>{name}</label>
+      <label className="active" htmlFor={id}>
+        {name}
+      </label>
     </div>
   );
 };

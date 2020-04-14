@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { updateStartup } from "../../actions/startupsActions";
 
+import { SelectField, InputField } from "../smallComponents/inputFields";
+
 const EditStartupModal = ({ current, updateStartup }) => {
   const [name, setName] = useState("");
   const [website, setWebsite] = useState("");
@@ -37,91 +39,59 @@ const EditStartupModal = ({ current, updateStartup }) => {
     <div id="edit-startup-modal" className="modal" style={modalStyle}>
       <div className="modal-content">
         <h4>Edit Startup</h4>
-
         {/** Name */}
         <div className="row">
-          <div className="input-field col s12">
-            <input
-              placeholder=""
-              id="name"
-              type="text"
-              name="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-            <label className="active" htmlFor="name">
-              Startup Name
-            </label>
-          </div>
+          <InputField
+            placeholder=""
+            id="editStartupName"
+            name="Startup Name"
+            type="text"
+            value={name ? name : ""}
+            setFunction={setName}
+          />
         </div>
-
         {/** Website */}
         <div className="row">
-          <div className="input-field col s12">
-            <input
-              placeholder=""
-              id="website"
-              type="text"
-              name="website"
-              value={website}
-              onChange={(e) => setWebsite(e.target.value)}
-            />
-            <label className="active" htmlFor="website">
-              Website
-            </label>
-          </div>
+          <InputField
+            placeholder=""
+            id="editWebsiteUrl"
+            name="Website URL"
+            type="text"
+            value={website ? website : ""}
+            setFunction={setWebsite}
+          />
         </div>
-
         {/** Ownership */}
         <div className="row">
-          <div className="input-field col s12">
-            <input
-              placeholder=""
-              id="ownership"
-              name="ownership"
-              type="text"
-              value={ownership ? ownership : ""}
-              onChange={(e) => setOwnership(e.target.value)}
-            />
-            <label className="active" htmlFor="ownership">
-              Ownership (%)
-            </label>
-          </div>
+          <InputField
+            placeholder=""
+            id="editOwnership"
+            name="Ownership (%)"
+            type="number"
+            value={ownership ? ownership : ""}
+            setFunction={setOwnership}
+          />
         </div>
-
         {/** Startup Email */}
         <div className="row">
-          <div className="input-field col s12">
-            <input
-              placeholder=""
-              id="startupEmail"
-              name="startupEmail"
-              type="text"
-              value={startupEmail}
-              onChange={(e) => setStartupEmail(e.target.value)}
-            />
-            <label htmlFor="startupEmail">Startup Email</label>
-          </div>
+          <InputField
+            placeholder=""
+            id="editStartupEmail"
+            name="Startup Email"
+            type="email"
+            value={startupEmail ? startupEmail : ""}
+            setFunction={setStartupEmail}
+          />
         </div>
-
+        {/* Membership */}
         <div className="row">
-          <div className="input-field col s12">
-            <select
-              id="board"
-              name="board"
-              value={board ? board : ""}
-              className="browser-default"
-              onChange={(e) => setBoard(e.target.value)}
-            >
-              <option value=" " disabled>
-                Choose your option
-              </option>
-              <option value="Member">Member</option>
-              <option value=" - "> - </option>
-              <option value="Observer"> Observer </option>
-            </select>
-            <label className="active">Board</label>
-          </div>
+          <SelectField
+            id="editBoard"
+            name="Board"
+            value={board ? board : ""}
+            setFunction={setBoard}
+            options={[" - ", "Member", "Observer"]}
+          />
         </div>
       </div>
 

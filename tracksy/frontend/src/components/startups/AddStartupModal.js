@@ -77,7 +77,7 @@ const AddStartupModal = ({ addStartup }) => {
         {/* Membership */}
         <div className="row">
           <SelectField
-            id="board"
+            id="addBoard"
             name="Board"
             value={board}
             setFunction={setBoard}
