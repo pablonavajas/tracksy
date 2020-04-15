@@ -5,20 +5,16 @@ import PropTypes from "prop-types";
 import StartupItem from "./StartupItem";
 import { getStartups } from "../../actions/startupsActions";
 import AddStartupBtn from "./../layout/AddStartupBtn";
+import Preloader from "../layout/Preloader";
 
 export const Startups = ({ startup: { startups, loading }, getStartups }) => {
   //everything inside useEffect hook, gets called at page start up if [] is empty
   useEffect(() => {
     getStartups();
-    // eslint-disable-next-line
   }, []);
 
   if (loading || startups === null) {
-    return (
-      <div className="progress">
-        <div className="indeterminate"></div>
-      </div>
-    );
+    return <Preloader />;
   }
 
   if (!loading && startups.length === 0) {
@@ -54,7 +50,7 @@ export const Startups = ({ startup: { startups, loading }, getStartups }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {startups.map(startup => (
+                  {startups.map((startup) => (
                     <StartupItem startup={startup} key={startup.id} />
                   ))}
                 </tbody>
@@ -66,7 +62,7 @@ export const Startups = ({ startup: { startups, loading }, getStartups }) => {
       <div
         className="right"
         style={{
-          margin: "-60px 50px"
+          margin: "-60px 50px",
         }}
       >
         <AddStartupBtn />
@@ -77,12 +73,12 @@ export const Startups = ({ startup: { startups, loading }, getStartups }) => {
 
 Startups.propTypes = {
   startup: PropTypes.object.isRequired,
-  getStartups: PropTypes.func.isRequired
+  getStartups: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   startup: state.startup, //state.startups is from rootReducer from index.js
-  investments: state.investments
+  investments: state.investments,
 });
 
 //first argument (to get anything from AppLevelState and get it into the component)
