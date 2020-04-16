@@ -1,0 +1,94 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Startups component  renders correctly 1`] = `
+<div>
+  <div
+    className="row"
+  >
+    <div
+      className="col s12"
+    >
+      <div
+        className="card"
+      >
+        <div
+          className="card-content"
+        >
+          <span
+            className="card-title center"
+          >
+            Portfolio Companies
+          </span>
+          <table
+            className="striped centered"
+          >
+            <thead>
+              <tr>
+                <th>
+                  Name
+                </th>
+                <th>
+                  Ownership (%)
+                </th>
+                <th>
+                  Board
+                </th>
+                <th
+                  className="center"
+                >
+                  Investment
+                </th>
+                <th
+                  className="center"
+                >
+                  Type
+                </th>
+                <th
+                  className="center"
+                >
+                  Closed
+                </th>
+                <th />
+                <th />
+                <th />
+                <th />
+                <th />
+              </tr>
+            </thead>
+            <tbody>
+              <Connect(StartupItem)
+                key="0"
+                startup={
+                  Object {
+                    "id": 0,
+                    "name": "company1",
+                  }
+                }
+              />
+              <Connect(StartupItem)
+                key="1"
+                startup={
+                  Object {
+                    "id": 1,
+                    "name": "company2",
+                  }
+                }
+              />
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="right"
+    style={
+      Object {
+        "margin": "-60px 50px",
+      }
+    }
+  >
+    <AddStartupBtn />
+  </div>
+</div>
+`;

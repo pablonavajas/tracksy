@@ -1,0 +1,255 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`StartupItem  renders correctly 1`] = `
+<tr>
+  <th
+    className="center"
+  >
+    <a
+      href="https://undefined"
+    >
+      <img
+        alt=""
+        height="100"
+        src="http://logo.clearbit.com/undefined"
+        width="100"
+      />
+    </a>
+    <div>
+      company1
+    </div>
+  </th>
+  <td
+    className="center"
+  >
+    <Chip />
+  </td>
+  <td
+    className="center"
+  >
+    <Chip />
+  </td>
+  <td
+    className="center"
+  >
+    <div
+      className="center"
+      key="0"
+    >
+      <Chip
+        data={
+          <CurrencyFormat
+            allowNegative={true}
+            decimalSeparator="."
+            displayType="text"
+            fixedDecimalScale={false}
+            isAllowed={[Function]}
+            isNumericString={false}
+            onBlur={[Function]}
+            onChange={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
+            onMouseUp={[Function]}
+            onValueChange={[Function]}
+            prefix="$"
+            suffix=""
+            thousandSeparator={true}
+            thousandSpacing="3"
+            type="text"
+            value={666}
+          />
+        }
+      />
+    </div>
+    <div
+      className="center"
+      key="1"
+    >
+      <Chip
+        data={
+          <CurrencyFormat
+            allowNegative={true}
+            decimalSeparator="."
+            displayType="text"
+            fixedDecimalScale={false}
+            isAllowed={[Function]}
+            isNumericString={false}
+            onBlur={[Function]}
+            onChange={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
+            onMouseUp={[Function]}
+            onValueChange={[Function]}
+            prefix="$"
+            suffix=""
+            thousandSeparator={true}
+            thousandSpacing="3"
+            type="text"
+            value={100}
+          />
+        }
+      />
+    </div>
+  </td>
+  <td
+    className="center"
+  >
+    <div
+      className="center"
+      key="0"
+    >
+      <Chip />
+    </div>
+    <div
+      className="center"
+      key="1"
+    >
+      <Chip />
+    </div>
+  </td>
+  <td>
+    <div
+      className="center"
+      key="0"
+    >
+      <Chip
+        data="04/04/1900"
+      />
+    </div>
+    <div
+      className="center"
+      key="1"
+    >
+      <Chip
+        data="04/04/2010"
+      />
+    </div>
+  </td>
+  <td>
+    <ClickIcon
+      href="#startup-overview"
+      iconName="dehaze"
+      setFunction={[MockFunction]}
+      val={
+        Object {
+          "financials": Array [],
+          "id": 0,
+          "investments": Array [
+            Object {
+              "currency": "$",
+              "date": "1900-04-04",
+              "id": 0,
+              "value": 666,
+            },
+            Object {
+              "currency": "$",
+              "date": "2010-04-04",
+              "id": 1,
+              "value": 100,
+            },
+          ],
+          "name": "company1",
+        }
+      }
+    />
+  </td>
+  <td>
+    <ClickIcon
+      href="#edit-startup-modal"
+      iconName="edit"
+      setFunction={[MockFunction]}
+      val={
+        Object {
+          "financials": Array [],
+          "id": 0,
+          "investments": Array [
+            Object {
+              "currency": "$",
+              "date": "1900-04-04",
+              "id": 0,
+              "value": 666,
+            },
+            Object {
+              "currency": "$",
+              "date": "2010-04-04",
+              "id": 1,
+              "value": 100,
+            },
+          ],
+          "name": "company1",
+        }
+      }
+    />
+  </td>
+  <td>
+    <ClickIcon
+      href="#add-investments-modal"
+      iconName="attach_money"
+      setFunction={[MockFunction]}
+      val={
+        Object {
+          "financials": Array [],
+          "id": 0,
+          "investments": Array [
+            Object {
+              "currency": "$",
+              "date": "1900-04-04",
+              "id": 0,
+              "value": 666,
+            },
+            Object {
+              "currency": "$",
+              "date": "2010-04-04",
+              "id": 1,
+              "value": 100,
+            },
+          ],
+          "name": "company1",
+        }
+      }
+    />
+  </td>
+  <td>
+    <ClickIcon
+      href="#add-kpi-names-modal"
+      iconName="insert_chart"
+      setFunction={[MockFunction]}
+      val={
+        Object {
+          "financials": Array [],
+          "id": 0,
+          "investments": Array [
+            Object {
+              "currency": "$",
+              "date": "1900-04-04",
+              "id": 0,
+              "value": 666,
+            },
+            Object {
+              "currency": "$",
+              "date": "2010-04-04",
+              "id": 1,
+              "value": 100,
+            },
+          ],
+          "name": "company1",
+        }
+      }
+    />
+  </td>
+  <td>
+    <a
+      className="secondary-content"
+      href="#!"
+      id="deleteIcon"
+      onClick={[Function]}
+    >
+      <i
+        className="material-icons blue-text"
+      >
+        delete
+      </i>
+    </a>
+  </td>
+</tr>
+`;

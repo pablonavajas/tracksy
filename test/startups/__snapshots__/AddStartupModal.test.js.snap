@@ -1,0 +1,97 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AddStartupModal  renders correctly 1`] = `
+<div
+  className="modal"
+  id="add-startup-modal"
+  style={
+    Object {
+      "height": "75%",
+      "width": "60%",
+    }
+  }
+>
+  <div
+    className="modal-content"
+  >
+    <h4>
+      Enter New Startup
+    </h4>
+    <div
+      className="row"
+    >
+      <InputField
+        id="addStartupName"
+        name="Startup Name"
+        setFunction={[Function]}
+        type="text"
+        value=""
+      />
+    </div>
+    <div
+      className="row"
+    >
+      <InputField
+        id="addWebsiteUrl"
+        name="Website URL"
+        setFunction={[Function]}
+        type="text"
+        value=""
+      />
+    </div>
+    <div
+      className="row"
+    >
+      <InputField
+        id="addOwnership"
+        name="Ownership (%)"
+        setFunction={[Function]}
+        type="number"
+        value=""
+      />
+    </div>
+    <div
+      className="row"
+    >
+      <InputField
+        id="addStartupEmail"
+        name="Startup Email"
+        setFunction={[Function]}
+        type="email"
+        value=""
+      />
+    </div>
+    <div
+      className="row"
+    >
+      <SelectField
+        id="addBoard"
+        name="Board"
+        options={
+          Array [
+            " - ",
+            "Member",
+            "Observer",
+          ]
+        }
+        setFunction={[Function]}
+        value=""
+      />
+    </div>
+  </div>
+  <div
+    className="modal-footer"
+  >
+    <div
+      className="center"
+    >
+      <a
+        className="btn waves-effect waves-light light-blue modal-close"
+        onClick={[Function]}
+      >
+        Submit
+      </a>
+    </div>
+  </div>
+</div>
+`;

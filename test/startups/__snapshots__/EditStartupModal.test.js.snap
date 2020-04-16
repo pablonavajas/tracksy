@@ -1,0 +1,101 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EditStartupModal  renders correctly 1`] = `
+<div
+  className="modal"
+  id="edit-startup-modal"
+  style={
+    Object {
+      "height": "75%",
+      "width": "60%",
+    }
+  }
+>
+  <div
+    className="modal-content"
+  >
+    <h4>
+      Edit Startup
+    </h4>
+    <div
+      className="row"
+    >
+      <InputField
+        id="editStartupName"
+        name="Startup Name"
+        placeholder=""
+        setFunction={[Function]}
+        type="text"
+        value=""
+      />
+    </div>
+    <div
+      className="row"
+    >
+      <InputField
+        id="editWebsiteUrl"
+        name="Website URL"
+        placeholder=""
+        setFunction={[Function]}
+        type="text"
+        value=""
+      />
+    </div>
+    <div
+      className="row"
+    >
+      <InputField
+        id="editOwnership"
+        name="Ownership (%)"
+        placeholder=""
+        setFunction={[Function]}
+        type="number"
+        value=""
+      />
+    </div>
+    <div
+      className="row"
+    >
+      <InputField
+        id="editStartupEmail"
+        name="Startup Email"
+        placeholder=""
+        setFunction={[Function]}
+        type="email"
+        value=""
+      />
+    </div>
+    <div
+      className="row"
+    >
+      <SelectField
+        id="editBoard"
+        name="Board"
+        options={
+          Array [
+            " - ",
+            "Member",
+            "Observer",
+          ]
+        }
+        setFunction={[Function]}
+        value=""
+      />
+    </div>
+  </div>
+  <div
+    className="modal-footer"
+  >
+    <div
+      className="center"
+    >
+      <a
+        className="modal-close waves-effect light-blue waves-light btn"
+        onClick={[Function]}
+      >
+        Submit
+      </a>
+    </div>
+  </div>
+</div>
+`;
