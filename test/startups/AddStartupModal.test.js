@@ -1,10 +1,8 @@
 import React from "react";
-import { configure, mount, shallow } from "enzyme";
-import Adapter from "enzyme-adapter-react-16";
+import { mount, shallow } from "enzyme";
+import "../setupTests";
 import toJson from "enzyme-to-json";
 import { AddStartupModal } from "../../tracksy/frontend/src/components/startups/AddStartupModal";
-
-configure({ adapter: new Adapter() });
 
 const testStartup = {
   name: "test",

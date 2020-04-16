@@ -1,11 +1,9 @@
 import React from "react";
-import { configure, mount, shallow } from "enzyme";
-import Adapter from "enzyme-adapter-react-16";
+import { mount, shallow } from "enzyme";
+import "../setupTests";
 import toJson from "enzyme-to-json";
 import { EditStartupModal } from "../../tracksy/frontend/src/components/startups/EditStartupModal";
 import ConnectedEditStartupModal from "../../tracksy/frontend/src/components/startups/EditStartupModal";
-
-configure({ adapter: new Adapter() });
 
 import configureMockStore from "redux-mock-store";
 import thunk from "redux-thunk";

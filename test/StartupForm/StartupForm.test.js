@@ -1,21 +1,16 @@
-import { configure, mount, shallow } from "enzyme";
+import { mount } from "enzyme";
 import React from "react";
 import { Provider } from "react-redux";
-import regeneratorRuntime from "regenerator-runtime";
+import "../setupTests";
 
 import { Redirect, HashRouter as Router } from "react-router-dom";
-
-import Adapter from "enzyme-adapter-react-16";
 
 import configureMockStore from "redux-mock-store";
 import thunk from "redux-thunk";
 
 import { getStartups } from "../../tracksy/frontend/src/actions/startupsActions";
 import { addFinancial } from "../../tracksy/frontend/src/actions/financialActions";
-import Preloader from "../../tracksy/frontend/src/components/layout/Preloader";
 import StartupForm from "../../tracksy/frontend/src/components/startupForm/StartupForm";
-
-configure({ adapter: new Adapter() });
 
 const mockStore = configureMockStore([thunk]);
 

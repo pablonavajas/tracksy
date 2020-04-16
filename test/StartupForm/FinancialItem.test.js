@@ -1,9 +1,9 @@
 import FinancialItem from "../../tracksy/frontend/src/components/startupForm/FinancialItem";
-import { configure, shallow } from "enzyme";
+import { shallow } from "enzyme";
 import React from "react";
+import "../setupTests";
 
 import CurrencyFormat from "react-currency-format";
-import Adapter from "enzyme-adapter-react-16";
 
 const financial = {
   id: 1,
@@ -30,8 +30,6 @@ const financial = {
   endDate: "2005-05-05",
   startupId: 2,
 };
-
-configure({ adapter: new Adapter() });
 
 describe("FinancialItem ", () => {
   const wrapper = shallow(<FinancialItem financial={financial} />);
