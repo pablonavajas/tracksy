@@ -5,8 +5,10 @@ var moment = require("moment");
 
 import { connect } from "react-redux";
 import { deleteStartup, setCurrent } from "../../actions/startupsActions";
+import { ClickIcon } from "../smallComponents/displayComponents";
+import { Chip } from "../smallComponents/displayComponents";
 
-const StartupItem = ({ startup, setCurrent, deleteStartup }) => {
+export const StartupItem = ({ startup, setCurrent, deleteStartup }) => {
   return (
     <tr>
       <th className="center">
@@ -21,91 +23,90 @@ const StartupItem = ({ startup, setCurrent, deleteStartup }) => {
         <div>{startup.name}</div>
       </th>
       <td className="center">
-        <div className="chip center">{startup.ownership}</div>
+        <Chip data={startup.ownership} />
       </td>
       <td className="center">
-        <div className="chip center">{startup.board}</div>
+        <Chip data={startup.board} />
       </td>
-
       <td className="center">
         {startup.investments.map((investment) => (
           <div className="center" key={investment.id}>
-            <div className="chip center">
-              <p>
+            <Chip
+              data={
                 <CurrencyFormat
                   value={investment.value}
                   displayType={"text"}
                   thousandSeparator={true}
                   prefix={investment.currency}
                 />
-              </p>
-            </div>
+              }
+            />
           </div>
         ))}
       </td>
       <td className="center">
         {startup.investments.map((investment) => (
           <div className="center" key={investment.id}>
-            <div className="chip center">{investment.investmentType}</div>
+            <Chip data={investment.investmentType} />
           </div>
         ))}
       </td>
       <td>
         {startup.investments.map((investment) => (
           <div className="center" key={investment.id}>
-            <div className="chip center">
-              {moment(investment.date).format("DD/MM/YYYY")}
-            </div>
+            <Chip data={moment(investment.date).format("DD/MM/YYYY")} />
           </div>
         ))}
       </td>
       <td>
-      <a
+        <ClickIcon
           href="#startup-overview"
-          onClick={() => setCurrent(startup)}
-          className="secondary-content modal-trigger"
-        >
-          <i className="material-icons grey-text">dehaze</i>
-          </a>
+          setFunction={setCurrent}
+          val={startup}
+          iconName="dehaze"
+        />
       </td>
       <td>
-        <a
+        <ClickIcon
           href="#edit-startup-modal"
-          onClick={() => setCurrent(startup)}
-          className="secondary-content modal-trigger"
-        >
-          <i className="material-icons blue-text">edit</i>
-        </a>
+          setFunction={setCurrent}
+          val={startup}
+          iconName="edit"
+        />
       </td>
       <td>
-        <a
+        <ClickIcon
           href="#add-investments-modal"
-          onClick={() => setCurrent(startup)}
-          className="secondary-content modal-trigger"
-        >
-          <i className="material-icons blue-text">attach_money</i>
-        </a>
+          setFunction={setCurrent}
+          val={startup}
+          iconName="attach_money"
+        />
       </td>
       {/* Display grey button with no functionality if some financials have already been added */}
       {startup.financials.length === 0 ? (
         <td>
-          <a
+          <ClickIcon
             href="#add-kpi-names-modal"
-            onClick={() => setCurrent(startup)}
-            className="secondary-content modal-trigger"
-          >
-            <i className="material-icons blue-text">insert_chart</i>
-          </a>
+            setFunction={setCurrent}
+            val={startup}
+            iconName="insert_chart"
+          />
         </td>
       ) : (
         <td>
-          <a className="secondary-content modal-trigger">
+          <a
+            id="unclickableIcon"
+            href="!#"
+            className="secondary-content"
+            onClick={(e) => e.preventDefault()}
+          >
             <i className="material-icons grey-text">insert_chart</i>
           </a>
         </td>
       )}
       <td>
         <a
+          id="deleteIcon"
           href="#!"
           onClick={(e) => {
             e.preventDefault();
