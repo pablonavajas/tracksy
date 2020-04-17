@@ -1,0 +1,390 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AddInvestmentModal  renders correctly with investments 1`] = `
+<AddInvestmentModal
+  addInvestments={[MockFunction]}
+  current={
+    Object {
+      "id": 0,
+      "investments": Array [
+        Object {
+          "currency": "$",
+          "date": "10-10-2000",
+          "id": 0,
+          "investmentType": "A",
+          "value": 10,
+        },
+        Object {
+          "currency": "$",
+          "date": "10-10-2001",
+          "id": 1,
+          "investmentType": "B",
+          "value": 20,
+        },
+      ],
+    }
+  }
+  deleteInvestment={[MockFunction]}
+  setCurrent={[MockFunction]}
+>
+  <div
+    className="modal"
+    id="add-investments-modal"
+    style={
+      Object {
+        "height": "75%",
+        "width": "60%",
+      }
+    }
+  >
+    <div>
+      <div
+        className="modal-content"
+      >
+        <h4>
+          Investments for 
+        </h4>
+        <div
+          className="center"
+        >
+          <div
+            className="row"
+            key="0"
+          >
+            <div
+              className="input-field col s1"
+            >
+              <select
+                className="browser-default"
+                id="invCurrency0"
+                name="currency"
+                onChange={[Function]}
+                value="$"
+              >
+                <option
+                  defaultValue="£"
+                  value="£"
+                >
+                  £
+                </option>
+                <option
+                  value="$"
+                >
+                  $
+                </option>
+                <option
+                  value="€"
+                >
+                  €
+                </option>
+              </select>
+              <label
+                className="active"
+                htmlFor="invCurrency0"
+              >
+                Currency
+              </label>
+            </div>
+            <div
+              className="input-field col s4"
+              key="0"
+            >
+              <CurrencyFormat
+                allowNegative={false}
+                className="validate"
+                decimalSeparator="."
+                displayType="input"
+                fixedDecimalScale={false}
+                id="invValue0"
+                isAllowed={[Function]}
+                isNumericString={false}
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                onMouseUp={[Function]}
+                onValueChange={[Function]}
+                prefix="$"
+                suffix=""
+                thousandSeparator={true}
+                thousandSpacing="3"
+                type="text"
+                value={10}
+              >
+                <input
+                  className="validate"
+                  id="invValue0"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  onFocus={[Function]}
+                  onKeyDown={[Function]}
+                  onMouseUp={[Function]}
+                  type="text"
+                  value="$10"
+                />
+              </CurrencyFormat>
+              <label
+                className="active"
+                htmlFor="inveValue0"
+              >
+                Investment
+              </label>
+            </div>
+            <div
+              className="input-field col s4"
+            >
+              <input
+                className="validate"
+                id="invType0"
+                name="type_1"
+                onChange={[Function]}
+                placeholder=""
+                type="text"
+                value="A"
+              />
+              <label
+                className="active"
+                htmlFor="invType0"
+              >
+                Type of Investment
+              </label>
+            </div>
+            <div
+              className="input-field col s2"
+            >
+              <input
+                className="validate"
+                id="invDate0"
+                name="date_1"
+                onChange={[Function]}
+                type="date"
+                value="10-10-2000"
+              />
+              <label
+                className="active"
+                htmlFor="invDate0"
+              >
+                Close Date
+              </label>
+              <a
+                href="#"
+                id="deleteInvestmentButton"
+                onClick={[Function]}
+              >
+                <i
+                  className="material-icons grey-text prefix"
+                >
+                  delete_forever
+                </i>
+              </a>
+            </div>
+          </div>
+          <div
+            className="row"
+            key="1"
+          >
+            <div
+              className="input-field col s1"
+            >
+              <select
+                className="browser-default"
+                id="invCurrency1"
+                name="currency"
+                onChange={[Function]}
+                value="$"
+              >
+                <option
+                  defaultValue="£"
+                  value="£"
+                >
+                  £
+                </option>
+                <option
+                  value="$"
+                >
+                  $
+                </option>
+                <option
+                  value="€"
+                >
+                  €
+                </option>
+              </select>
+              <label
+                className="active"
+                htmlFor="invCurrency1"
+              >
+                Currency
+              </label>
+            </div>
+            <div
+              className="input-field col s4"
+              key="1"
+            >
+              <CurrencyFormat
+                allowNegative={false}
+                className="validate"
+                decimalSeparator="."
+                displayType="input"
+                fixedDecimalScale={false}
+                id="invValue1"
+                isAllowed={[Function]}
+                isNumericString={false}
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                onMouseUp={[Function]}
+                onValueChange={[Function]}
+                prefix="$"
+                suffix=""
+                thousandSeparator={true}
+                thousandSpacing="3"
+                type="text"
+                value={20}
+              >
+                <input
+                  className="validate"
+                  id="invValue1"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  onFocus={[Function]}
+                  onKeyDown={[Function]}
+                  onMouseUp={[Function]}
+                  type="text"
+                  value="$20"
+                />
+              </CurrencyFormat>
+              <label
+                className="active"
+                htmlFor="inveValue1"
+              >
+                Investment
+              </label>
+            </div>
+            <div
+              className="input-field col s4"
+            >
+              <input
+                className="validate"
+                id="invType1"
+                name="type_1"
+                onChange={[Function]}
+                placeholder=""
+                type="text"
+                value="B"
+              />
+              <label
+                className="active"
+                htmlFor="invType1"
+              >
+                Type of Investment
+              </label>
+            </div>
+            <div
+              className="input-field col s2"
+            >
+              <input
+                className="validate"
+                id="invDate1"
+                name="date_1"
+                onChange={[Function]}
+                type="date"
+                value="10-10-2001"
+              />
+              <label
+                className="active"
+                htmlFor="invDate1"
+              >
+                Close Date
+              </label>
+              <a
+                href="#"
+                id="deleteInvestmentButton"
+                onClick={[Function]}
+              >
+                <i
+                  className="material-icons grey-text prefix"
+                >
+                  delete_forever
+                </i>
+              </a>
+            </div>
+          </div>
+          <a
+            className="btn waves-effect waves-light light-blue"
+            id="addInvestmentButton"
+            onClick={[Function]}
+          >
+            Add Investment
+          </a>
+        </div>
+      </div>
+      <div
+        className="modal-footer"
+      >
+        <div
+          className="center"
+        >
+          <a
+            className="modal-close waves-effect light-blue waves-light btn"
+            id="submitInvestmentButton"
+            onClick={[Function]}
+          >
+            Submit
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</AddInvestmentModal>
+`;
+
+exports[`AddInvestmentModal  renders correctly with no investments 1`] = `
+<div
+  className="modal"
+  id="add-investments-modal"
+  style={
+    Object {
+      "height": "75%",
+      "width": "60%",
+    }
+  }
+>
+  <div>
+    <div
+      className="modal-content"
+    >
+      <h4>
+        Investments for 
+      </h4>
+      <div
+        className="center"
+      >
+        <a
+          className="btn waves-effect waves-light light-blue"
+          id="addInvestmentButton"
+          onClick={[Function]}
+        >
+          Add Investment
+        </a>
+      </div>
+    </div>
+    <div
+      className="modal-footer"
+    >
+      <div
+        className="center"
+      >
+        <a
+          className="modal-close waves-effect light-blue waves-light btn"
+          id="submitInvestmentButton"
+          onClick={[Function]}
+        >
+          Submit
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+`;

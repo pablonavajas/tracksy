@@ -9,7 +9,7 @@ import {
 } from "../../actions/investmentsActions";
 import { setCurrent } from "../../actions/startupsActions";
 
-const addInvestmentModal = ({
+export const AddInvestmentModal = ({
   current,
   addInvestments,
   deleteInvestment,
@@ -37,6 +37,7 @@ const addInvestmentModal = ({
   };
 
   const onSubmit = () => {
+    // console.log("submit button clicked apparently");
     addInvestments(current.id, list);
     setCurrent(null);
   };
@@ -134,7 +135,11 @@ const addInvestmentModal = ({
                   <label htmlFor={"invDate" + i} className="active">
                     Close Date
                   </label>
-                  <a href="#" onClick={() => deleteInput(i)}>
+                  <a
+                    id="deleteInvestmentButton"
+                    href="#"
+                    onClick={() => deleteInput(i)}
+                  >
                     <i className="material-icons grey-text prefix">
                       delete_forever
                     </i>
@@ -144,6 +149,7 @@ const addInvestmentModal = ({
             ))}
 
             <a
+              id="addInvestmentButton"
               className="btn waves-effect waves-light light-blue"
               onClick={addInput}
             >
@@ -154,6 +160,7 @@ const addInvestmentModal = ({
         <div className="modal-footer">
           <div className="center">
             <a
+              id="submitInvestmentButton"
               onClick={onSubmit}
               className="modal-close waves-effect light-blue waves-light btn"
             >
@@ -171,7 +178,7 @@ const modalStyle = {
   height: "75%",
 };
 
-addInvestmentModal.propTypes = {
+AddInvestmentModal.propTypes = {
   addInvestments: PropTypes.func.isRequired,
   deleteInvestment: PropTypes.func.isRequired,
   setCurrent: PropTypes.func.isRequired,
@@ -185,4 +192,4 @@ export default connect(mapStateToProps, {
   addInvestments,
   deleteInvestment,
   setCurrent,
-})(addInvestmentModal);
+})(AddInvestmentModal);
