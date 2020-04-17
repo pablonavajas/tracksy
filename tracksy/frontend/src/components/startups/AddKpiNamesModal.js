@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { addKpiNames, deleteKpiName } from "../../actions/kpiActions";
 import { setCurrent } from "../../actions/startupsActions";
 
-const addKpiNamesModal = ({
+export const AddKpiNamesModal = ({
   current,
   addKpiNames,
   deleteKpiName,
@@ -58,14 +58,6 @@ const addKpiNamesModal = ({
     setList([...list]);
   };
 
-  const onSubmitHelper = (callback) => {
-    list.map((kpiName) => {
-      if (kpiName.id) console.log(kpiName.id);
-      if (kpiName.name) addKpiNames(current.id, kpiName);
-    });
-    callback();
-  };
-
   const onSubmit = () => {
     addKpiNames(current.id, list);
     setCurrent(null);
@@ -104,7 +96,11 @@ const addKpiNamesModal = ({
                   <label htmlFor={"kpiName" + i} className="active">
                     KPI Name {kpiNo + 1 + i}
                   </label>
-                  <a href="#" onClick={() => deleteInput(i)}>
+                  <a
+                    id="deleteKpiNameButton"
+                    href="#"
+                    onClick={() => deleteInput(i)}
+                  >
                     <i className=" material-icons grey-text postfix">
                       delete_forever
                     </i>
@@ -114,6 +110,7 @@ const addKpiNamesModal = ({
             ))}
           </div>
           <a
+            id="addKpiNameButton"
             className="btn waves-effect waves-light light-blue"
             onClick={addInput}
           >
@@ -124,6 +121,7 @@ const addKpiNamesModal = ({
       <div className="modal-footer">
         <div className="center">
           <a
+            id="submitKpiNamesButton"
             onClick={onSubmit}
             className="modal-close waves-effect light-blue waves-light btn"
           >
@@ -140,7 +138,7 @@ const modalStyle = {
   height: "75%",
 };
 
-addKpiNamesModal.propTypes = {
+AddKpiNamesModal.propTypes = {
   addKpiNames: PropTypes.func.isRequired,
   deleteKpiName: PropTypes.func.isRequired,
   setCurrent: PropTypes.func.isRequired,
@@ -154,4 +152,4 @@ export default connect(mapStateToProps, {
   addKpiNames,
   deleteKpiName,
   setCurrent,
-})(addKpiNamesModal);
+})(AddKpiNamesModal);

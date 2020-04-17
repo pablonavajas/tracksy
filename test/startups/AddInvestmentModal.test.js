@@ -82,7 +82,6 @@ describe("AddInvestmentModal ", () => {
         current={current}
       />
     );
-    wrapper.update();
   });
 
   it("when submit is clicked, addInvestments is called and current is set to null", () => {

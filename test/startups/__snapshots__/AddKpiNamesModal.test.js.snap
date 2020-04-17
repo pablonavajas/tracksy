@@ -1,0 +1,141 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AddKpiNamesModal  renders correctly with no investments 1`] = `
+<div
+  className="modal"
+  id="add-kpi-names-modal"
+  style={
+    Object {
+      "height": "75%",
+      "width": "60%",
+    }
+  }
+>
+  <div
+    className="modal-content"
+  >
+    <h4>
+      Enter KPI Names for 
+    </h4>
+    <div
+      className="center"
+    >
+      <div
+        className="row"
+      >
+        <div
+          className="input-field col s4"
+          key="1"
+        >
+          <input
+            disabled={true}
+            id={1}
+            type="text"
+            value="Revenue"
+          />
+          <label
+            htmlFor={1}
+          >
+            Kpi Name 
+            1
+             (default)
+          </label>
+        </div>
+        <div
+          className="input-field col s4"
+          key="2"
+        >
+          <input
+            disabled={true}
+            id={2}
+            type="text"
+            value="Cash Balance"
+          />
+          <label
+            htmlFor={2}
+          >
+            Kpi Name 
+            2
+             (default)
+          </label>
+        </div>
+        <div
+          className="input-field col s4"
+          key="3"
+        >
+          <input
+            disabled={true}
+            id={3}
+            type="text"
+            value="Monthly Burn"
+          />
+          <label
+            htmlFor={3}
+          >
+            Kpi Name 
+            3
+             (default)
+          </label>
+        </div>
+        <div
+          key="0"
+        >
+          <div
+            className="input-field col s4"
+          >
+            <input
+              className="validate"
+              id="kpiName0"
+              name="type_1"
+              onChange={[Function]}
+              placeholder=""
+              type="text"
+              value=""
+            />
+            <label
+              className="active"
+              htmlFor="kpiName0"
+            >
+              KPI Name 
+              4
+            </label>
+            <a
+              href="#"
+              id="deleteKpiNameButton"
+              onClick={[Function]}
+            >
+              <i
+                className=" material-icons grey-text postfix"
+              >
+                delete_forever
+              </i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <a
+        className="btn waves-effect waves-light light-blue"
+        id="addKpiNameButton"
+        onClick={[Function]}
+      >
+        Add KPI Name
+      </a>
+    </div>
+  </div>
+  <div
+    className="modal-footer"
+  >
+    <div
+      className="center"
+    >
+      <a
+        className="modal-close waves-effect light-blue waves-light btn"
+        id="submitKpiNamesButton"
+        onClick={[Function]}
+      >
+        Submit
+      </a>
+    </div>
+  </div>
+</div>
+`;
