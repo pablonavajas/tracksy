@@ -61,19 +61,16 @@ describe("AddInvestmentModal ", () => {
 });
 
 describe("AddInvestmentModal ", () => {
-  let wrapper;
-  const deleteInvestment = jest.fn();
-  const addInvestments = jest.fn();
-  const setCurrent = jest.fn();
-  const current = {
-    id: 0,
-    investments: [
-      { id: 0, value: 10 },
-      { id: 1, value: 20 },
-    ],
-  };
-
+  let wrapper, deleteInvestment, addInvestments, setCurrent, current;
   beforeEach(() => {
+    deleteInvestment = jest.fn();
+    addInvestments = jest.fn();
+    setCurrent = jest.fn();
+    current = {
+      id: 0,
+      investments: [{ value: 10 }, { id: 1, value: 20 }],
+    };
+
     wrapper = mount(
       <AddInvestmentModal
         addInvestments={addInvestments}
@@ -95,9 +92,14 @@ describe("AddInvestmentModal ", () => {
     // included for the purposes of coverage
     wrapper.find("#addInvestmentButton").simulate("click");
   });
-  it("hehe", () => {
+  it("when delete Investment Button is clicked teh deleteInvestment function gets called", () => {
     wrapper.find("#deleteInvestmentButton").at(1).simulate("click");
     expect(deleteInvestment).toHaveBeenCalledWith(current.id, 1);
+  });
+
+  it("when delete Investment Button is clicked teh deleteInvestment function gets called", () => {
+    wrapper.find("#deleteInvestmentButton").at(0).simulate("click");
+    expect(deleteInvestment).not.toHaveBeenCalled();
   });
 });
 

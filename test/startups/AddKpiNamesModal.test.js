@@ -31,16 +31,18 @@ describe("AddKpiNamesModal ", () => {
 });
 
 describe("AddInvestmentModal ", () => {
-  let wrapper;
-  const deleteKpiName = jest.fn();
-  const addKpiNames = jest.fn();
-  const setCurrent = jest.fn();
-  const current = {
-    id: 0,
-    kpinames: [{ name: "test1" }, { id: 1, name: "test2" }],
-  };
+  let wrapper, deleteKpiName, addKpiNames, setCurrent, current;
 
   beforeEach(() => {
+    deleteKpiName = jest.fn();
+    addKpiNames = jest.fn();
+    setCurrent = jest.fn();
+    current = {
+      id: 0,
+      kpinames: [{ name: "test1" }, { id: 1, name: "test2" }],
+    };
+
+    // mount needed to for useEffect to be called
     wrapper = mount(
       <AddKpiNamesModal
         addKpiNames={addKpiNames}
@@ -66,6 +68,12 @@ describe("AddInvestmentModal ", () => {
   it("when delete kpi button is clicked, deleteKpiName is called", () => {
     wrapper.find("#deleteKpiNameButton").at(1).simulate("click");
     expect(deleteKpiName).toHaveBeenCalled();
+  });
+
+  it("when delete kpi button is clicked, but the startup is not \
+    yet in the database (has no id yet) deleteKpiName functino doesn't get called", () => {
+    wrapper.find("#deleteKpiNameButton").at(0).simulate("click");
+    expect(deleteKpiName).not.toHaveBeenCalled();
   });
 });
 
