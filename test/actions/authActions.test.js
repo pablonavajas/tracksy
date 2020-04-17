@@ -126,4 +126,54 @@ describe("In auth actions", () => {
       expect(store.getActions()).toEqual(expectedActions);
     });
   });
+
+  it("register() should dispatch the correct action type and payload to the store", () => {
+    mock.onPost(`/api/auth/register`).reply(200, user);
+
+    store
+      .dispatch(
+        actions.register({
+          username: "a",
+          email: "a@a.com",
+          password: "123456",
+        })
+      )
+      .then(() => {
+        let expectedActions = [
+          {
+            type: types.REGISTER_SUCCESS,
+            payload: user,
+          },
+        ];
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+  });
+
+  it("register() should send error type and payload to the store when getting errors from API ", () => {
+    mock.onPost(`/api/auth/register`).reply(404, { error });
+
+    store
+      .dispatch(
+        actions.register({
+          username: "a",
+          email: "a@a.com",
+          password: "123456",
+        })
+      )
+      .then(() => {
+        let expectedActions = [
+          {
+            type: types.GET_ERRORS,
+            payload: {
+              msg: { error },
+              status: 404,
+            },
+          },
+          {
+            type: types.REGISTER_FAIL,
+          },
+        ];
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+  });
 });
