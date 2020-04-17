@@ -73,9 +73,7 @@ export const logout = () => async (dispatch, getState) => {
 };
 
 // REGISTER USER
-export const register = ({ username, email, password, is_staff }) => (
-  dispatch
-) => {
+export const register = ({ username, email, password }) => async (dispatch) => {
   // Headers
   const config = {
     headers: {
@@ -88,24 +86,24 @@ export const register = ({ username, email, password, is_staff }) => (
     username: username,
     email: email,
     password: password,
+    // only VC Funds can register
+    // startups will be sent login details via email
     isStartup: false,
   });
 
-  axios
-    .post("/api/auth/register", body, config)
-    .then((res) => {
-      // console.log(res.data),
-      dispatch({
-        type: REGISTER_SUCCESS,
-        payload: res.data,
-      });
-    })
-    .catch((err) => {
-      dispatch(returnErrors(err.response.data, err.response.status));
-      dispatch({
-        type: REGISTER_FAIL,
-      });
+  try {
+    const res = await axios.post("/api/auth/register", body, config);
+
+    dispatch({
+      type: REGISTER_SUCCESS,
+      payload: res.data,
     });
+  } catch (err) {
+    dispatch(returnErrors(err.response.data, err.response.status));
+    dispatch({
+      type: REGISTER_FAIL,
+    });
+  }
 };
 
 // Setup config with token - helper function
