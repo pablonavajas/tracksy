@@ -1,6 +1,4 @@
-import {
-  GET_CONNECTIONS,
-} from "./types";
+import { GET_CONNECTIONS } from "./types";
 import axios from "axios";
 import { createMessage, returnErrors } from "./messageActions";
 import { tokenConfig } from "./authActions";
