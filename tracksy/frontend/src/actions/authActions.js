@@ -31,7 +31,7 @@ export const loadUser = () => async (dispatch, getState) => {
 };
 
 // LOGIN USER
-export const login = (username, password) => (dispatch) => {
+export const login = (username, password) => async (dispatch) => {
   // Headers
   const config = {
     headers: {
@@ -45,34 +45,31 @@ export const login = (username, password) => (dispatch) => {
     password: password,
   });
 
-  axios
-    .post("/api/auth/login", body, config)
-    .then((res) => {
-      dispatch({
-        type: LOGIN_SUCCESS,
-        payload: res.data,
-      });
-    })
-    .catch((err) => {
-      dispatch(returnErrors(err.response.data, err.response.status));
-      dispatch({
-        type: LOGIN_FAIL,
-      });
+  try {
+    const res = await axios.post("/api/auth/login", body, config);
+
+    dispatch({
+      type: LOGIN_SUCCESS,
+      payload: res.data,
     });
+  } catch (err) {
+    dispatch(returnErrors(err.response.data, err.response.status));
+    dispatch({
+      type: LOGIN_FAIL,
+    });
+  }
 };
 
 // LOGOUT USER
-export const logout = () => (dispatch, getState) => {
-  axios
-    .post("/api/auth/logout", null, tokenConfig(getState))
-    .then((res) => {
-      dispatch({
-        type: LOGOUT_SUCCESS,
-      });
-    })
-    .catch((err) => {
-      dispatch(returnErrors(err.response.data, err.response.status));
+export const logout = () => async (dispatch, getState) => {
+  try {
+    await axios.post("/api/auth/logout", null, tokenConfig(getState));
+    dispatch({
+      type: LOGOUT_SUCCESS,
     });
+  } catch (err) {
+    dispatch(returnErrors(err.response.data, err.response.status));
+  }
 };
 
 // REGISTER USER
