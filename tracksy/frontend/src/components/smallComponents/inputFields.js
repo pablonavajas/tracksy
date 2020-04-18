@@ -1,6 +1,35 @@
 import React from "react";
 import CurrencyFormat from "react-currency-format";
 
+export const InputFieldWithIconPrefix = ({
+  id,
+  name,
+  type,
+  value,
+  setFunction,
+  placeholder = undefined,
+  required = false,
+  minLength = "0",
+  iconName,
+}) => {
+  return (
+    <div className="input-field ">
+      <i className="material-icons prefix">{iconName}</i>
+      <input
+        placeholder={placeholder}
+        id={id}
+        type={type}
+        value={value}
+        onChange={(e) => setFunction(e.target.value)}
+        required={required}
+        minLength={minLength}
+      />
+      <label className="white-text" htmlFor={id}>
+        {name}
+      </label>
+    </div>
+  );
+};
 export const InputField = ({
   id,
   name,
@@ -8,6 +37,7 @@ export const InputField = ({
   value,
   setFunction,
   placeholder = undefined,
+  required = false,
 }) => {
   return (
     <div className="input-field col s12">
@@ -17,6 +47,7 @@ export const InputField = ({
         type={type}
         value={value}
         onChange={(e) => setFunction(e.target.value)}
+        required={required}
       />
       <label className="active" htmlFor={id}>
         {name}
