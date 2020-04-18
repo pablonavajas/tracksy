@@ -2,17 +2,14 @@ import React from "react";
 import { connect } from "react-redux";
 import { Route, Redirect } from "react-router-dom";
 import PropTypes from "prop-types";
+import Preloader from "../layout/Preloader";
 
-const VCPrivateRoute = ({ component: Component, auth, ...rest }) => (
+export const VCPrivateRoute = ({ component: Component, auth, ...rest }) => (
   <Route
     {...rest}
-    render={props => {
+    render={(props) => {
       if (auth.isLoading) {
-        return (
-          <div className="progress">
-            <div className="indeterminate" />
-          </div>
-        );
+        return <Preloader />;
       } else if (!auth.isAuthenticated && !localStorage.token) {
         return <Redirect to="/login" />;
       } else if (auth.isStartup) {
@@ -25,8 +22,8 @@ const VCPrivateRoute = ({ component: Component, auth, ...rest }) => (
   />
 );
 
-const mapStateToProps = state => ({
-  auth: state.auth
+const mapStateToProps = (state) => ({
+  auth: state.auth,
 });
 
 export default connect(mapStateToProps)(VCPrivateRoute);
