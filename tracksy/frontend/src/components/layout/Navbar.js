@@ -6,9 +6,6 @@ import { logout } from "../../actions/authActions";
 
 export const Navbar = ({ title, icon, auth, logout }) => {
   const { isAuthenticated, username, isStartup } = auth;
-  console.log(isAuthenticated);
-  console.log(username);
-  console.log(isStartup);
   const vcLinks = (
     <ul id="nav-mobile" className="right hide-on-med-and-down">
       <span className="mr-3">
