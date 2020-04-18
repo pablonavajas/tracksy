@@ -38,9 +38,10 @@ export const InputField = ({
   setFunction,
   placeholder = undefined,
   required = false,
+  className = "input-field col s12",
 }) => {
   return (
-    <div className="input-field col s12">
+    <div className={className}>
       <input
         placeholder={placeholder}
         id={id}
