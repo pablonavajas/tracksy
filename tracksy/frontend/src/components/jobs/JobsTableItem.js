@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 
 import { setCurrentJob, deleteJob } from "../../actions/jobActions";
 
-function JobsTableItem({ job, setCurrentJob, deleteJob }) {
+export const JobsTableItem = ({ job, setCurrentJob, deleteJob }) => {
   return (
     <tr>
       <td>{job.title}</td>
@@ -13,6 +13,7 @@ function JobsTableItem({ job, setCurrentJob, deleteJob }) {
       {/* Review Intros Button */}
       <td className="center">
         <a
+          id="reviewIntrosButton"
           href="#review-intros-modal"
           onClick={(e) => setCurrentJob(job)}
           className="modal-trigger"
@@ -24,6 +25,7 @@ function JobsTableItem({ job, setCurrentJob, deleteJob }) {
       {/* Delete Button */}
       <td className="center">
         <a
+          id="deleteJobItemButton"
           href="#!"
           onClick={(e) => {
             e.preventDefault();
@@ -35,7 +37,7 @@ function JobsTableItem({ job, setCurrentJob, deleteJob }) {
       </td>
     </tr>
   );
-}
+};
 
 JobsTableItem.propTypes = {
   job: PropTypes.object.isRequired,

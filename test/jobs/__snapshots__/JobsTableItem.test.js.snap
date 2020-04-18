@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`JobsTableItem renders correctly 1`] = `
+<tr>
+  <td>
+    Job Title
+  </td>
+  <td>
+    £100k
+  </td>
+  <td
+    className="center"
+  >
+    <a
+      className="modal-trigger"
+      href="#review-intros-modal"
+      id="reviewIntrosButton"
+      onClick={[Function]}
+    >
+      <i
+        className="centered material-icons light-blue-text"
+      >
+        contacts
+      </i>
+    </a>
+  </td>
+  <td
+    className="center"
+  >
+    <a
+      href="#!"
+      id="deleteJobItemButton"
+      onClick={[Function]}
+    >
+      <i
+        className="centered material-icons light-blue-text"
+      >
+        delete
+      </i>
+    </a>
+  </td>
+</tr>
+`;

@@ -1,0 +1,60 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`JobsTableItem renders correctly 1`] = `
+<div
+  className="col s12"
+>
+  <table
+    className="responsive-table highlight"
+  >
+    <thead>
+      <tr>
+        <th>
+          Job Title
+        </th>
+        <th>
+          Salary
+        </th>
+        <th
+          className="center"
+        />
+        <th
+          className="center"
+        />
+      </tr>
+    </thead>
+    <tbody>
+      <Connect(JobsTableItem)
+        job={
+          Object {
+            "id": 0,
+            "title": "testJobName",
+          }
+        }
+        key="0"
+      />
+    </tbody>
+  </table>
+  <div
+    className="center"
+    style={
+      Object {
+        "margin": "-1.1em ",
+      }
+    }
+  >
+    <a
+      className="modal-trigger btn-floating waves-effect waves-light light-blue"
+      href="#add-job-modal"
+    >
+      <i
+        className="material-icons"
+      >
+        add
+      </i>
+    </a>
+  </div>
+</div>
+`;
+
+exports[`JobsTableItem renders the preloader when loading is true 1`] = `<Preloader />`;

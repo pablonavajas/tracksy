@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import JobsTableItem from "./JobsTableItem";
 import Preloader from "../layout/Preloader";
 
-const JobsTable = ({ startup: { startups, loading } }) => {
+export const JobsTable = ({ startup: { startups, loading } }) => {
   if (loading) {
     return <Preloader />;
   }
