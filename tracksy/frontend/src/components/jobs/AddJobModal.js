@@ -3,8 +3,10 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
 import { addJob, getJobDescription } from "../../actions/jobActions";
+import "../smallComponents/inputFields";
+import { InputField } from "../smallComponents/inputFields";
 
-const AddJobModal = ({
+export const AddJobModal = ({
   startup: { startups },
   jobs: { latestRetrieved },
   addJob,
@@ -53,6 +55,7 @@ const AddJobModal = ({
             <div className="input-field">
               {/* Button to scrape info from AngelList */}
               <a
+                id="getJobDescriptionButton"
                 onClick={(e) => {
                   e.preventDefault();
                   getJobDescription({
@@ -73,41 +76,33 @@ const AddJobModal = ({
               />
               <label htmlFor="url">Angel List URL</label>
             </div>
-            <div className="input-field ">
-              <input
-                placeholder=""
-                id="title"
-                type="text"
-                className="validate"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-              />
-              <label htmlFor="title">Title</label>
-            </div>
-            <div className="input-field ">
-              <input
-                placeholder=""
-                id="salary"
-                type="text"
-                className="validate"
-                value={salary}
-                onChange={(e) => setSalary(e.target.value)}
-              />
-              <label htmlFor="salary"> Salary</label>
-            </div>
-            <div className="input-field ">
-              <input
-                placeholder=""
-                id="location"
-                type="text"
-                className="validation"
-                value={location}
-                onChange={(e) => setLocation(e.target.value)}
-              />
-              <label htmlFor="location" className="active">
-                Location
-              </label>
-            </div>
+            <InputField
+              placeholder=""
+              id="title"
+              type="text"
+              name="Title"
+              className="input-field"
+              value={title}
+              setFunction={setTitle}
+            />
+            <InputField
+              placeholder=""
+              id="salary"
+              type="text"
+              name="Salary"
+              className="input-field"
+              value={salary}
+              setFunction={setSalary}
+            />
+            <InputField
+              placeholder=""
+              id="location"
+              type="text"
+              name="Location"
+              className="input-field"
+              value={location}
+              setFunction={setLocation}
+            />
             <div className="row">
               <div className="input-field col s12">
                 <textarea
@@ -127,6 +122,7 @@ const AddJobModal = ({
       <div className="modal-footer">
         <div className="center">
           <a
+            id="addJobButton"
             onClick={onSubmit}
             className="btn waves-effect waves-light light-blue modal-close"
           >
