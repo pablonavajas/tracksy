@@ -1,0 +1,156 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`StartupPrivateRoute redirects to home page, if isAuthenticated is true, isStartup is false and isLoading is false 1`] = `
+<HashRouter>
+  <Router
+    history={
+      Object {
+        "action": "REPLACE",
+        "block": [Function],
+        "createHref": [Function],
+        "go": [Function],
+        "goBack": [Function],
+        "goForward": [Function],
+        "length": 1,
+        "listen": [Function],
+        "location": Object {
+          "hash": "",
+          "pathname": "/",
+          "search": "",
+          "state": undefined,
+        },
+        "push": [Function],
+        "replace": [Function],
+      }
+    }
+  >
+    <StartupPrivateRoute
+      auth={
+        Object {
+          "isAuthenticated": true,
+          "isLoading": false,
+          "isStartup": false,
+        }
+      }
+    >
+      <Route
+        render={[Function]}
+      >
+        <Redirect
+          to="/"
+        >
+          <Lifecycle
+            onMount={[Function]}
+            onUpdate={[Function]}
+            to="/"
+          />
+        </Redirect>
+      </Route>
+    </StartupPrivateRoute>
+  </Router>
+</HashRouter>
+`;
+
+exports[`StartupPrivateRoute redirects to login, if isAuthenticated is false  1`] = `
+<HashRouter>
+  <Router
+    history={
+      Object {
+        "action": "REPLACE",
+        "block": [Function],
+        "createHref": [Function],
+        "go": [Function],
+        "goBack": [Function],
+        "goForward": [Function],
+        "length": 1,
+        "listen": [Function],
+        "location": Object {
+          "hash": "",
+          "pathname": "/login",
+          "search": "",
+          "state": undefined,
+        },
+        "push": [Function],
+        "replace": [Function],
+      }
+    }
+  >
+    <StartupPrivateRoute
+      auth={
+        Object {
+          "isAuthenticated": false,
+          "isLoading": false,
+          "isStartup": false,
+        }
+      }
+    >
+      <Route
+        render={[Function]}
+      >
+        <Redirect
+          to="/login"
+        >
+          <Lifecycle
+            onMount={[Function]}
+            onUpdate={[Function]}
+            to="/login"
+          />
+        </Redirect>
+      </Route>
+    </StartupPrivateRoute>
+  </Router>
+</HashRouter>
+`;
+
+exports[`StartupPrivateRoute shows preloader, if isLoading is true  1`] = `
+<HashRouter>
+  <Router
+    history={
+      Object {
+        "action": "POP",
+        "block": [Function],
+        "createHref": [Function],
+        "go": [Function],
+        "goBack": [Function],
+        "goForward": [Function],
+        "length": 1,
+        "listen": [Function],
+        "location": Object {
+          "hash": "",
+          "pathname": "/",
+          "search": "",
+          "state": undefined,
+        },
+        "push": [Function],
+        "replace": [Function],
+      }
+    }
+  >
+    <StartupPrivateRoute
+      auth={
+        Object {
+          "isAuthenticated": true,
+          "isLoading": true,
+          "isStartup": false,
+        }
+      }
+    >
+      <Route
+        render={[Function]}
+      >
+        <Preloader>
+          <div>
+            <div
+              className="progress"
+            >
+              <div
+                className="indeterminate"
+              />
+            </div>
+          </div>
+        </Preloader>
+      </Route>
+    </StartupPrivateRoute>
+  </Router>
+</HashRouter>
+`;

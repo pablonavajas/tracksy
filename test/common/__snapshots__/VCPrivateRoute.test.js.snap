@@ -1,0 +1,156 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`VCPrivateRoute redirects to /startupPage, if isAuthenticated is true, isStartup is true and isLoading is false 1`] = `
+<HashRouter>
+  <Router
+    history={
+      Object {
+        "action": "REPLACE",
+        "block": [Function],
+        "createHref": [Function],
+        "go": [Function],
+        "goBack": [Function],
+        "goForward": [Function],
+        "length": 1,
+        "listen": [Function],
+        "location": Object {
+          "hash": "",
+          "pathname": "/startupPage",
+          "search": "",
+          "state": undefined,
+        },
+        "push": [Function],
+        "replace": [Function],
+      }
+    }
+  >
+    <VCPrivateRoute
+      auth={
+        Object {
+          "isAuthenticated": true,
+          "isLoading": false,
+          "isStartup": true,
+        }
+      }
+    >
+      <Route
+        render={[Function]}
+      >
+        <Redirect
+          to="/startupPage"
+        >
+          <Lifecycle
+            onMount={[Function]}
+            onUpdate={[Function]}
+            to="/startupPage"
+          />
+        </Redirect>
+      </Route>
+    </VCPrivateRoute>
+  </Router>
+</HashRouter>
+`;
+
+exports[`VCPrivateRoute redirects to login, if isAuthenticated is false  1`] = `
+<HashRouter>
+  <Router
+    history={
+      Object {
+        "action": "REPLACE",
+        "block": [Function],
+        "createHref": [Function],
+        "go": [Function],
+        "goBack": [Function],
+        "goForward": [Function],
+        "length": 1,
+        "listen": [Function],
+        "location": Object {
+          "hash": "",
+          "pathname": "/login",
+          "search": "",
+          "state": undefined,
+        },
+        "push": [Function],
+        "replace": [Function],
+      }
+    }
+  >
+    <VCPrivateRoute
+      auth={
+        Object {
+          "isAuthenticated": false,
+          "isLoading": false,
+          "isStartup": false,
+        }
+      }
+    >
+      <Route
+        render={[Function]}
+      >
+        <Redirect
+          to="/login"
+        >
+          <Lifecycle
+            onMount={[Function]}
+            onUpdate={[Function]}
+            to="/login"
+          />
+        </Redirect>
+      </Route>
+    </VCPrivateRoute>
+  </Router>
+</HashRouter>
+`;
+
+exports[`VCPrivateRoute shows preloader, if isLoading is true  1`] = `
+<HashRouter>
+  <Router
+    history={
+      Object {
+        "action": "POP",
+        "block": [Function],
+        "createHref": [Function],
+        "go": [Function],
+        "goBack": [Function],
+        "goForward": [Function],
+        "length": 1,
+        "listen": [Function],
+        "location": Object {
+          "hash": "",
+          "pathname": "/",
+          "search": "",
+          "state": undefined,
+        },
+        "push": [Function],
+        "replace": [Function],
+      }
+    }
+  >
+    <VCPrivateRoute
+      auth={
+        Object {
+          "isAuthenticated": true,
+          "isLoading": true,
+          "isStartup": false,
+        }
+      }
+    >
+      <Route
+        render={[Function]}
+      >
+        <Preloader>
+          <div>
+            <div
+              className="progress"
+            >
+              <div
+                className="indeterminate"
+              />
+            </div>
+          </div>
+        </Preloader>
+      </Route>
+    </VCPrivateRoute>
+  </Router>
+</HashRouter>
+`;
