@@ -3,7 +3,7 @@ import { withAlert } from "react-alert";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
-function MessageAlerts({ message, alert }) {
+export const MessageAlerts = ({ message, alert }) => {
   useEffect(() => {
     if (message.succ) {
       alert.success(message.succ);
@@ -11,14 +11,14 @@ function MessageAlerts({ message, alert }) {
   });
 
   return <Fragment />;
-}
-
-MessageAlerts.propTypes = {
-  message: PropTypes.object.isRequired
 };
 
-const mapStateToProps = state => ({
-  message: state.messages
+MessageAlerts.propTypes = {
+  message: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  message: state.messages,
 });
 
 export default connect(mapStateToProps)(withAlert()(MessageAlerts));
