@@ -3,12 +3,13 @@ import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { login } from "../../actions/authActions";
+import { InputFieldWithIconPrefix } from "../smallComponents/inputFields";
 
-function Login({ isAuthenticated, login }) {
+export const Login = ({ isAuthenticated, login }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const onSubmit = e => {
+  const onSubmit = (e) => {
     e.preventDefault();
     login(username, password);
   };
@@ -24,36 +25,24 @@ function Login({ isAuthenticated, login }) {
               <div className="card-panel login blue white-text center">
                 <h2>Tracksy Login</h2>
                 <form onSubmit={onSubmit}>
-                  <div className="input-field">
-                    <i className="material-icons prefix">account_box</i>
-                    <input
-                      id="username"
-                      type="text"
-                      name="username"
-                      value={username}
-                      onChange={e => setUsername(e.target.value)}
-                      required
-                    />
-                    <label htmlFor="username" className="white-text">
-                      Username
-                    </label>
-                  </div>
-                  <div className="input-field">
-                    <i className="material-icons prefix">lock</i>
-                    <input
-                      id="password"
-                      type="password"
-                      name="password"
-                      value={password}
-                      onChange={e => setPassword(e.target.value)}
-                      required
-                      minLength="6"
-                    />
-                    <label htmlFor="password" className="white-text">
-                      Password
-                    </label>
-                  </div>
-
+                  <InputFieldWithIconPrefix
+                    id="username"
+                    type="text"
+                    name="Username"
+                    value={username}
+                    setFunction={setUsername}
+                    required={true}
+                    iconName="account_box"
+                  />
+                  <InputFieldWithIconPrefix
+                    id="password"
+                    type="password"
+                    name="Password"
+                    value={password}
+                    setFunction={setPassword}
+                    required={true}
+                    iconName="lock"
+                  />
                   <button
                     className="btn #546e7a blue-grey darken-1 waves-effect waves-light"
                     type="submit"
@@ -75,15 +64,15 @@ function Login({ isAuthenticated, login }) {
       </section>
     </div>
   );
-}
+};
 
 Login.propTypes = {
   login: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool
+  isAuthenticated: PropTypes.bool,
 };
 
-const mapStateToProps = state => ({
-  isAuthenticated: state.auth.isAuthenticated
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
 });
 
 export default connect(mapStateToProps, { login })(Login);

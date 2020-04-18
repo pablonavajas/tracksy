@@ -1,0 +1,78 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Register redirects to home page if isAuthenticated is true  1`] = `
+<Redirect
+  to="/"
+/>
+`;
+
+exports[`Register shows the login form  1`] = `
+<div>
+  <section
+    className="section section-login"
+  >
+    <div
+      className="form-container"
+    >
+      <div
+        className="row"
+      >
+        <div
+          className="col s12 m8 offset-m2 l6 offset-l3"
+        >
+          <div
+            className="card-panel login blue white-text center"
+          >
+            <h2>
+              Tracksy Login
+            </h2>
+            <form
+              onSubmit={[Function]}
+            >
+              <InputFieldWithIconPrefix
+                iconName="account_box"
+                id="username"
+                name="Username"
+                required={true}
+                setFunction={[Function]}
+                type="text"
+                value=""
+              />
+              <InputFieldWithIconPrefix
+                iconName="lock"
+                id="password"
+                name="Password"
+                required={true}
+                setFunction={[Function]}
+                type="password"
+                value=""
+              />
+              <button
+                className="btn #546e7a blue-grey darken-1 waves-effect waves-light"
+                name="action"
+                type="submit"
+              >
+                Login
+              </button>
+              <p>
+                Don't have an account?
+                 
+                <Link
+                  style={
+                    Object {
+                      "color": "#FFF",
+                    }
+                  }
+                  to="/register"
+                >
+                  Register
+                </Link>
+              </p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+`;
