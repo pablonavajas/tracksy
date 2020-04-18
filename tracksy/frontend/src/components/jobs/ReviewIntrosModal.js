@@ -6,7 +6,7 @@ import { updateIntroductionsStatuses } from "../../actions/introductionActions";
 import { setCurrentJob } from "../../actions/jobActions";
 import Preloader from "../layout/Preloader";
 
-const ReviewIntrosModal = ({
+export const ReviewIntrosModal = ({
   jobs: { current },
   updateIntroductionsStatuses,
   setCurrentJob,
@@ -65,6 +65,7 @@ const ReviewIntrosModal = ({
                           <td>{introduction.connection.description}</td>
                           <td>
                             <select
+                              id="rateIntroductionSelection"
                               className="browser-default"
                               onChange={(e) =>
                                 setStatus(introduction.id, e.target.value)
@@ -89,6 +90,7 @@ const ReviewIntrosModal = ({
           <div className="modal-footer">
             <div className="center">
               <a
+                id="submitIntroductionsRatingButton"
                 onClick={onSubmit}
                 className="btn waves-effect waves-light light-blue modal-close"
               >

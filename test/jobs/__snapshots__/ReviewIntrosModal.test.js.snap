@@ -1,0 +1,172 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ReviewIntrosModal renders no introducitons, if connection is null for the introduction 1`] = `
+<div
+  className="modal"
+  id="review-intros-modal"
+  style={
+    Object {
+      "height": "75%",
+      "width": "60%",
+    }
+  }
+>
+  <div
+    className="modal-content"
+  >
+    <h4>
+      Review Introductions
+    </h4>
+    <div
+      className="col s12"
+    >
+      <table
+        className="responsive-table highlight"
+      >
+        <thead>
+          <tr>
+            <th>
+              Name
+            </th>
+            <th>
+              Description
+            </th>
+            <th>
+              Status
+            </th>
+            <th />
+          </tr>
+        </thead>
+        <tbody />
+      </table>
+    </div>
+  </div>
+  <div
+    className="modal-footer"
+  >
+    <div
+      className="center"
+    >
+      <a
+        className="btn waves-effect waves-light light-blue modal-close"
+        id="submitIntroductionsRatingButton"
+        onClick={[Function]}
+      >
+        Submit
+      </a>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ReviewIntrosModal renders the connection of the introductions  1`] = `
+<div
+  className="modal"
+  id="review-intros-modal"
+  style={
+    Object {
+      "height": "75%",
+      "width": "60%",
+    }
+  }
+>
+  <div
+    className="modal-content"
+  >
+    <h4>
+      Review Introductions
+    </h4>
+    <div
+      className="col s12"
+    >
+      <table
+        className="responsive-table highlight"
+      >
+        <thead>
+          <tr>
+            <th>
+              Name
+            </th>
+            <th>
+              Description
+            </th>
+            <th>
+              Status
+            </th>
+            <th />
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            key="0"
+          >
+            <td>
+              <a />
+            </td>
+            <td />
+            <td>
+              <select
+                className="browser-default"
+                id="rateIntroductionSelection"
+                onChange={[Function]}
+              >
+                <option
+                  disabled={true}
+                  value=""
+                >
+                  Choose your option
+                </option>
+                <option
+                  value="Good"
+                >
+                  Good
+                </option>
+                <option
+                  value="Excellent"
+                >
+                  Excellent
+                </option>
+                <option
+                  value="Bad"
+                >
+                  Bad
+                </option>
+              </select>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div
+    className="modal-footer"
+  >
+    <div
+      className="center"
+    >
+      <a
+        className="btn waves-effect waves-light light-blue modal-close"
+        id="submitIntroductionsRatingButton"
+        onClick={[Function]}
+      >
+        Submit
+      </a>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ReviewIntrosModal renders the preloader if there is no currently selected job 1`] = `
+<div
+  className="modal"
+  id="review-intros-modal"
+  style={
+    Object {
+      "height": "75%",
+      "width": "60%",
+    }
+  }
+>
+  <Preloader />
+</div>
+`;
