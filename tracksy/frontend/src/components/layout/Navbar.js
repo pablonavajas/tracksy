@@ -4,8 +4,11 @@ import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { logout } from "../../actions/authActions";
 
-const Navbar = ({ title, icon, auth, logout }) => {
+export const Navbar = ({ title, icon, auth, logout }) => {
   const { isAuthenticated, username, isStartup } = auth;
+  console.log(isAuthenticated);
+  console.log(username);
+  console.log(isStartup);
   const vcLinks = (
     <ul id="nav-mobile" className="right hide-on-med-and-down">
       <span className="mr-3">
@@ -63,15 +66,15 @@ Navbar.propTypes = {
   title: PropTypes.string.isRequired,
   icon: PropTypes.string.isRequired,
   auth: PropTypes.object.isRequired,
-  logout: PropTypes.func.isRequired
+  logout: PropTypes.func.isRequired,
 };
 
 Navbar.defaultProps = {
   title: "Tracksy",
-  icon: "cloud"
+  icon: "cloud",
 };
-const mapStateToProps = state => ({
-  auth: state.auth
+const mapStateToProps = (state) => ({
+  auth: state.auth,
 });
 
 export default connect(mapStateToProps, { logout })(Navbar);

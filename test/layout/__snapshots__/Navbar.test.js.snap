@@ -1,0 +1,224 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Navbar renders empty string for username in vcLinks, when username is not provided 1`] = `
+<nav
+  className="blue"
+  style={
+    Object {
+      "marginBottom": "30px",
+    }
+  }
+>
+  <div
+    className="nav-wrapper cont"
+  >
+    <a
+      className="brand-logo"
+      href="/"
+    >
+      <i
+        className="material-icons"
+        style={
+          Object {
+            "marginLeft": "30px",
+          }
+        }
+      >
+        cloud
+      </i>
+      Tracksy
+    </a>
+    <ul
+      className="right hide-on-med-and-down"
+      id="nav-mobile"
+    >
+      <span
+        className="mr-3"
+      >
+        <strong />
+      </span>
+      <li
+        className="right"
+      >
+        <a
+          onClick={[MockFunction]}
+        >
+          Logout
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+`;
+
+exports[`Navbar renders guestLinks, when isAuthenticated is false 1`] = `
+<nav
+  className="blue"
+  style={
+    Object {
+      "marginBottom": "30px",
+    }
+  }
+>
+  <div
+    className="nav-wrapper cont"
+  >
+    <a
+      className="brand-logo"
+      href="/"
+    >
+      <i
+        className="material-icons"
+        style={
+          Object {
+            "marginLeft": "30px",
+          }
+        }
+      >
+        cloud
+      </i>
+      Tracksy
+    </a>
+    <ul
+      className="right hide-on-med-and-down"
+      id="nav-mobile"
+    >
+      <li
+        className="right"
+      >
+        <Link
+          to="/login"
+        >
+          Login
+        </Link>
+      </li>
+      <li
+        className="right"
+      >
+        <Link
+          to="/register"
+        >
+          Register
+        </Link>
+      </li>
+    </ul>
+  </div>
+</nav>
+`;
+
+exports[`Navbar renders startupLinks, when isAuthenticated is true, and isStartup is true 1`] = `
+<nav
+  className="blue"
+  style={
+    Object {
+      "marginBottom": "30px",
+    }
+  }
+>
+  <div
+    className="nav-wrapper cont"
+  >
+    <a
+      className="brand-logo"
+      href="/"
+    >
+      <i
+        className="material-icons"
+        style={
+          Object {
+            "marginLeft": "30px",
+          }
+        }
+      >
+        cloud
+      </i>
+      Tracksy
+    </a>
+    <ul
+      className="right hide-on-med-and-down"
+      id="nav-mobile"
+    >
+      <li>
+        <span
+          className="mr-3"
+        >
+          <strong>
+            Welcome TestingModeUsername
+          </strong>
+        </span>
+      </li>
+      <li
+        className="right"
+      >
+        <a
+          onClick={[MockFunction]}
+        >
+          Logout
+        </a>
+      </li>
+      <li
+        className="right"
+      >
+        <Link
+          to="/startupPage"
+        >
+          History
+        </Link>
+      </li>
+    </ul>
+  </div>
+</nav>
+`;
+
+exports[`Navbar renders vcLinks, when isAuthenticated is true, and isStartup is false 1`] = `
+<nav
+  className="blue"
+  style={
+    Object {
+      "marginBottom": "30px",
+    }
+  }
+>
+  <div
+    className="nav-wrapper cont"
+  >
+    <a
+      className="brand-logo"
+      href="/"
+    >
+      <i
+        className="material-icons"
+        style={
+          Object {
+            "marginLeft": "30px",
+          }
+        }
+      >
+        cloud
+      </i>
+      Tracksy
+    </a>
+    <ul
+      className="right hide-on-med-and-down"
+      id="nav-mobile"
+    >
+      <span
+        className="mr-3"
+      >
+        <strong>
+          Welcome TestingModeUsername
+        </strong>
+      </span>
+      <li
+        className="right"
+      >
+        <a
+          onClick={[MockFunction]}
+        >
+          Logout
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+`;
