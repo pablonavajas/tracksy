@@ -23,18 +23,6 @@ from .angel_get import get_description
 from .serializers import *
 
 
-# Startup Viewset (crud API, without specifying requests, managed by django)
-class StartupViewSet(viewsets.ModelViewSet):
-    permission_classes = [permissions.IsAuthenticated]
-
-    serializer_class = StartupSerializer
-
-    def get_queryset(self):
-        return self.request.user.startups.all()
-
-    def perform_create(self, serializer):
-        serializer.save(users=self.request.user)
-
 
 def get_startup(user, pk=None):
     """ Returns startup object using startupId in the request,
@@ -74,6 +62,20 @@ def list_processor(request, startupId, Serializer, field):
             response["errors"].append({"message": str(err)})
 
     return response
+
+class StartupAPI(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request):
+        serializer = StartupSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save(users=request.user)
+        return Response(serializer.data)
+
+    def get(self, request):
+        startups = request.user.startups.all()
+        serializer = StartupSerializer(startups, many=True)
+        return Response(serializer.data)
 
 
 class InvestmentAPI(APIView):

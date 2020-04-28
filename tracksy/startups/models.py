@@ -7,7 +7,7 @@ from accounts.models import Connection
 
 class Startup(models.Model):
     users = models.ManyToManyField(
-        User, related_name="startups")
+        User, related_name="startups", blank=True)
     startupEmail = models.EmailField()
 
     name = models.CharField(max_length=100)
