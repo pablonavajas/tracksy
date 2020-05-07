@@ -1,61 +1,71 @@
 # Tracksy Application
 
-This application is developed for relationship management of Venture Capital (VC) Funds, which also allows tracking their current investment portfolio. The application is built in django, with front-end handled by ReactJS.
+This application is developed for relationship management of Venture Capital (VC) Funds and the Portfolio Companies (PC)s that they have invested in. The application allows for VCs to track their current investment portfolio as well as metadata submitted by the PCs on a regular basis. The application is built in django, with front-end handled by ReactJS.
 
-## Running the project locally
+## Installing dependencies
 
-**In the root directory run the following:**\
+**From root directory run the following:**\
 `pip3 install pipenv` - installs pipenv for creation of virtual environments \
 `pipenv shell` - creates a virtual environment and creates a Pipfile \
 `pipenv install django djangorestframework django-rest-knox` - installs django dependencies (django-rest-knox for token authentication) \
-`pipenv install pylint-django` - this is optional, but it enables static checking of django code without actiually running it (useful for some editors like VSCode)
+`pipenv install pylint-django` - this is optional, but it enables static checking of django code without actually running it (useful for some editors like VSCode)
 
-**Change to the trakcsy directory `(cd tracksy)` and run:**\
-`python manage.py makemigrations startups` - creates db migrations \
-`python manage.py makemigrations accounts` - creates db migrations \
+**From first level trakcsy directory run:**\
+`python manage.py makemigrations` - creates db migrations \
 `python manage.py migrate` - puts the table and columns into database:
+`npm install` - installs all the frontend/react dependencies
 
-**Change back to the root directory `(cd ..)` and run :**\
-`npm install` - installs all the frontend/react dependencies\
-`npm run dev` - compiles the fron-end code into a single javascript file
+## Running the project locally
 
-**Finally to run the project change to the tracksy project directory `(cd tracksy)` and run:**\
-`python manage.py runserver` - server should now be running on a localhost (if this link is copied to the browser, this will make the whole application accessible)\
+**From first level trakcsy directory run:**\
+`python manage.py runserver` - server should now be running on a localhost (the link can now be used in the browser)
 
 ## Root File Structure
 
-The old file structure contains a backend and client/frontend folders as well as chrome-ext folder, however once react and django are integrated the front-end application runs within the backend/django directory, therefore there is a new file structure.
-
-**The new file structure of the root directory is explained below.**\
+**The file structure of the root directory is explained below.**\
 `chrome-ext` - chrome extension which allows extracting personal connections from a given LinkedIn account\
-`tracksy` - django project folder\
+`tracksy` - django project folder (first level directory that is called tracksy)\
 [`babel.config.js`](https://babeljs.io/) - contains configuration for JavaScript transcompiler that is mainly used to convert ECMAScript 2015+ code into a backwards compatible version of JavaScript that can be run by older JavaScript engines \
 [`webpack.config.js`](https://webpack.js.org/) - contains configuration for webpack module bundler which bundles JavaScript modules with dependencies and generates static assets representing those modules\
 `jest.config.js` - is the jest configuration file, with ModuleNameMapper spcifying how to interpret the .css files\
 `Pipfile` - contains information for the python/django dependencies of the project \
-`Package.json` - contains information for the ReacJS dependencies of the project\
-`.pylintrc` - configuration file for static code checker
+`package.json` - contains information for the ReacJS dependencies of the project\
+`.pylintrc` - configuration file for static code checker (useful for VSCode)\
+`package-lock.json` - automatically generated file that describes the exact node_modules tree or package.json configuration, such that installs from another system are able to generate the same tree, regardless of intermediate dependency updates\
+`Pipfile.lock` - specifies, based on the packages present in Pipfile, which versions of those should be used, maintaining the consistency in the dependency tree even if installed from another system
 
 ## Tracksy Project File Structure
 
 `accounts` - backend accounts app folder (used for backend authentication management)\
-`frontend` - frontend app folder (used for ReactJS development) \
-`startups` - backend startups folder (used for startups models setup and manageing HTTP requests)\
-`tracksy` - main application folder (which combines all the applications into one project)\
-`db.sqlite3` - local sqlite database (default with django) / to be changed to an AWS ran database\
+`frontend` - frontend app folder (used for ReactJS frontend application) \
+`startups` - backend startups folder (used for startups models and APIs)\
+`tracksy` - main application folder (which combines all the applications listed above into one project running on one host)\
+`db.sqlite3` - local sqlite database (default with django)\
 `manage.py` - python file that allows to run administrative tasks
 
 ## Front-end development instructions
 
-When making changes in ReactJS, the the whole application has to be rebuilt,
-otherwise the `main.js` will not change, and therefore changes will not be applied to the version running on a given host. `--watch` in `package.json` allows for `npm run dev` to run, everytime a change in files has occured, therefore recompiling the application and showing it in the browser straight away (with no manual re-run of the command).
+**From root run :**\
+`npm run dev` - compiles the fron-end code into a single javascript file, namely `main.js`.
 
-Run `python manage.py runserver` from the tracksy directory, and simultaneously in another terminal run `npm run dev` in the root directory, which allows for continuous development, without having to restart the server or manually recompile/rebundle the code.
+When making changes in ReactJS, the the whole application has to be rebuilt, otherwise the `main.js` will not change, and therefore changes will not be applied to the version running on a given host. `--watch` flag in `package.json` for the `npm run dev` command allows it to run everytime a change in files has occured, therefore recompiling the application and showing it in the browser straight away (with no manual re-run of the command).
 
-## Miscellaneous
+**From first level trakcsy directory run:**\
+`python manage.py runserver` allows the server to be running continuosly on the localhost
 
-`python manage.py startapp <appName>` - creates a new app called leads
+Both commands above have to be run simultaneously from two different terminal windows, which allows for continuous development, without having to restart the server or manually recompile/rebundle the code.
 
 ## Front-end Tests
 
-If major changes made to the testing setup, run `jest --clearCache` or `yarn jest --clearCache` if yarn package manager is installed.
+**From root run :**\
+`npm run test` - runs all the test suites created\
+`npm run coverage` - runs the test suites and displays the coverage of the frontend codebase
+
+If major changes made to the testing setup or project structure, run `jest --clearCache` or `yarn jest --clearCache` if yarn package manager is installed.
+
+## Others Sections ??
+
+- how to run backend tests
+- how to run selenium system tests
+- how to run the dummy.py file that can automatically create some data in the database (for development purposes)
+- anything related to heroku deployment that might be relevant?
