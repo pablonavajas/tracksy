@@ -12,6 +12,7 @@ djangorestframework = "*"
 django-rest-knox = "*"
 requests = "*"
 bs4 = "*"
+selenium = "*"
 
 [requires]
 python_version = "3.7"
