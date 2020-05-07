@@ -63,9 +63,15 @@ Both commands above have to be run simultaneously from two different terminal wi
 
 If major changes made to the testing setup or project structure, run `jest --clearCache` or `yarn jest --clearCache` if yarn package manager is installed.
 
+## Front-end Tests
+
+**From root run :**\
+`pipenv install selenium` - installs Selenium dependencies\
+**Install web driver according to your personal system :**\
+- Tested using Chromedriver version 81.0.4044.138:(available at https://chromedriver.chromium.org/downloads) 
+
 ## Others Sections ??
 
 - how to run backend tests
-- how to run selenium system tests
 - how to run the dummy.py file that can automatically create some data in the database (for development purposes)
 - anything related to heroku deployment that might be relevant?
