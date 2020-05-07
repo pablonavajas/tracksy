@@ -67,8 +67,11 @@ If major changes made to the testing setup or project structure, run `jest --cle
 
 **From root run :**\
 `pipenv install selenium` - installs Selenium dependencies\
-**Install web driver according to your personal system :**\
+`Install web driver according to your personal system`
 - Tested using Chromedriver version 81.0.4044.138:(available at https://chromedriver.chromium.org/downloads) 
+`python3 RegisterTest.py`
+`python3 LoginTest.py`
+`python3 AddingStartupTest.py`
 
 ## Others Sections ??
 
