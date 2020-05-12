@@ -20,6 +20,15 @@ This application is developed for relationship management of Venture Capital (VC
 **From first level trakcsy directory run:**\
 `python manage.py runserver` - server should now be running on a localhost (the link can now be used in the browser)
 
+## Using the Chrome Extension
+1. Run project locally and **register a user**
+1. Open Google Chrome
+1. Navigate to Chrome Extensions: `chrome://extensions/`
+1. Enable **Developer Mode**
+1. Click **Load Unpacked**
+1. Select `chrome-ext/main/` folder
+1. Enable the loaded extension
+
 ## Root File Structure
 
 **The file structure of the root directory is explained below.**\
@@ -55,16 +64,28 @@ When making changes in ReactJS, the the whole application has to be rebuilt, oth
 
 Both commands above have to be run simultaneously from two different terminal windows, which allows for continuous development, without having to restart the server or manually recompile/rebundle the code.
 
-## Front-end Tests
+## Front-end Unit Tests 
 
-**From root run :**\
+**From root run:**\
 `npm run test` - runs all the test suites created\
 `npm run coverage` - runs the test suites and displays the coverage of the frontend codebase
 
 If major changes made to the testing setup or project structure, run `jest --clearCache` or `yarn jest --clearCache` if yarn package manager is installed.
 
-## Front-end Tests
+## Back-end Tests
+### Unit Tests
+**From first level tracksy directory run:**
+`python manage.py test`
+### Integration Test / Database filling
+**From first level tracksy directory run:** \
+`python manage.py runserver` - runs the server on the local host\
+`python pre_fill.py` - fills the database with dummy data by sending requests to the APIs\
 
+## Chrome Extension Unit Tests
+**Frome `chrome-ext` folder run:**
+`npm test`
+
+## Selenium Tests
 **From root run :**\
 `pipenv install selenium` - installs Selenium dependencies\
 `Install web driver according to your personal system`
@@ -73,8 +94,3 @@ If major changes made to the testing setup or project structure, run `jest --cle
 `python3 LoginTest.py`
 `python3 AddingStartupTest.py`
 
-## Others Sections ??
-
-- how to run backend tests
-- how to run the dummy.py file that can automatically create some data in the database (for development purposes)
-- anything related to heroku deployment that might be relevant?

@@ -1,6 +1,6 @@
 test("Test Running", () => {});
 
-const functions = require("../basics/connections");
+const functions = require("../main/connections");
 
 const fs = require('fs');
 const path = require('path');
@@ -12,9 +12,9 @@ const egPage = {
     totalConnections : 65,
     firstConnection : {
         owner : "David Hilman",
-        link : "https://www.linkedin.com/in/ilyachudenkov/",
+        url : "https://www.linkedin.com/in/ilyachudenkov/",
         name : "Ilya Chudenkov",
-        occupation : "MSc Cognitive and Decision Science Graduate from University College London"
+        description : "MSc Cognitive and Decision Science Graduate from University College London"
     }
 };
 
@@ -51,33 +51,4 @@ test("Callback in scroll after 1 scroll attempt when no scrolling possible", don
         expect(visibleN).toBe(65); expect(totalN).toBe(65)
     });
 });
-
-
-// test("Creation of JSON object from HTML for single connection", () => {
-//     const fs = require('fs');
-//     const path = require('path');
-//     document.body.innerHTML = fs.readFileSync(
-//         path.resolve(__dirname, 'singleConnection.html'), 'utf8');
-//     let profileHTML = document.querySelector(".mn-connection-card__link");
-//
-//     let link = window.location.origin + '/in/sebastianisaacs/';
-//     const owner = "Daivd";
-//     const profile = {
-//         owner: owner,
-//         link: link,
-//         name: "Sebastian Isaacs",
-//         occupation: "Co-Founder, London Blockchain Labs"
-//     };
-//     expect(functions.stripProfileInfo(profileHTML, owner)).toEqual(profile);
-// });
-
-// test("Creation of JSON object from HTML for single connection", () => {
-//     const fs = require('fs');
-//     const path = require('path');
-//     document.body.innerHTML = fs.readFileSync(
-//         path.resolve(__dirname, 'complete.htm'), 'utf8');
-//     let profileHTML = document.querySelector(".mn-connections__header");
-//
-//     console.log(profileHTML.textContent)
-// });
 
