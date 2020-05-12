@@ -16,5 +16,7 @@ urlpatterns += [
     path('api/jobDescription/', AngelJobAPI.as_view(), name="jobDescription"),
     path('api/job/<int:startupId>/', JobAPI.as_view(), name="jobs"),
     path('api/job/<int:startupId>/<int:pk>/', JobAPI.as_view(), name="job"),
+    path('api/introduction/<int:startupId>/<int:jobId>/<int:pk>/', IntroductionAPI.as_view(), name="introductions")
 ]
+
 
