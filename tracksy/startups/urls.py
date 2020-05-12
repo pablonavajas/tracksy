@@ -2,8 +2,11 @@ from rest_framework import routers
 from django.urls import path
 from .api import *
 
-urlpatterns = [
-    path('api/startups/', StartupAPI.as_view(), name='startups'),
+router = routers.DefaultRouter()
+router.register('api/startups', StartupViewSet, 'startups')
+
+urlpatterns = router.urls
+urlpatterns += [
     path('api/investments/<int:startupId>/', InvestmentAPI.as_view(), name="investments"),
     path('api/investments/<int:startupId>/<int:pk>/', InvestmentAPI.as_view(), name="investment"),
     path('api/kpiNames/<int:startupId>/', KpiNameAPI.as_view(), name="kpiNames"),
