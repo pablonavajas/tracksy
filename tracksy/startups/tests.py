@@ -24,7 +24,7 @@ class StartupsApiTest(TestCase):
             "board": "member",
             "startupEmail": "skype@gmail.com"
         }
-        url = reverse("startups")
+        url = reverse("startups-list")
         response = self.client.post(url, request_body, foramt='json')
         data = response.data
         for key, value in request_body.items():
