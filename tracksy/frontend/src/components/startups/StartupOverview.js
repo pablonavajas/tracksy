@@ -2,8 +2,16 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Line } from 'react-chartjs-2';
+import Preloader from "../layout/Preloader";
+import  { Redirect } from 'react-router-dom'
 
 const StartupOverview = ({ current}) => {
+  
+  if (current === null) {
+    return <Redirect to="/startupPage"/>
+    // return <Preloader />;
+  }
+  
   const [name, setName] = useState("");
   const [website, setWebsite] = useState("");
   const [ownership, setOwnership] = useState("");
@@ -20,6 +28,7 @@ const StartupOverview = ({ current}) => {
 
   
   const latest_date = () => {
+
     const date = current.financials[0].endDate;
     for(let item of current.financials){
       if (item.endDate > date) {

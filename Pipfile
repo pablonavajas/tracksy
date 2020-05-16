@@ -13,6 +13,7 @@ django-rest-knox = "*"
 requests = "*"
 bs4 = "*"
 selenium = "*"
+pylint-django = "*"
 
 [requires]
 python_version = "3.7"
