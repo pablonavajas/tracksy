@@ -2,14 +2,20 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Line } from 'react-chartjs-2';
-import Preloader from "../layout/Preloader";
 import  { Redirect } from 'react-router-dom'
 
 const StartupOverview = ({ current}) => {
   
   if (current === null) {
     return <Redirect to="/startupPage"/>
-    // return <Preloader />;
+  }
+
+  if (current.financials.length === 0) {
+    return (
+      <div>
+        <h5 className="left">Awaiting startup to complete onboarding</h5>
+      </div>
+    );
   }
   
   const [name, setName] = useState("");
@@ -29,11 +35,20 @@ const StartupOverview = ({ current}) => {
   
   const latest_date = () => {
 
+    if (current.financials[0] === null) {
+      return (
+        <div>
+          <h5 className="left">Waiting on Startup to complete onboarding</h5>
+        </div>
+      );
+    }
+
     const date = current.financials[0].endDate;
     for(let item of current.financials){
       if (item.endDate > date) {
         date = item.endDate
-    }
+      }
+
     }
     return date
   }
