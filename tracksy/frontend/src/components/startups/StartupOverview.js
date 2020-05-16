@@ -13,7 +13,7 @@ const StartupOverview = ({ current}) => {
   if (current.financials.length === 0) {
     return (
       <div>
-        <h5 className="left">Awaiting startup to complete onboarding</h5>
+        <h5 className="left">Startup has not completed onboarding yet</h5>
       </div>
     );
   }
