@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'p-e+_p5g=_xqhv%e9eii6&(kso=)zhuz3zq)4s$74js(fat+a4'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['https://tracksy.herokuapp.com/', '*']
 
 
 # Application definition
@@ -102,7 +102,7 @@ WSGI_APPLICATION = 'tracksy.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',     
+        'NAME': 'postgres',
         'USER': 'master_psql',
         'PASSWORD': 'tracksy5',
         'HOST': 'tracksydb.cjmgjfcswhtl.eu-west-2.rds.amazonaws.com',
