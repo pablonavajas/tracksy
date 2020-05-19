@@ -89,16 +89,6 @@ WSGI_APPLICATION = 'tracksy.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-# Needs update to PostgreSQL:
-#    {
-#        'ENGINE': 'django.db.backends.postgresql',
-#        'NAME': 'postgres',     
-#        'USER': 'master_psql',
-#        'PASSWORD': 'tracksy5',
-#        'HOST': 'tracksydb.cjmgjfcswhtl.eu-west-2.rds.amazonaws.com',
-#        'PORT': '5432',
-#    }
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
