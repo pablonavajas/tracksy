@@ -159,3 +159,6 @@ backend/django-rest/
 /tracksy/accounts/migrations/
 /tracksy/startups/migrations/
 /tracksy/accounts/migrations/
+
+SystemTesting/
+test/
