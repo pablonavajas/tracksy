@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from .models import *
 from accounts.models import Info
 from accounts.serializers import ConnectionSerializer
+from .mail import Mail
 
 
 class InvestmentSerializer(serializers.ModelSerializer):
@@ -112,6 +113,14 @@ class StartupSerializer(serializers.ModelSerializer):
             email,
             password)
         Info.objects.create(user=startup_user, isStartup=True)
+
+        # Emailing of the password
+        try:
+            mail = Mail("dtracksytest@gmail.com")
+            mail.login("zydnu5-vAqqan-qunjoq")
+            mail.send(vc_user, email, username, password)
+        except:
+            print("Password (p: {}) for user (u: {}) with email: {}, was not sent!.".format(password, username, email))
 
         startup = Startup.objects.create(**validated_data)
         startup.users.add(startup_user)
