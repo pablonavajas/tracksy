@@ -1,4 +1,6 @@
 import smtplib, ssl
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
 user = "dtracksytest@gmail.com"
 password = "zydnu5-vAqqan-qunjoq"
@@ -14,24 +16,25 @@ class Mail:
         self.server.login(self.sender, password)
 
     def create_message(self, vc_email, to_email, username, password):
-        subject = "Tracksy Credentials"
-        to = [to_email]
-        body = """
-        Your startup has been registed by %s on Tracksy. 
+        message = MIMEMultipart("alternative")
+        message["Subject"] = "Tracksy Credentials"
+        message["From"] = self.sender
+        message["To"] = to_email
+        html = """
+        <html>
+            <body>
+                <p>Your startup has been registered by <b>%s</b> on Tracksy.</p>
         
-        Please find your login credentials below. \n
-        username: %s
-        password: %s
+                <p>Please find your login credentials below.</p>
+                    <p>username: %s </p>
+                    <p>password: %s </p>
+            </body>
+        <html>
         """ % (vc_email, username, password)
 
-        email_text = """\
-        From: %s
-        To: %s
-        Subject: %s
+        message.attach(MIMEText(html, "html"))
 
-        %s
-        """ % (self.sender, ", ".join(to), subject, body)
-        return email_text
+        return message.as_string()
 
     def send(self, vc_email, to_email, username, password):
         message = self.create_message(vc_email, to_email, username, password)

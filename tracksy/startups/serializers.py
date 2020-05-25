@@ -106,7 +106,6 @@ class StartupSerializer(serializers.ModelSerializer):
         email = validated_data.get('startupEmail')
         username = email[:email.find("@")]
         password = User.objects.make_random_password()
-        print(password)
 
         startup_user = User.objects.create_user(
             username,
@@ -114,16 +113,15 @@ class StartupSerializer(serializers.ModelSerializer):
             password)
         Info.objects.create(user=startup_user, isStartup=True)
 
-        # Emailing of the password
-        try:
-            mail = Mail("dtracksytest@gmail.com")
-            mail.login("zydnu5-vAqqan-qunjoq")
-            mail.send(vc_user, email, username, password)
-        except:
-            print("Password (p: {}) for user (u: {}) with email: {}, was not sent!.".format(password, username, email))
-
         startup = Startup.objects.create(**validated_data)
         startup.users.add(startup_user)
         startup.users.add(vc_user)
+
+
+        # Emailing of the password
+        mail = Mail("dtracksytest@gmail.com")
+        mail.login("zydnu5-vAqqan-qunjoq")
+        mail.send(vc_user, email, username, password)
+        mail.logout()
 
         return startup
