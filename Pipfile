@@ -16,6 +16,7 @@ selenium = "*"
 pylint-django = "*"
 whitenoise = "==3.3.1"
 gunicorn = "==19.7.1"
+python-dotenv = "*"
 
 [requires]
 python_version = "3.7"
